@@ -48,23 +48,19 @@ const DetailedUbicationView: React.FC<DetailedUbicationViewProps> = (props) => {
     setPublic(props.markerShown.isPublic);
   }, [props.markerShown]);
 
-  useEffect(() => {
-    let id = props.markerShown.id;
+  const handlePublicChange = (changeTo: boolean) => {
+    let marker = markers.find(marker => marker.id = props.markerShown.id)!;
+    marker.isPublic = changeTo;
 
-    if (id !== "") {
-      let marker = markers.find(marker => marker.id = id)!;
-
-      marker.isPublic = isPublic;
-      if (isPublic) {
-        savePublicMarker(marker, session.info.webId!);
-      } else {
-        deletePublicMarker(marker, session.info.webId!);
-      }
-      dispatch({ type: Types.UPDATE_MARKER, payload: { id: marker.id, marker: marker } });
+    if (changeTo) {
+      savePublicMarker(marker, session.info.webId!);
+    } else {
+      deletePublicMarker(marker, session.info.webId!);
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPublic]);
+    dispatch({ type: Types.UPDATE_MARKER, payload: { id: marker.id, marker: marker } });
+    setPublic(changeTo);
+  }
 
   return (
     <>
@@ -84,7 +80,7 @@ const DetailedUbicationView: React.FC<DetailedUbicationViewProps> = (props) => {
                 <Switch
                   checked={isPublic}
                   inputProps={{ 'aria-label': 'controlled' }}
-                  onChange={e => setPublic(e.target.checked)}
+                  onChange={e => handlePublicChange(e.target.checked)}
                 />
               }
                 sx={{ color: 'white', my: 2 }} label="Compartir ubicación" />
