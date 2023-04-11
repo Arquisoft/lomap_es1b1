@@ -38,7 +38,5 @@ You should be able to access the application in [http://localhost:3000](http://l
 
 | Contributor | Contact |
 | ------------- | ------------- |
-| Calvo Gamonal, Pablo  | <a href="https://github.com/pelotazos123"><img src="https://img.shields.io/badge/UO276220-Pablo Calvo-red"></a>  |
 | Davila Sampedro, Óscar  | <a href="https://github.com/OscarDavilaSampedro"><img src="https://img.shields.io/badge/UO284541-Óscar Davila-yellow"></a>  |
 | Hermida Giganto, Joaquín  | <a href="https://github.com/Jhergig"><img src="https://img.shields.io/badge/UO271718-Joaquín Hermida-success"></a>  |
-| García-Ovies Pérez, Pablo  | <a href="https://github.com/PabloGOP"><img src="https://img.shields.io/badge/UO265314-Pablo García Ovies-blue"></a>  |
