@@ -20,6 +20,7 @@ const FriendsList: React.FC = () => {
     };
   
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showFriends, showAddFriendForm]);
 
   async function loadPersonData() {
@@ -57,19 +58,6 @@ const FriendsList: React.FC = () => {
     }
     return url
   }
-
-  /*
-  const miFuncion = async (webId: string) => {
-    const amigos = await findFriends(webId)
-    console.log(amigos)
-    amigos.friends.forEach(element => {
-      console.log(element);
-    })
-  }
-
-  console.log(session.info.webId!)
-  miFuncion(session.info.webId!);
-  */
 
   return (
     <div id='div-friends'>
