@@ -9,10 +9,12 @@ const UbicationsView = () => {
     const { state: markers } = useContext(MarkerContext);
 
     const getMyUbications = () => {
+        let myUbications: IPMarker[] = [];
         if (session.info.isLoggedIn) {
-            return markers.filter((marker) => marker.webId === session.info.webId!);
+            myUbications = markers.filter((marker) => marker.webId === session.info.webId!);
         }
-        return [];
+
+        return myUbications;
     }
 
     return (

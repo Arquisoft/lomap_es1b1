@@ -3,12 +3,12 @@ import { LoginButton } from "@inrupt/solid-ui-react";
 import { Button, Dialog, FormGroup, Stack, Select, MenuItem, TextField, Container } from "@mui/material";
 
 export interface LoginProps {
-  open: boolean;
+  isOpen: boolean;
   onClose: () => void;
 }
 
-function LoginForm(props: LoginProps): JSX.Element {
-  const { onClose, open } = props;
+const LoginForm: React.FC<LoginProps> = (props) => {
+  const { onClose, isOpen } = props;
   const [disabled, setDisabled] = useState<boolean>(true);
   const [oidcIssuer, setOidcIssuer] = useState<string>("");
   const [itemSelected, setItemSelected] = useState<string>("https://inrupt.net/");
@@ -19,15 +19,15 @@ function LoginForm(props: LoginProps): JSX.Element {
 
   useEffect(() => {
     if (itemSelected !== "otro") {
-      setOidcIssuer(itemSelected);
       setDisabled(true);
+      setOidcIssuer(itemSelected);
     } else {
       setDisabled(false);
     }
   }, [itemSelected])
 
   return (
-    <Dialog onClose={handleClose} open={open}>
+    <Dialog onClose={handleClose} open={isOpen}>
       <Container sx={{ display: 'flex', padding: '0.5em !important' }}>
         <div style={{ margin: '1em' }}>
           <p>Por favor, seleccione un proveedor.</p>

@@ -39,14 +39,12 @@ const MapView = () => {
     const [globalCategory, setGlobalCategory] = useState<string>("Museos");
     const [isDetailedIWOpen, setDetailedIWOpen] = useState<boolean>(false);
     const [globalFilterCategories, setGlobalFilterCategories] = useState([
-        'Museos', 'Parques', 'Tiendas',
-        'Edificios', 'Farmacias', 'Transporte',
-        'Restaurantes', 'Entretenimiento'
+        'Museos', 'Parques', 'Tiendas', 'Edificios',
+        'Farmacias', 'Transporte', 'Restaurantes', 'Entretenimiento'
     ]);
     const [markerShown, setMarkerShown] = useState<IPMarker>({
         id: "", date: new Date(), lat: 0, lng: 0, name: "Sin nombre", address: "Sin dirección",
-        category: "Sin categoría", isPublic: false, description: "Sin descripción",
-        ratings: [], comments: [], webId: ""
+        category: "Sin categoría", isPublic: false, description: "Sin descripción", ratings: [], comments: [], webId: ""
     });
 
     const addMarker = (marker: IPMarker) => {
@@ -55,8 +53,7 @@ const MapView = () => {
 
     useEffect(() => {
         if (session.info.isLoggedIn) {
-            saveMarkers(markers.filter((marker) => marker.webId === session.info.webId!),
-                session.info.webId!);
+            saveMarkers(markers.filter((marker) => marker.webId === session.info.webId!), session.info.webId!);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [markers]);

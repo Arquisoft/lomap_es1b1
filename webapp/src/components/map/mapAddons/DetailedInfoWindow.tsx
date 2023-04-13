@@ -24,7 +24,7 @@ const DetailedUbicationView: React.FC<DetailedUbicationViewProps> = (props) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let marker = markers.find(marker => marker.id = props.markerShown.id)!;
+    let marker = markers.find(marker => marker.id === props.markerShown.id)!;
     marker.ratings.push(rating);
     marker.comments.push(comment);
 
@@ -35,8 +35,7 @@ const DetailedUbicationView: React.FC<DetailedUbicationViewProps> = (props) => {
   }
 
   const getRatingMean = () => {
-    let sum = props.markerShown.ratings
-      .map(n => parseInt(n.toString()))
+    let sum = props.markerShown.ratings.map(n => parseInt(n.toString()))
       .reduce((previous, current) => current += previous, 0);
     let total = props.markerShown.ratings.length;
     let result = sum / total;
@@ -48,18 +47,18 @@ const DetailedUbicationView: React.FC<DetailedUbicationViewProps> = (props) => {
     setPublic(props.markerShown.isPublic);
   }, [props.markerShown]);
 
-  const handlePublicChange = (changeTo: boolean) => {
-    let marker = markers.find(marker => marker.id = props.markerShown.id)!;
-    marker.isPublic = changeTo;
+  const handlePublicChange = (isPublic: boolean) => {
+    let marker = markers.find(marker => marker.id === props.markerShown.id)!;
+    marker.isPublic = isPublic;
 
-    if (changeTo) {
+    if (isPublic) {
       savePublicMarker(marker, session.info.webId!);
     } else {
       deletePublicMarker(marker, session.info.webId!);
     }
 
     dispatch({ type: Types.UPDATE_MARKER, payload: { id: marker.id, marker: marker } });
-    setPublic(changeTo);
+    setPublic(isPublic);
   }
 
   return (
