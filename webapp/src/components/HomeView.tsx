@@ -1,6 +1,6 @@
 import { Container } from "@mui/material"
-import { CombinedDataProvider, Text, useSession } from "@inrupt/solid-ui-react";
 import { FOAF } from "@inrupt/vocab-common-rdf";
+import { CombinedDataProvider, Text, useSession } from "@inrupt/solid-ui-react";
 
 const HomeView = () => {
     const { session } = useSession();

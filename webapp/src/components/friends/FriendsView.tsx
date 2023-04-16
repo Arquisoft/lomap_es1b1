@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { CombinedDataProvider, useSession, Image, Text } from '@inrupt/solid-ui-react';
-import { Box, Grid, Button, TextField, Avatar } from '@mui/material';
-import { addFriendByWebId, deleteFriendByWebId, getFriendList } from '../../helpers/SolidHelper';
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
+import { Box, Grid, Button, TextField, Avatar } from '@mui/material';
+import { CombinedDataProvider, useSession, Image, Text } from '@inrupt/solid-ui-react';
+import { addFriendByWebId, deleteFriendByWebId, getFriendList } from '../../helpers/SolidHelper';
 
 export const FriendsView = () => {
   const { session } = useSession();
@@ -68,10 +68,14 @@ export const FriendsView = () => {
               <CombinedDataProvider datasetUrl={`${friendWebId}profile/card#me`} thingUrl={`${friendWebId}profile/card#me`}>
                 <Grid container direction="row" alignItems="center">
                   <Grid item>
-                    <Image property={VCARD.hasPhoto} style={{ width: 100, height: 100, borderRadius: "50%" }} errorComponent={() => <Avatar sx={{ width: 100, height: 100 }}></Avatar>} />
+                    <Image property={VCARD.hasPhoto} style={{ width: 100, height: 100, borderRadius: "50%" }} errorComponent={() =>
+                      <Avatar sx={{ width: 100, height: 100 }} />
+                    } />
                   </Grid>
                   <Grid item>
-                    <h1 style={{ marginLeft: "1em" }}><Text property={FOAF.name} errorComponent={() => <>{friendWebId.substring(8).split('.')[0]}</>}></Text></h1>
+                    <h1 style={{ marginLeft: "1em" }}><Text property={FOAF.name} errorComponent={() =>
+                      <>{friendWebId.substring(8).split('.')[0]}</>
+                    } /></h1>
                   </Grid>
                 </Grid>
               </CombinedDataProvider>
