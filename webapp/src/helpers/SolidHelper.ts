@@ -83,7 +83,7 @@ async function readMarkersFromFile(fileURL: string) {
     return markers;
 }
 
-async function getFriendList(webId: string) {
+export async function getFriendList(webId: string) {
     let solidDataset = await getSolidDataset(webId);
     let friends = getUrlAll((getThing(solidDataset, webId) as Thing), FOAF.knows);
 

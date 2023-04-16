@@ -40,7 +40,7 @@ function App(): JSX.Element {
 
   return (
     <>
-      <NavBar></NavBar>
+      <NavBar />
       <Routes>
         <Route path="/" element={
           <HomeView />

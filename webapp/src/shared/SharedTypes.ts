@@ -19,3 +19,9 @@ export interface IPMarker {
   comments: string[],
   description: string
 }
+
+export type FriendInfo = {
+  webId: string,
+  name: string | undefined,
+  photoURL: string | undefined
+}
