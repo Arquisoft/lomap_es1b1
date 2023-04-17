@@ -1,7 +1,7 @@
 [[section-architecture-constraints]]
-= Architecture Constraints
+== Architecture Constraints
 
-== 1. Technical constraints
+=== 1. Technical constraints
 
 [options="header",cols="2,3"]
 |===
@@ -18,7 +18,7 @@
 |We will employ Docker to deploy the application and have a virtual machine allocated in Azure for this purpose.
 |===
 
-== 2. Organisational constraints
+=== 2. Organisational constraints
 
 [options="header",cols="2,7"]
 |===
@@ -47,7 +47,7 @@
 |We must coordinate properly to avoid problems like those that happened in the previous team.
 |===
 
-== 3. Conventions
+=== 3. Conventions
 
 [options="header",cols="1,3"]
 |===
