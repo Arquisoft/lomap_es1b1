@@ -1,40 +1,29 @@
 [[section-quality-requirements]]
-== Quality Requirements
-=== Quality Tree
-[plantuml, "Quality tree", png]
-----
-left to right direction
-(Quality) as (Q)
-(Privacy) as (Pr)
-(Usability) as (U)
-(Security) as (S)
-(Reliability) as (R)
-(Testability) as (T)
-(Efficiency) as (E)
-(Maintainability) as (M)
-Q --> Pr
-Q --> U
-Q --> S
-Q --> R
-Q --> T
-Q --> E
-Q --> M
-----
-=== Quality Scenarios
+= Quality requirements
+
+== Quality tree
+
+:imagesdir: images/
+image:09_quality_tree.png["Quality tree"]
+
+== Quality Scenarios
+[options="header",cols="1,3,3,3,1"]
 |===
-|*Quality goal*|*Motivation*|*Usage scenarios*|*Priority*
+|Quality goal
+|Motivation
+|Usage scenarios
+|Change scenarios
+|Priority
 
-|*Privacy*|User's data must not be kept, storing just the minimum required, and retrieving the necessary from the user's POD.|User's data will be stored in it's own pod during the sign-up and usage, may it be private information relative to the user or personalized maps.|High
+|*Privacy*|The application shall store only the necessary information in a decentralised manner.|Only information relating to locations shall be stored. The information provided in the registration form and during the checkout process is not stored, but rather obtained from the POD.|We have implemented a fully integrated login system with pod providers to avoid taking unnecessary information.|_High_
 
-|*Usability*|The user won't be able to add locations to the map if he can't properly distinguish them in it, needing an intuitive interface clear enough to be used, be it a client or administrators.|Almost every user of every age will be able to complete any task without previous knowledge of the website without taking long time.|High
+|*Usability*|The user will not be able to create locations if the interface is not sufficiently clear and intuitive.|Anyone without prior knowledge of the application will be able to complete any task in a reasonable amount of time.|We have simplified the interface to avoid unintuitive processes and/or sections.|_High_
 
-|*Security*|The application needs to be secure enough, giving confidence enough to be used without any risk on the data being.|The app won't allow any third parties to access the data from the users.|High
+|*Security*|Users will not trust our application if we do not store their data in a secure place.|The data must not be accessible to any third party.|As the privacy requirement is closely associated with security, we have made numerous adjustments to the application to ensure maximum protection.|_High_
 
-|*Reliability*|There shouldn't be any error that breaks the application, them being handled by the application.|User won't have any clear notice of any error happening while using the application.|High
+|*Reliability*|Errors in the application must be handled by the application itself, without crashing under any circumstances.|The user shall have no knowledge of such errors, except for those that must necessarily be communicated to the user.|A considerable amount of effort will be dedicated to error prevention, as it is closely tied to maintainability. When implementing a feature, there is much more involved than simply making it functional.|_High_
 
-|*Testability*|The application will be tested with different methods and by different users to ensure the requirements.|The testing will help reduce to the minimum possibe every bug or bad design in the app for improving it.|High
+|*Maintainability*|Our application will undergo many changes, so we need to develop it in a way that makes it easy to maintain in the future.|We aim to make as few errors per line of code as possible.|Investing greater effort in implementing a new feature can lead to significant rewards when modifications are made later on.|_Medium_
 
-|*Efficiency*|The system should respond as smooth and efficient as possible, as the user won't use an application with bad performance.|The app must use the minimum resources possible without affecting the performance to ensure a fast and fluid use.|High
-
-|*Maintainability*|The app will go through many changes, so it is important that the code is easy to mantain and modify.|With a good quality code, we are able to perform the minimum changes required to be modified or repaired.|High
+|*Freedom*|We are developing the application on a greenfield basis. We intend to save unnecessary effort for those working on it in the future by including the code with plenty of documentation in a public repository.|The project must be available in its entirety in a public repository accessible by anyone at any time.|A repository that is accessible to the public and contains a record of every discussion, issue, or decision made.|_Medium_
 |===
