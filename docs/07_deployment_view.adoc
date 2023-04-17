@@ -1,18 +1,17 @@
 [[section-deployment-view]]
-= Deployment View
-
-== Infrastructure Level 1
+== Deployment View
+=== Infrastructure Level 1
 
 :imagesdir: images/
 image:07_level_1.png["Infrastructure Level 1"]
 
-=== Motivation:
+==== Motivation:
 During the development and testing phases, each student will run the runtime environment on their own machine. However, once the system is ready for production, it will be deployed on Azure in a Dockerised environment. It is important that we understand Docker as the infrastructure on which our system will be deployed.
 
-=== Quality and/or performance features:
+==== Quality and/or performance features:
 The performance of the deployment build relies on both the user's internet connection and the Azure servers used for the app's deployment, which are beyond our control. However, we can optimize the application's performance by using certain coding techniques. Our primary concerns in achieving the best and most secure user experience will be privacy and security.
 
-=== Mapping of building blocks to infrastructure:
+==== Mapping of building blocks to infrastructure:
 |===
 |*Element*|*Description*
 
