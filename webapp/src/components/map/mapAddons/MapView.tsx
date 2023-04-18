@@ -3,10 +3,9 @@ import { v4 as uuid } from 'uuid';
 import { Close } from '@mui/icons-material';
 import NewUbicationForm from './NewUbicationForm';
 import { useSession } from '@inrupt/solid-ui-react';
+import { useState, useContext, useRef } from 'react';
 import { IPMarker } from "../../../shared/SharedTypes";
 import DetailedUbicationView from './DetailedInfoWindow';
-import { saveMarkers } from '../../../helpers/SolidHelper';
-import { useState, useEffect, useContext, useRef } from 'react';
 import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
 import {
     Box,
@@ -25,12 +24,12 @@ import {
 const MapView = () => {
     const { session } = useSession();
     const nextID = useRef<string>(uuid());
+    const { dispatch } = useContext(MarkerContext);
     const [globalLat, setGlobalLat] = useState<number>(0);
     const [globalLng, setGlobalLng] = useState<number>(0);
     const [globalName, setGlobalName] = useState<string>("");
     const [globalMode, setGlobalMode] = useState<string>("E");
     const [isFormOpened, setFormOpened] = useState<boolean>(false);
-    const { state: markers, dispatch } = useContext(MarkerContext);
     const [globalAddress, setGlobalAddress] = useState<string>("");
     const [isFilterOpen, setFilterOpen] = useState<boolean>(false);
     const [globalFilterName, setGlobalFilterName] = useState<string>("");
@@ -51,13 +50,6 @@ const MapView = () => {
         dispatch({ type: Types.ADD_MARKER, payload: { marker: marker } });
         setAcceptedMarker(true);
     };
-
-    useEffect(() => {
-        if (session.info.isLoggedIn) {
-            saveMarkers(markers.filter((marker) => marker.webId === session.info.webId!), session.info.webId!);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [markers]);
 
     const handleCategories = (
         event: React.MouseEvent<HTMLElement>,

@@ -8,13 +8,13 @@ import { useContext, useEffect, useState } from 'react';
 import MapView from './components/map/mapAddons/MapView';
 import { FriendsView } from './components/friends/FriendsView';
 import UbicationsView from './components/map/mapAddons/UbicationsView';
-import { readFriendMarkers, readMarkers } from './helpers/SolidHelper';
 import { MarkerContext, Types } from './context/MarkerContextProvider';
+import { readFriendMarkers, readMarkers, saveMarkers } from './helpers/SolidHelper';
 
 function App(): JSX.Element {
   const { session } = useSession();
-  const { dispatch } = useContext(MarkerContext);
   const [scriptLoaded, setScriptLoaded] = useState(false);
+  const { state: markers, dispatch } = useContext(MarkerContext);
 
   session.onLogin(async () => {
     let markers = await readFriendMarkers(session.info.webId!);
@@ -30,6 +30,13 @@ function App(): JSX.Element {
   function setMarkers(markers: IPMarker[]) {
     dispatch({ type: Types.SET_MARKERS, payload: { markers: markers } });
   }
+
+  useEffect(() => {
+    if (session.info.isLoggedIn) {
+      saveMarkers(markers.filter((marker) => marker.webId === session.info.webId!), session.info.webId!);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [markers]);
 
   useEffect(() => {
     const googleMapScript = loadMapApi();
