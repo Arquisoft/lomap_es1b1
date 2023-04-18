@@ -1,8 +1,8 @@
 import express, { Request, Response, Router } from 'express';
-import {check} from 'express-validator';
-import {v4 as uuidv4} from 'uuid';
+import { check } from 'express-validator';
+import { v4 as uuidv4 } from 'uuid';
 
-const api:Router = express.Router()
+const api: Router = express.Router()
 
 const mongoose = require("mongoose");
 
@@ -20,15 +20,15 @@ const ubicacionSchema = new mongoose.Schema({
 const Ubicacion = mongoose.model("ubicaciones", ubicacionSchema);
 
 interface User {
-    id: string;
-    name: string;
-    email: string;
-    friends: Array<string>;
+  id: string;
+  name: string;
+  email: string;
+  friends: Array<string>;
 }
 
 api.get(
   "/ubicaciones/list",
-  async (req: Request, res: Response): Promise<Response> => { 
+  async (req: Request, res: Response): Promise<Response> => {
     const ubicaciones = await Ubicacion.find()
     return res.status(200).send(ubicaciones);
   }
@@ -37,79 +37,73 @@ api.get(
 api.post("/ubicaciones/add", [
   check('webid').isLength({ min: 1 }).trim().escape(),
 ],
-async (req: Request, res: Response): Promise<Response> => {
-  let id = req.body.id;
-  let date = req.body.date;
-  let lat = req.body.lat;
-  let lng = req.body.lng;
-  let name = req.body.name;
-  let address = req.body.address;
-  let category = req.body.category;
-  let descripcion = req.body.descripcion;
-  new Ubicacion({id, date, lat, lng, name, address, category, descripcion}).save();
-  return res.sendStatus(200);
-})
+  async (req: Request, res: Response): Promise<Response> => {
+    let id = req.body.id;
+    let date = req.body.date;
+    let lat = req.body.lat;
+    let lng = req.body.lng;
+    let name = req.body.name;
+    let address = req.body.address;
+    let category = req.body.category;
+    let descripcion = req.body.descripcion;
+    new Ubicacion({ id, date, lat, lng, name, address, category, descripcion }).save();
+    return res.sendStatus(200);
+  })
 
 //This is not a restapi as it mantains state but it is here for
 //simplicity. A database should be used instead.
 let users: Array<User> = [];
 
 api.get(
-    "/users/list",
-    async (req: Request, res: Response): Promise<Response> => {
-        // return res.status(200).send(users);
+  "/users/list",
+  async (req: Request, res: Response): Promise<Response> => {
+    // return res.status(200).send(users);
 
-        const userList = users.map((user, index) => {
-          return { id: user.id, name: user.name, email: user.email };
-        });
-        return res.status(200).send(userList);
-    }
+    const userList = users.map((user, index) => {
+      return { id: user.id, name: user.name, email: user.email };
+    });
+    return res.status(200).send(userList);
+  }
 );
-
 
 api.get(
   "/users/get/:userId",
   async (req: Request, res: Response): Promise<Response> => {
-      const userId = req.params.userId;
-      const user = users.find(user => user.id === userId);
-      if (!user) {
-          return res.status(404).send('User not found');
-      }
-      return res.status(200).send(user);
+    const userId = req.params.userId;
+    const user = users.find(user => user.id === userId);
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    return res.status(200).send(user);
   }
 );
 
-
-
 api.post(
-  "/users/add",[
-    check('name').isLength({ min: 1 }).trim().escape(),
-    check('email').isEmail().normalizeEmail(),
-  ],
+  "/users/add", [
+  check('name').isLength({ min: 1 }).trim().escape(),
+  check('email').isEmail().normalizeEmail(),
+],
   async (req: Request, res: Response): Promise<Response> => {
     let name = req.body.name;
     let email = req.body.email;
-    let user: User = {id: uuidv4(),name:name,email:email,friends:[]}
+    let user: User = { id: uuidv4(), name: name, email: email, friends: [] }
     users.push(user);
     return res.sendStatus(200);
   }
 );
 
-
-
 api.get(
   "/users/:userId/friends",
   async (req: Request, res: Response): Promise<Response> => {
-      const userId = req.params.userId;
-      const user = users.find(user => user.id === userId);
-      if (!user) {
-          return res.status(404).send('User not found');
-      }
-      const friends = user.friends;
-      return res.status(200).send(friends);
+    const userId = req.params.userId;
+    const user = users.find(user => user.id === userId);
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    const friends = user.friends;
+    return res.status(200).send(friends);
   }
 );
-
 
 api.post(
   "/users/:userId/add-friend",
@@ -139,9 +133,5 @@ api.post(
     return res.status(200).send(user);
   }
 );
-
-
-
-
 
 export default api;
