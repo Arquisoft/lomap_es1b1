@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const api: Router = express.Router()
 
-const mongoose = require("mongoose");
+/* const mongoose = require("mongoose");
 
 const ubicacionSchema = new mongoose.Schema({
   id: Number,
@@ -132,6 +132,6 @@ api.post(
 
     return res.status(200).send(user);
   }
-);
+); */
 
 export default api;

@@ -49,6 +49,7 @@ const MapView = () => {
 
     const addMarker = (marker: IPMarker) => {
         dispatch({ type: Types.ADD_MARKER, payload: { marker: marker } });
+        setAcceptedMarker(true);
     };
 
     useEffect(() => {
@@ -138,7 +139,6 @@ const MapView = () => {
             <Grid item xs={isDetailedIWOpen ? 3 : 0}>
                 <DetailedUbicationView
                     markerShown={markerShown}
-                    setMarkerShown={setMarkerShown}
                     isDetailedIWOpen={isDetailedIWOpen}
                     setDetailedIWOpen={setDetailedIWOpen}
                 />

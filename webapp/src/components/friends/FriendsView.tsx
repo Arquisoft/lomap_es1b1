@@ -28,8 +28,8 @@ export const FriendsView = () => {
   }
 
   const addFriend = async (webID: string) => {
-    await addFriendByWebId(session.info.webId!, webID)
-    setFriendList([...friendList, webID]);
+    await addFriendByWebId(session.info.webId!, webID);
+    setFriendList(prevFriendList => [...prevFriendList, webID]);
   }
 
   const deleteFriend = async (webID: string) => {
@@ -98,5 +98,4 @@ export const FriendsView = () => {
       </Grid>
     </>
   )
-
 }

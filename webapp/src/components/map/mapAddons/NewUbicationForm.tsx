@@ -18,9 +18,9 @@ interface INewUbicationFormProps {
   setGlobalLng: (globalLng: number) => void;
   setGlobalName: (globalName: string) => void;
   setFormOpened: (formOpened: boolean) => void;
-  setGlobalDescription: (globalName: string) => void;
   setGlobalCategory: (globalCategory: string) => void;
   setAcceptedMarker: (acceptedMarker: boolean) => void;
+  setGlobalDescription: (globalDescription: string) => void;
 }
 
 const NewUbicationForm: React.FC<INewUbicationFormProps> = (props) => {
@@ -34,8 +34,6 @@ const NewUbicationForm: React.FC<INewUbicationFormProps> = (props) => {
       lat: props.globalLat, lng: props.globalLng, category: props.globalCategory, isPublic: false,
       address: props.globalAddress, ratings: [], comments: [], webId: session.info.webId!
     });
-
-    props.setAcceptedMarker(true);
   }
 
   return (

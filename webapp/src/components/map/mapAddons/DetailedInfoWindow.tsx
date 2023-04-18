@@ -6,14 +6,11 @@ import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
 import { deletePublicMarker, savePublicMarker } from '../../../helpers/SolidHelper';
 import { Slide, Stack, TextField, Dialog, Rating, Button, IconButton, FormGroup, Switch, FormControlLabel } from '@mui/material';
 
-interface DetailedUbicationViewProps {
+const DetailedUbicationView: React.FC<{
   markerShown: IPMarker;
   isDetailedIWOpen: boolean;
-  setMarkerShown: (detailedMarker: IPMarker) => void;
   setDetailedIWOpen: (detailedMarkerOpened: boolean) => void;
-}
-
-const DetailedUbicationView: React.FC<DetailedUbicationViewProps> = (props) => {
+}> = ({ markerShown, isDetailedIWOpen, setDetailedIWOpen }) => {
   const { session } = useSession();
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState<string>("");
@@ -21,58 +18,67 @@ const DetailedUbicationView: React.FC<DetailedUbicationViewProps> = (props) => {
   const { state: markers, dispatch } = useContext(MarkerContext);
   const [isRatingOpen, setRatingOpen] = useState<boolean>(false);
 
+  const handlePublicChange = async (isPublic: boolean) => {
+    let marker = markers.find(marker => marker.id === markerShown?.id);
+    if (marker) {
+      marker.isPublic = isPublic;
+
+      if (isPublic) {
+        await savePublicMarker(marker, session.info.webId!);
+      } else {
+        await deletePublicMarker(marker, session.info.webId!);
+      }
+
+      dispatch({ type: Types.UPDATE_MARKER, payload: { id: marker.id, marker: marker } });
+      setPublic(isPublic);
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let marker = markers.find(marker => marker.id === props.markerShown.id)!;
-    marker.ratings.push(rating);
-    marker.comments.push(comment);
+    let marker = markers.find(marker => marker.id === markerShown.id);
 
-    dispatch({ type: Types.UPDATE_MARKER, payload: { id: marker.id, marker: marker } });
-    if (marker.webId !== session.info.webId!) {
-      await savePublicMarker(marker, marker.webId);
+    if (marker) {
+      marker.ratings.push(rating);
+      marker.comments.push(comment);
+
+      dispatch({ type: Types.UPDATE_MARKER, payload: { id: marker.id, marker: marker } });
+      if (marker.webId !== session.info.webId!) {
+        await savePublicMarker(marker, marker.webId);
+      }
     }
   }
 
   const getRatingMean = () => {
-    let sum = props.markerShown.ratings.map(n => parseInt(n.toString()))
+    let total = markerShown.ratings.length;
+    if (total === 0) {
+      return 0;
+    }
+
+    let sum = markerShown.ratings.map(n => parseInt(n.toString()))
       .reduce((previous, current) => current += previous, 0);
-    let total = props.markerShown.ratings.length;
     let result = sum / total;
 
     return result;
   }
 
   useEffect(() => {
-    setPublic(props.markerShown.isPublic);
-  }, [props.markerShown]);
-
-  const handlePublicChange = (isPublic: boolean) => {
-    let marker = markers.find(marker => marker.id === props.markerShown.id)!;
-    marker.isPublic = isPublic;
-
-    if (isPublic) {
-      savePublicMarker(marker, session.info.webId!);
-    } else {
-      deletePublicMarker(marker, session.info.webId!);
-    }
-
-    dispatch({ type: Types.UPDATE_MARKER, payload: { id: marker.id, marker: marker } });
-    setPublic(isPublic);
-  }
+    setPublic(markerShown.isPublic);
+  }, [markerShown]);
 
   return (
     <>
-      <Slide style={{ color: 'white' }} direction="right" in={props.isDetailedIWOpen} mountOnEnter unmountOnExit>
-        <Stack alignItems="right" sx={{ margin: 2, display: props.isDetailedIWOpen ? '' : 'none' }}>
+      <Slide style={{ color: 'white' }} direction="right" in={isDetailedIWOpen} mountOnEnter unmountOnExit>
+        <Stack alignItems="right" sx={{ margin: 2, display: isDetailedIWOpen ? '' : 'none' }}>
           <Stack direction='row'>
-            <h1 style={{ marginTop: '0em' }}>{props.markerShown.name}</h1>
-            <IconButton sx={{ marginLeft: 'auto', marginRight: '0em' }} onClick={async () => props.setDetailedIWOpen(false)}><Close /></IconButton>
+            <h1 style={{ marginTop: '0em' }}>{markerShown.name}</h1>
+            <IconButton sx={{ marginLeft: 'auto', marginRight: '0em' }} onClick={async () => setDetailedIWOpen(false)}><Close /></IconButton>
           </Stack>
-          <p style={{ marginTop: '0em' }}>Dirección: {props.markerShown.address}</p>
-          <p>Categoría: {props.markerShown.category}</p>
-          <p>Descripción: {props.markerShown.description}</p>
-          {props.markerShown.webId === session.info.webId
+          <p style={{ marginTop: '0em' }}>Dirección: {markerShown.address}</p>
+          <p>Categoría: {markerShown.category}</p>
+          <p>Descripción: {markerShown.description}</p>
+          {markerShown.webId === session.info.webId
             &&
             <FormGroup>
               <FormControlLabel control={
@@ -88,7 +94,7 @@ const DetailedUbicationView: React.FC<DetailedUbicationViewProps> = (props) => {
           <h2>Resumen de reseñas</h2>
           <Rating value={getRatingMean()} readOnly />
           <ul>
-            {props.markerShown.comments.map(comment =>
+            {markerShown.comments.map(comment =>
               <li key={comment}>{comment}</li>
             )}
           </ul>
