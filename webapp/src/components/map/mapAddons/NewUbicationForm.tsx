@@ -32,7 +32,7 @@ const NewUbicationForm: React.FC<INewUbicationFormProps> = (props) => {
     props.addMarker({
       id: props.nextID.current, date: new Date(), name: props.globalName, description: props.globalDescription,
       lat: props.globalLat, lng: props.globalLng, category: props.globalCategory, isPublic: false,
-      address: props.globalAddress, ratings: [], comments: [], webId: session.info.webId!
+      address: props.globalAddress, reviews: [], webId: session.info.webId!
     });
   }
 

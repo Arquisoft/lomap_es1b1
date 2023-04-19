@@ -43,7 +43,8 @@ const MapView = () => {
     ]);
     const [markerShown, setMarkerShown] = useState<IPMarker>({
         id: "", date: new Date(), lat: 0, lng: 0, name: "Sin nombre", address: "Sin dirección",
-        category: "Sin categoría", isPublic: false, description: "Sin descripción", ratings: [], comments: [], webId: ""
+        category: "Sin categoría", isPublic: false, description: "Sin descripción",
+        reviews: [], webId: ""
     });
 
     const addMarker = (marker: IPMarker) => {
