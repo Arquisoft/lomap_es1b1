@@ -1,8 +1,9 @@
 import Button from '@mui/material/Button';
-import React, { MutableRefObject } from 'react';
+import React, { MutableRefObject, useState } from 'react';
 import { useSession } from '@inrupt/solid-ui-react';
 import { IPMarker } from "../../../shared/SharedTypes";
-import { Slide, Stack, TextField, Select, MenuItem } from '@mui/material'
+import { Slide, Stack, TextField, Select, MenuItem, FormGroup, FormControlLabel, Switch } from '@mui/material'
+import { addUbicacion } from '../../../api/API';
 
 interface INewUbicationFormProps {
   globalLat: number;
@@ -24,16 +25,25 @@ interface INewUbicationFormProps {
 }
 
 const NewUbicationForm: React.FC<INewUbicationFormProps> = (props) => {
+  const [isSwitchChecked, setIsSwitchChecked] = useState(false);
   const { session } = useSession();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    props.addMarker({
+    let newMarker = {
       id: props.nextID.current, date: new Date(), name: props.globalName, description: props.globalDescription,
       lat: props.globalLat, lng: props.globalLng, category: props.globalCategory, isPublic: false,
       address: props.globalAddress, ratings: [], comments: [], webId: session.info.webId!
-    });
+    }
+
+    if (isSwitchChecked) {
+      addUbicacion(newMarker)
+    } else {
+      props.addMarker(newMarker);
+    }
+
+    
   }
 
   return (
@@ -93,6 +103,13 @@ const NewUbicationForm: React.FC<INewUbicationFormProps> = (props) => {
               <MenuItem value={'Restaurantes'}>Restaurantes</MenuItem>
               <MenuItem value={'Entretenimiento'}>Entretenimiento</MenuItem>
             </Select>
+            <FormGroup>
+              <FormControlLabel control={<Switch
+                checked={isSwitchChecked}
+                onChange={e => setIsSwitchChecked(e.target.checked)}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />} sx={{ color: 'white' }} label="Ubicación pública" />
+            </FormGroup>
             <Button variant="contained" type="submit" sx={{ my: 2 }}>Aceptar</Button>
             <Button variant="contained" onClick={() => props.setFormOpened(false)} sx={{ my: 2 }}>Cancelar</Button>
           </Stack>

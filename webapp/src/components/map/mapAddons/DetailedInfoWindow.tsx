@@ -44,7 +44,9 @@ const DetailedUbicationView: React.FC<{
       marker.comments.push(comment);
 
       dispatch({ type: Types.UPDATE_MARKER, payload: { id: marker.id, marker: marker } });
-      if (marker.webId !== session.info.webId!) {
+      if (!marker.id.includes('-')) {
+        //actualizar db
+      } else if (marker.webId !== session.info.webId!) {
         await savePublicMarker(marker, marker.webId);
       }
     }
@@ -78,7 +80,7 @@ const DetailedUbicationView: React.FC<{
           <p style={{ marginTop: '0em' }}>Dirección: {markerShown.address}</p>
           <p>Categoría: {markerShown.category}</p>
           <p>Descripción: {markerShown.description}</p>
-          {markerShown.webId === session.info.webId
+          {markerShown.webId === session.info.webId && markerShown.id.includes('-')
             &&
             <FormGroup>
               <FormControlLabel control={

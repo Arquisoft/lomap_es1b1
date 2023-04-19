@@ -12,13 +12,16 @@ export async function addUbicacion(ubicacion: IPMarker): Promise<boolean> {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      'id': ubicacion.id,
       'date': ubicacion.date,
       'lat': ubicacion.lat,
       'lng': ubicacion.lng,
       'name': ubicacion.name,
+      'webId': ubicacion.webId,
       'address': ubicacion.address,
       'category': ubicacion.category,
+      'isdPublic': ubicacion.isPublic,
+      'ratings': ubicacion.ratings,
+      'comments': ubicacion.comments,
       'descripcion': ubicacion.description,
     })
   });

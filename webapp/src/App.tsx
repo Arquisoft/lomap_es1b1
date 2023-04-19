@@ -10,6 +10,7 @@ import { FriendsView } from './components/friends/FriendsView';
 import UbicationsView from './components/map/mapAddons/UbicationsView';
 import { MarkerContext, Types } from './context/MarkerContextProvider';
 import { readFriendMarkers, readMarkers, saveMarkers } from './helpers/SolidHelper';
+import { getUbicaciones } from './api/API';
 
 function App(): JSX.Element {
   const { session } = useSession();
@@ -19,21 +20,32 @@ function App(): JSX.Element {
   session.onLogin(async () => {
     let markers = await readFriendMarkers(session.info.webId!);
     (await readMarkers(session.info.webId!)).forEach(m => markers.push(m));
-
+    parseFromDB(await getUbicaciones()).forEach(m => markers.push(m))
     setMarkers(markers);
   })
 
   session.onLogout(async () => {
-    setMarkers([])
+    setMarkers(parseFromDB(await getUbicaciones()))
   })
 
   function setMarkers(markers: IPMarker[]) {
     dispatch({ type: Types.SET_MARKERS, payload: { markers: markers } });
   }
 
+  const parseFromDB = (json: any[]): IPMarker[] => {
+    let ubications: IPMarker[] = []
+    json.forEach(e => {
+      let mark: IPMarker = e
+      mark.isPublic = false
+      mark.id = e._id
+      ubications.push(mark)
+    });
+    return ubications
+  }
+
   useEffect(() => {
     if (session.info.isLoggedIn) {
-      saveMarkers(markers.filter((marker) => marker.webId === session.info.webId!), session.info.webId!);
+      saveMarkers(markers.filter((marker) => marker.webId === session.info.webId! && marker.id.includes('-')), session.info.webId!);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [markers]);

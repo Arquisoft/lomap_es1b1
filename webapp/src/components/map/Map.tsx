@@ -257,7 +257,7 @@ const Map: React.FC<IMapProps> = (props) => {
                 loadFriendMarkers();
                 break;
             case 'E':
-                // <- Cargar marcadores
+                loadPublicMarkers();// <- Cargar marcadores
                 break;
             default:
         }
@@ -282,6 +282,10 @@ const Map: React.FC<IMapProps> = (props) => {
     const loadFriendMarkers = (): void => {
         loadMarkers(markers.filter(m => m.webId !== session.info.webId!));
     }
+    
+    const loadPublicMarkers = async () => {
+        loadMarkers(markers.filter(m => !m.id.includes('-')));
+    } 
 
     const loadMarkers = (markers: IPMarker[]): void => {
         markers.filter(m => props.globalFilterCategories.includes(m.category)
