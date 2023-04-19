@@ -1,11 +1,11 @@
 import { Close } from '@mui/icons-material';
-import { CombinedDataProvider, useSession, Image, Text } from '@inrupt/solid-ui-react';
+import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
 import { IPMarker } from "../../../shared/SharedTypes";
 import React, { useContext, useEffect, useState } from 'react';
 import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
 import { deletePublicMarker, savePublicMarker } from '../../../helpers/SolidHelper';
+import { CombinedDataProvider, useSession, Image, Text } from '@inrupt/solid-ui-react';
 import { Slide, Stack, TextField, Dialog, Rating, Button, IconButton, FormGroup, Switch, FormControlLabel, Grid, Avatar, Paper, Divider } from '@mui/material';
-import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
 
 const DetailedUbicationView: React.FC<{
   markerShown: IPMarker;
@@ -52,19 +52,19 @@ const DetailedUbicationView: React.FC<{
     }
   }
 
-  /* const getRatingMean = () => {
-    let total = markerShown.reviewScore.length;
+  const getRatingMean = () => {
+    let total = markerShown.reviews.length;
     if (total === 0) {
       return 0;
     }
 
-    let sum = markerShown.reviewScore
+    let sum = markerShown.reviews
       .map(r => r.score)
       .reduce((previous, current) => current += previous, 0);
     let result = sum / total;
 
     return result;
-  } */
+  }
 
   function timeSince(date: Date) {
 
@@ -122,6 +122,19 @@ const DetailedUbicationView: React.FC<{
                 sx={{ color: 'white', my: 2 }} label="Compartir ubicación" />
             </FormGroup>
           }
+          <h2>Resumen de reseñas</h2>
+          <Rating value={getRatingMean()} readOnly />
+          <ul style={{ overflow: "auto" }}>
+            {markerShown.reviews.sort(() => 0.5 - Math.random()).slice(0, 3).map((review =>
+              <>
+                <CombinedDataProvider datasetUrl={review.author} thingUrl={review.author}>
+                  <li key={review.comment} style={{ wordBreak: "break-all" }}><Text property={FOAF.name} errorComponent={() =>
+                    <>{review.author.substring(8).split('.')[0]}</>
+                  } />: {review.comment}</li>
+                </CombinedDataProvider>
+              </>
+            ))}
+          </ul>
           <Button variant="contained" sx={{ my: 2 }} onClick={() => setRatingOpen(true)}>Escribir una reseña</Button>
           <Dialog onClose={() => setRatingOpen(false)} open={isRatingOpen}>
             <form name="newRating" onSubmit={handleSubmit}>
