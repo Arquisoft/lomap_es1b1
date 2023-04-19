@@ -1,0 +1,12 @@
+{
+    "HomeView": {
+        "welcome": "Welcome"
+    },
+    "NavBar": {
+        "map": "Map",
+        "login": "Log in",
+        "logout": "Log out",
+        "myFriends": "My friends",
+        "myLocations": "My locations"
+    }
+}

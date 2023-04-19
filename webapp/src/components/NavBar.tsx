@@ -1,13 +1,21 @@
-import { useState } from 'react';
 import { Link } from "react-router-dom";
 import LoginForm from './login/LoginForm';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import i18n from '../internationalization/i18n';
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
-import { Stack, Button, Avatar } from '@mui/material';
+import { Stack, Button, Avatar, FormControl, Select, MenuItem } from '@mui/material';
 import { useSession, LogoutButton, CombinedDataProvider, Image, Text } from '@inrupt/solid-ui-react';
 
 export const NavBar = () => {
+  const { t } = useTranslation();
   const { session } = useSession();
   const [isOpen, setOpen] = useState(false);
+  const [locale, setLocale] = useState<string>(i18n.language);
+
+  useEffect(() => {
+    i18n.changeLanguage(locale);
+  }, [locale])
 
   return (
     <nav>
@@ -18,12 +26,23 @@ export const NavBar = () => {
         justifyContent='left'
       >
         <Link to="/"><img src="/logo-no-background.png" className="App-logo" alt="logo" height="60" /></Link>
-        <Link to="/map" style={{ color: 'white', textDecoration: 'none' }}>Mapa</Link>
+        <Link to="/map" style={{ color: 'white', textDecoration: 'none' }}>{t("NavBar.map")}</Link>
         {session.info.isLoggedIn ?
           <>
-            <Link to="/ubications" style={{ color: 'white', textDecoration: 'none' }}>Mis ubicaciones</Link>
-            <Link to="/friends" style={{ color: 'white', textDecoration: 'none' }}>Mis amigos</Link>
+            <Link to="/ubications" style={{ color: 'white', textDecoration: 'none' }}>{t("NavBar.myLocations")}</Link>
+            <Link to="/friends" style={{ color: 'white', textDecoration: 'none' }}>{t("NavBar.myFriends")}</Link>
             <Stack direction={{ xs: 'column', sm: 'row' }} alignItems='center' sx={{ flexGrow: '2' }} justifyContent='flex-end' spacing={{ xs: 1, sm: 2, md: 4 }}>
+              <FormControl>
+                <Select
+                  value={locale}
+                  onChange={(e) => setLocale(e.target.value)}
+                  sx={{ background: "white", height: "2.5em" }}
+                >
+                  <MenuItem value={"en"}>English</MenuItem>
+                  <MenuItem value={"es"}>Español</MenuItem>
+                </Select>
+              </FormControl>
+
               <CombinedDataProvider
                 datasetUrl={session.info.webId!}
                 thingUrl={session.info.webId!}>
@@ -34,14 +53,24 @@ export const NavBar = () => {
               </CombinedDataProvider>
               <LogoutButton>
                 <Button variant="contained" sx={{ margin: "1em", marginLeft: "0em" }}>
-                  Cerrar sesión
+                  {t("NavBar.logout")}
                 </Button>
               </LogoutButton>
             </Stack>
           </>
           : <Stack direction={{ xs: 'column', sm: 'row' }} alignItems='center' sx={{ flexGrow: '2' }} justifyContent='flex-end' spacing={{ xs: 1, sm: 2, md: 4 }}>
-            <Button variant="contained" onClick={() => setOpen(true)} sx={{ margin: "1em" }}>
-              Iniciar sesión
+            <FormControl>
+              <Select
+                value={locale}
+                onChange={(e) => setLocale(e.target.value)}
+                sx={{ background: "white", height: "2.5em" }}
+              >
+                <MenuItem value={"en"}>English</MenuItem>
+                <MenuItem value={"es"}>Español</MenuItem>
+              </Select>
+            </FormControl>
+            <Button variant="contained" onClick={() => setOpen(true)} sx={{ margin: "1em !important", marginLeft: "0em" }}>
+              {t("NavBar.login")}
             </Button>
             <LoginForm
               isOpen={isOpen}
