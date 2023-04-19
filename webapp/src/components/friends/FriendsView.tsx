@@ -17,7 +17,9 @@ export const FriendsView = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await addFriend(newFriendWebID);
+    if (newFriendWebID.endsWith("/")) {
+      await addFriend(newFriendWebID);
+    }
     setNewFriendWebID("");
   }
 
@@ -44,6 +46,7 @@ export const FriendsView = () => {
           <Grid item>
             <TextField
               required
+              type="url"
               label="WebID"
               variant="filled"
               value={newFriendWebID}
