@@ -1,12 +1,87 @@
 {
-    "HomeView": {
-        "welcome": "Welcome"
-    },
     "NavBar": {
         "map": "Map",
         "login": "Log in",
         "logout": "Log out",
         "myFriends": "My friends",
         "myLocations": "My locations"
+    },
+    "HomeView": {
+        "welcome": "Welcome"
+    },
+    "Map": {
+        "noName": "No name",
+        "noDescription": "No description"
+    },
+    "NewLocationForm": {
+        "name": "Name",
+        "parks": "Parks",
+        "shops": "Shops",
+        "accept": "Accept",
+        "cancel": "Cancel",
+        "museums": "Museums",
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "buildings": "Buildings",
+        "pharmacies": "Pharmacies",
+        "description": "Description",
+        "restaurants": "Restaurants",
+        "entertainment": "Entertainment",
+        "transportation": "Transportation"
+    },
+    "MapView": {
+        "name": "Name",
+        "parks": "Parks",
+        "shops": "Shops",
+        "explore": "Explore",
+        "museums": "Museums",
+        "filters": "Filters",
+        "buildings": "Buildings",
+        "categories": "Categories",
+        "pharmacies": "Pharmacies",
+        "restaurants": "Restaurants",
+        "newLocation": "New location",
+        "myLocations": "My locations",
+        "entertainment": "Entertainment",
+        "transportation": "Transportation",
+        "filterLocations": "Filter locations",
+        "friendsLocations": "Friends' locations"
+    },
+    "LocationsView": {
+        "delete": "Delete",
+        "address": "Address: ",
+        "category": "Category: ",
+        "description": "Description: ",
+        "noLocations": "You haven't created any locations yet"
+    },
+    "DetailedInfoWindow": {
+        "send": "Send",
+        "posted": "posted ",
+        "comment": "Comment",
+        "address": "Address: ",
+        "imageURL": "Image URL",
+        "category": "Category: ",
+        "daysAgo": " day(s) ago",
+        "hoursAgo": " hour(s) ago",
+        "yearsAgo": " year(s) ago",
+        "seeReviews": "See reviews",
+        "monthsAgo": " month(s) ago",
+        "secondsAgo": " second(s) ago",
+        "minutesAgo": " minute(s) ago",
+        "description": "Description: ",
+        "writeReview": "Write a review",
+        "shareLocation": "Share location",
+        "reviewsSummary": "Reviews summary",
+        "rateLocation": "Rate this location"
+    },
+    "LoginForm": {
+        "login": "Log in",
+        "otherProvider": "Other provider",
+        "selectProvider": "Please select a provider."
+    },
+    "FriendsView": {
+        "delete": "Delete",
+        "addFriend": "Add friend",
+        "noFriends": "You haven't added any friends yet"
     }
 }

@@ -7,15 +7,19 @@ import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
 import { Stack, Button, Avatar, FormControl, Select, MenuItem } from '@mui/material';
 import { useSession, LogoutButton, CombinedDataProvider, Image, Text } from '@inrupt/solid-ui-react';
 
-export const NavBar = () => {
+interface INavBarProps {
+  locale: string;
+  setLocale: (locale: string) => void;
+}
+
+export const NavBar: React.FC<INavBarProps> = (props) => {
   const { t } = useTranslation();
   const { session } = useSession();
   const [isOpen, setOpen] = useState(false);
-  const [locale, setLocale] = useState<string>(i18n.language);
 
   useEffect(() => {
-    i18n.changeLanguage(locale);
-  }, [locale])
+    i18n.changeLanguage(props.locale);
+  }, [props.locale]);
 
   return (
     <nav>
@@ -34,15 +38,14 @@ export const NavBar = () => {
             <Stack direction={{ xs: 'column', sm: 'row' }} alignItems='center' sx={{ flexGrow: '2' }} justifyContent='flex-end' spacing={{ xs: 1, sm: 2, md: 4 }}>
               <FormControl>
                 <Select
-                  value={locale}
-                  onChange={(e) => setLocale(e.target.value)}
+                  value={props.locale}
+                  onChange={(e) => props.setLocale(e.target.value)}
                   sx={{ background: "white", height: "2.5em" }}
                 >
                   <MenuItem value={"en"}>English</MenuItem>
                   <MenuItem value={"es"}>Español</MenuItem>
                 </Select>
               </FormControl>
-
               <CombinedDataProvider
                 datasetUrl={session.info.webId!}
                 thingUrl={session.info.webId!}>
@@ -61,8 +64,8 @@ export const NavBar = () => {
           : <Stack direction={{ xs: 'column', sm: 'row' }} alignItems='center' sx={{ flexGrow: '2' }} justifyContent='flex-end' spacing={{ xs: 1, sm: 2, md: 4 }}>
             <FormControl>
               <Select
-                value={locale}
-                onChange={(e) => setLocale(e.target.value)}
+                value={props.locale}
+                onChange={(e) => props.setLocale(e.target.value)}
                 sx={{ background: "white", height: "2.5em" }}
               >
                 <MenuItem value={"en"}>English</MenuItem>

@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
 import { Box, Grid, Button, TextField, Avatar } from '@mui/material';
 import { CombinedDataProvider, useSession, Image, Text } from '@inrupt/solid-ui-react';
 import { addFriendByWebId, deleteFriendByWebId, getFriendList } from '../../helpers/SolidHelper';
 
 export const FriendsView = () => {
+  const { t } = useTranslation();
   const { session } = useSession();
   const [friendList, setFriendList] = useState<string[]>([]);
   const [newFriendWebID, setNewFriendWebID] = useState<string>("");
@@ -60,45 +62,49 @@ export const FriendsView = () => {
               ":hover": {
                 bgcolor: "green"
               }
-            }}>Añadir amigo</Button>
+            }}>{t("FriendsView.addFriend")}</Button>
           </Grid>
         </Grid>
       </form>
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ padding: '0em 2em 0em' }}>
-        {friendList.map((friendWebId) =>
-          <Grid item key={friendWebId}>
-            <Box sx={{ padding: '2em', bgcolor: 'white', border: 'solid', borderRadius: '2em' }}>
-              <CombinedDataProvider datasetUrl={`${friendWebId}profile/card#me`} thingUrl={`${friendWebId}profile/card#me`}>
-                <Grid container direction="row" alignItems="center">
-                  <Grid item>
-                    <Image property={VCARD.hasPhoto} style={{ width: 100, height: 100, borderRadius: "50%" }} errorComponent={() =>
-                      <Avatar sx={{ width: 100, height: 100 }} />
-                    } />
+      {friendList.length > 0 ? (
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ padding: '0em 2em 0em' }}>
+          {friendList.map((friendWebId) =>
+            <Grid item key={friendWebId}>
+              <Box sx={{ padding: '2em', bgcolor: 'white', border: 'solid', borderRadius: '2em' }}>
+                <CombinedDataProvider datasetUrl={`${friendWebId}profile/card#me`} thingUrl={`${friendWebId}profile/card#me`}>
+                  <Grid container direction="row" alignItems="center">
+                    <Grid item>
+                      <Image property={VCARD.hasPhoto} style={{ width: 100, height: 100, borderRadius: "50%" }} errorComponent={() =>
+                        <Avatar sx={{ width: 100, height: 100 }} />
+                      } />
+                    </Grid>
+                    <Grid item>
+                      <h1 style={{ marginLeft: "1em" }}><Text property={FOAF.name} errorComponent={() =>
+                        <>{friendWebId.substring(8).split('.')[0]}</>
+                      } /></h1>
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <h1 style={{ marginLeft: "1em" }}><Text property={FOAF.name} errorComponent={() =>
-                      <>{friendWebId.substring(8).split('.')[0]}</>
-                    } /></h1>
-                  </Grid>
-                </Grid>
-              </CombinedDataProvider>
-              <Box
-                display="flex"
-                marginTop="2em"
-                alignItems="flex-end"
-                justifyContent="flex-end"
-              >
-                <Button variant="contained" sx={{
-                  bgcolor: 'red',
-                  ":hover": {
-                    bgcolor: "red"
-                  }
-                }} onClick={() => deleteFriend(friendWebId)}>Eliminar</Button>
+                </CombinedDataProvider>
+                <Box
+                  display="flex"
+                  marginTop="2em"
+                  alignItems="flex-end"
+                  justifyContent="flex-end"
+                >
+                  <Button variant="contained" sx={{
+                    bgcolor: 'red',
+                    ":hover": {
+                      bgcolor: "red"
+                    }
+                  }} onClick={() => deleteFriend(friendWebId)}>{t("FriendsView.delete")}</Button>
+                </Box>
               </Box>
-            </Box>
-          </Grid>
-        )}
-      </Grid>
+            </Grid>
+          )}
+        </Grid>
+      ) : (
+        <h1 style={{ color: 'white', textAlign: 'center' }}>{t("FriendsView.noFriends")}</h1>
+      )}
     </>
   )
 }

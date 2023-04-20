@@ -1,10 +1,12 @@
 import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Grid, Box, Button } from '@mui/material';
 import { useSession } from '@inrupt/solid-ui-react';
 import { IPMarker } from "../../../shared/SharedTypes";
 import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
 
 const UbicationsView = () => {
+    const { t } = useTranslation();
     const { session } = useSession();
     const { state: markers, dispatch } = useContext(MarkerContext);
 
@@ -18,16 +20,16 @@ const UbicationsView = () => {
                         <Grid item xs={6} sm={4} md={3} key={ubication.id}>
                             <Box sx={{ padding: '1em', bgcolor: 'white', border: 'solid', borderRadius: '2em' }}>
                                 <h1 style={{ marginTop: '0em' }}>{ubication.name}</h1>
-                                <p style={{ marginTop: '0em' }}>Dirección: {ubication.address}</p>
-                                <p>Categoría: {ubication.category}</p>
-                                <p>Descripción: {ubication.description}</p>
-                                <Button onClick={() => dispatch({ type: Types.DELETE_MARKER, payload: { id: ubication.id } })}>Borrar</Button>
+                                <p style={{ marginTop: '0em' }}>{t("LocationsView.address")}{ubication.address}</p>
+                                <p>{t("LocationsView.category")}{ubication.category}</p>
+                                <p>{t("LocationsView.description")}{ubication.description}</p>
+                                <Button onClick={() => dispatch({ type: Types.DELETE_MARKER, payload: { id: ubication.id } })}>{t("LocationsView.delete")}</Button>
                             </Box>
                         </Grid>
                     ))}
                 </Grid>
             ) : (
-                <h1 style={{ color: 'white', textAlign: 'center' }}>Aún no has creado ninguna ubicación</h1>
+                <h1 style={{ color: 'white', textAlign: 'center' }}>{t("LocationsView.noLocations")}</h1>
             )}
         </>
     );

@@ -1,4 +1,5 @@
 import { Close } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
 import { IPMarker } from "../../../shared/SharedTypes";
 import React, { useContext, useEffect, useState } from 'react';
@@ -12,6 +13,7 @@ const DetailedUbicationView: React.FC<{
   isDetailedIWOpen: boolean;
   setDetailedIWOpen: (detailedMarkerOpened: boolean) => void;
 }> = ({ markerShown, isDetailedIWOpen, setDetailedIWOpen }) => {
+  const { t } = useTranslation();
   const { session } = useSession();
   const [comment, setComment] = useState<string>("");
   const [isPublic, setPublic] = useState<boolean>(false);
@@ -73,25 +75,25 @@ const DetailedUbicationView: React.FC<{
     var interval = seconds / 31536000;
 
     if (interval > 1) {
-      return Math.floor(interval) + " years";
+      return Math.floor(interval) + t("DetailedInfoWindow.yearsAgo");
     }
     interval = seconds / 2592000;
     if (interval > 1) {
-      return Math.floor(interval) + " months";
+      return Math.floor(interval) + t("DetailedInfoWindow.monthsAgo");
     }
     interval = seconds / 86400;
     if (interval > 1) {
-      return Math.floor(interval) + " days";
+      return Math.floor(interval) + t("DetailedInfoWindow.daysAgo");
     }
     interval = seconds / 3600;
     if (interval > 1) {
-      return Math.floor(interval) + " hours";
+      return Math.floor(interval) + t("DetailedInfoWindow.hoursAgo");
     }
     interval = seconds / 60;
     if (interval > 1) {
-      return Math.floor(interval) + " minutes";
+      return Math.floor(interval) + t("DetailedInfoWindow.minutesAgo");
     }
-    return Math.floor(seconds) + " seconds";
+    return Math.floor(seconds) + t("DetailedInfoWindow.secondsAgo");
   }
 
   useEffect(() => {
@@ -106,9 +108,9 @@ const DetailedUbicationView: React.FC<{
             <h1 style={{ marginTop: '0em' }}>{markerShown.name}</h1>
             <IconButton sx={{ marginLeft: 'auto', marginRight: '0em' }} onClick={async () => setDetailedIWOpen(false)}><Close /></IconButton>
           </Stack>
-          <p style={{ marginTop: '0em' }}>Dirección: {markerShown.address}</p>
-          <p>Categoría: {markerShown.category}</p>
-          <p>Descripción: {markerShown.description}</p>
+          <p style={{ marginTop: '0em' }}>{t("DetailedInfoWindow.address")}{markerShown.address}</p>
+          <p>{t("DetailedInfoWindow.category")}{markerShown.category}</p>
+          <p>{t("DetailedInfoWindow.description")}{markerShown.description}</p>
           {markerShown.webId === session.info.webId
             &&
             <FormGroup>
@@ -119,10 +121,10 @@ const DetailedUbicationView: React.FC<{
                   onChange={e => handlePublicChange(e.target.checked)}
                 />
               }
-                sx={{ color: 'white', my: 2 }} label="Compartir ubicación" />
+                sx={{ color: 'white', my: 2 }} label={t("DetailedInfoWindow.shareLocation")} />
             </FormGroup>
           }
-          <h2>Resumen de reseñas</h2>
+          <h2>{t("DetailedInfoWindow.reviewsSummary")}</h2>
           <Rating value={getRatingMean()} readOnly />
           <ul style={{ overflow: "auto" }}>
             {markerShown.reviews.sort(() => 0.5 - Math.random()).slice(0, 3).map((review =>
@@ -135,12 +137,12 @@ const DetailedUbicationView: React.FC<{
               </>
             ))}
           </ul>
-          <Button variant="contained" sx={{ my: 2 }} onClick={() => setRatingOpen(true)}>Escribir una reseña</Button>
+          <Button variant="contained" sx={{ my: 2 }} onClick={() => setRatingOpen(true)}>{t("DetailedInfoWindow.writeReview")}</Button>
           <Dialog onClose={() => setRatingOpen(false)} open={isRatingOpen}>
             <form name="newRating" onSubmit={handleSubmit}>
               <Stack direction='column' sx={{ width: '30em', padding: '1em' }}>
                 <Stack direction='row'>
-                  <h1 style={{ margin: '0' }}>Valora esta ubicación</h1>
+                  <h1 style={{ margin: '0' }}>{t("DetailedInfoWindow.rateLocation")}</h1>
                   <IconButton sx={{ marginLeft: 'auto', marginRight: '0em' }} onClick={async () => setRatingOpen(false)}><Close /></IconButton>
                 </Stack>
                 <Rating
@@ -153,7 +155,7 @@ const DetailedUbicationView: React.FC<{
                   type='url'
                   value={pictureURL}
                   name="imageURL"
-                  label="URL de imagen"
+                  label={t("DetailedInfoWindow.imageURL")}
                   onChange={(e) => setPictureURL(e.target.value as string)}
                   sx={{ margin: '0.5em 0em 0.5em' }}
                 />
@@ -162,15 +164,15 @@ const DetailedUbicationView: React.FC<{
                   multiline
                   value={comment}
                   name="comment"
-                  label="Comentario"
+                  label={t("DetailedInfoWindow.comment")}
                   onChange={(e) => setComment(e.target.value as string)}
                   sx={{ margin: '0.5em 0em 0.5em' }}
                 />
-                <Button variant="contained" type="submit" sx={{ marginTop: '0.5em' }}>Enviar</Button>
+                <Button variant="contained" type="submit" sx={{ marginTop: '0.5em' }}>{t("DetailedInfoWindow.send")}</Button>
               </Stack>
             </form>
           </Dialog>
-          <Button variant="contained" sx={{ my: 2 }} onClick={() => setCommentsOpen(true)}>Ver reseñas</Button>
+          <Button variant="contained" sx={{ my: 2 }} onClick={() => setCommentsOpen(true)}>{t("DetailedInfoWindow.seeReviews")}</Button>
           <Dialog onClose={() => setCommentsOpen(false)} open={isCommentsOpen}>
             <Paper style={{ padding: "40px 20px", maxHeight: 700, overflow: 'auto' }}>
               {markerShown.reviews.map((review, index) =>
@@ -191,7 +193,7 @@ const DetailedUbicationView: React.FC<{
                           {review.comment}
                         </p>}
                         <p style={{ textAlign: "left", color: "gray" }}>
-                          posted {timeSince(review.date)} ago
+                          {t("DetailedInfoWindow.posted")}{timeSince(review.date)}
                         </p>
                       </Grid>
                     </Grid>
