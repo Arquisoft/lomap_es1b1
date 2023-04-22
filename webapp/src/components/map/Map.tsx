@@ -181,7 +181,7 @@ const Map: React.FC<IMapProps> = (props) => {
     const generateInfoWindowContent = (name: string, category: string, description: string, address: string): string => {
         let result = ""
 
-        result += `<h1>${name} (${category})</h1>`
+        result += `<h1>${name} (${t(`Map.${category.toLowerCase()}`)})</h1>`
         result += `<h2>${address}</h2>`
         result += `<p>${description}</p>`
 
@@ -257,6 +257,7 @@ const Map: React.FC<IMapProps> = (props) => {
     }, [props.acceptedMarker]);
 
     useEffect(() => {
+        props.setDetailedIWOpen(false);
         deleteAllMarkers();
 
         switch (props.globalMode) {
@@ -273,7 +274,7 @@ const Map: React.FC<IMapProps> = (props) => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.globalMode, props.globalFilterName, props.globalFilterCategories]);
+    }, [props.globalMode, props.globalFilterName, props.globalFilterCategories, props.locale]);
 
     const deleteAllMarkers = (): void => {
         googleMarkers.forEach((googleMarker) => {

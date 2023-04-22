@@ -69,27 +69,29 @@ const DetailedUbicationView: React.FC<{
   }
 
   function timeSince(date: Date) {
-
     var seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000);
-
     var interval = seconds / 31536000;
 
     if (interval > 1) {
       return Math.floor(interval) + t("DetailedInfoWindow.yearsAgo");
     }
     interval = seconds / 2592000;
+
     if (interval > 1) {
       return Math.floor(interval) + t("DetailedInfoWindow.monthsAgo");
     }
     interval = seconds / 86400;
+
     if (interval > 1) {
       return Math.floor(interval) + t("DetailedInfoWindow.daysAgo");
     }
     interval = seconds / 3600;
+
     if (interval > 1) {
       return Math.floor(interval) + t("DetailedInfoWindow.hoursAgo");
     }
     interval = seconds / 60;
+
     if (interval > 1) {
       return Math.floor(interval) + t("DetailedInfoWindow.minutesAgo");
     }
@@ -109,7 +111,7 @@ const DetailedUbicationView: React.FC<{
             <IconButton sx={{ marginLeft: 'auto', marginRight: '0em' }} onClick={async () => setDetailedIWOpen(false)}><Close /></IconButton>
           </Stack>
           <p style={{ marginTop: '0em' }}>{t("DetailedInfoWindow.address")}{markerShown.address}</p>
-          <p>{t("DetailedInfoWindow.category")}{markerShown.category}</p>
+          <p>{t("DetailedInfoWindow.category")}{t(`Map.${markerShown.category.toLowerCase()}`)}</p>
           <p>{t("DetailedInfoWindow.description")}{markerShown.description}</p>
           {markerShown.webId === session.info.webId
             &&

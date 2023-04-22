@@ -77,14 +77,14 @@ const NewUbicationForm: React.FC<INewLocationFormProps> = (props) => {
               onChange={(e) => props.setGlobalCategory(e.target.value as string)}
               sx={{ my: 2, bgcolor: 'white' }}
             >
-              <MenuItem value={'Parques'}>{t("NewLocationForm.parks")}</MenuItem>
-              <MenuItem value={'Tiendas'}>{t("NewLocationForm.shops")}</MenuItem>
-              <MenuItem value={'Museos'}>{t("NewLocationForm.museums")}</MenuItem>
-              <MenuItem value={'Edificios'}>{t("NewLocationForm.buildings")}</MenuItem>
-              <MenuItem value={'Farmacias'}>{t("NewLocationForm.pharmacies")}</MenuItem>
-              <MenuItem value={'Restaurantes'}>{t("NewLocationForm.restaurants")}</MenuItem>
-              <MenuItem value={'Transporte'}>{t("NewLocationForm.transportation")}</MenuItem>
-              <MenuItem value={'Entretenimiento'}>{t("NewLocationForm.entertainment")}</MenuItem>
+              <MenuItem value={'P'}>{t("NewLocationForm.parks")}</MenuItem>
+              <MenuItem value={'Ti'}>{t("NewLocationForm.shops")}</MenuItem>
+              <MenuItem value={'M'}>{t("NewLocationForm.museums")}</MenuItem>
+              <MenuItem value={'Ed'}>{t("NewLocationForm.buildings")}</MenuItem>
+              <MenuItem value={'F'}>{t("NewLocationForm.pharmacies")}</MenuItem>
+              <MenuItem value={'R'}>{t("NewLocationForm.restaurants")}</MenuItem>
+              <MenuItem value={'Tr'}>{t("NewLocationForm.transportation")}</MenuItem>
+              <MenuItem value={'En'}>{t("NewLocationForm.entertainment")}</MenuItem>
             </Select>
             <Button variant="contained" type="submit" sx={{ my: 2 }}>{t("NewLocationForm.accept")}</Button>
             <Button variant="contained" onClick={() => props.setFormOpened(false)} sx={{ my: 2 }}>{t("NewLocationForm.cancel")}</Button>

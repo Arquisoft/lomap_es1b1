@@ -10,7 +10,15 @@
         "welcome": "Welcome"
     },
     "Map": {
+        "p": "Parks",
+        "ti": "Shops",
+        "m": "Museums",
+        "ed": "Buildings",
+        "f": "Pharmacies",
+        "r": "Restaurants",
         "noName": "No name",
+        "en": "Entertainment",
+        "tr": "Transportation",
         "noDescription": "No description"
     },
     "NewLocationForm": {
