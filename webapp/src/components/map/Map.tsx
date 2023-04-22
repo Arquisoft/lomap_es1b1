@@ -30,6 +30,7 @@ interface IMapProps {
     globalLng: number;
     globalName: string;
     globalMode: string;
+    formOpened: boolean;
     globalAddress: string;
     globalCategory: string;
     acceptedMarker: boolean;
@@ -62,10 +63,6 @@ const Map: React.FC<IMapProps> = (props) => {
         if (!map) {
             defaultMapStart();
         } else {
-            if (session.info.isLoggedIn) {
-                addInitMarker();
-                initEventListener();
-            }
             addHomeMarker(map.getCenter());
         }
     };
@@ -88,6 +85,16 @@ const Map: React.FC<IMapProps> = (props) => {
         }
     };
 
+    useEffect(() => {
+        if (props.formOpened) {
+            addInitMarker();
+            initEventListener();
+        } else {
+            disableMap();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.formOpened]);
+
     const initEventListener = (): void => {
         listenerRef.current = google.maps.event.addListener(map!, 'click', async function (e) {
             props.setGlobalLat(e.latLng.lat());
@@ -103,10 +110,10 @@ const Map: React.FC<IMapProps> = (props) => {
         })
     };
 
-    session.onLogout(() => {
+    const disableMap = (): void => {
         lastAddedCouple?.marker.setMap(null);
         google.maps.event.removeListener(listenerRef.current!);
-    });
+    }
 
     useEffect(() => {
         if (marker) {

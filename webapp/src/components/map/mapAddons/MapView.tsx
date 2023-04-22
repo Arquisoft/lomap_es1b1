@@ -164,6 +164,7 @@ const MapView: React.FC<IMapViewProps> = (props) => {
                     globalLng={globalLng}
                     globalMode={globalMode}
                     globalName={globalName}
+                    formOpened={isFormOpened}
                     setGlobalLat={setGlobalLat}
                     setGlobalLng={setGlobalLng}
                     globalAddress={globalAddress}
