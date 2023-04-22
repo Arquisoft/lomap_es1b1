@@ -53,8 +53,21 @@ const MapView: React.FC<IMapViewProps> = (props) => {
         reviews: [], webId: ""
     });
 
-    const addMarker = (marker: IPMarker) => {
+    const addMarker = () => {
+        let marker = {
+            id: nextID.current, date: new Date(), lat: globalLat, lng: globalLng, name: globalName,
+            webId: session.info.webId!, address: globalAddress, category: globalCategory, isPublic: false,
+            description: globalDescription, reviews: []
+        }
+
         dispatch({ type: Types.ADD_MARKER, payload: { marker: marker } });
+
+        setGlobalLat(0);
+        setGlobalLng(0);
+        setGlobalName("");
+        setGlobalDescription("");
+        setGlobalCategory("Parques");
+
         setAcceptedMarker(true);
     };
 
@@ -168,7 +181,6 @@ const MapView: React.FC<IMapViewProps> = (props) => {
             </Grid>
             <Grid item xs={3}>
                 <NewUbicationForm
-                    nextID={nextID}
                     globalLat={globalLat}
                     globalLng={globalLng}
                     addMarker={addMarker}

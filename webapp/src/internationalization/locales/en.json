@@ -62,6 +62,7 @@
         "imageURL": "Image URL",
         "category": "Category: ",
         "daysAgo": " day(s) ago",
+        "noReviews": "No reviews",
         "hoursAgo": " hour(s) ago",
         "yearsAgo": " year(s) ago",
         "seeReviews": "See reviews",

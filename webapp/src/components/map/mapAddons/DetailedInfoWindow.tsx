@@ -174,34 +174,38 @@ const DetailedUbicationView: React.FC<{
           </Dialog>
           <Button variant="contained" sx={{ my: 2 }} onClick={() => setCommentsOpen(true)}>{t("DetailedInfoWindow.seeReviews")}</Button>
           <Dialog onClose={() => setCommentsOpen(false)} open={isCommentsOpen}>
-            <Paper style={{ padding: "40px 20px", maxHeight: 700, overflow: 'auto' }}>
-              {markerShown.reviews.map((review, index) =>
-                <>
-                  <CombinedDataProvider datasetUrl={review.author} thingUrl={review.author}>
-                    <Grid container wrap="nowrap" spacing={2}>
-                      <Grid item>
-                        <Image property={VCARD.hasPhoto} style={{ width: 100, height: 100, borderRadius: "50%" }} errorComponent={() =>
-                          <Avatar sx={{ width: 100, height: 100 }} />
-                        } />
+            {markerShown.reviews.length > 0 ? (
+              <Paper style={{ padding: "40px 20px", maxHeight: 700, overflow: 'auto' }}>
+                {markerShown.reviews.map((review, index) =>
+                  <>
+                    <CombinedDataProvider datasetUrl={review.author} thingUrl={review.author}>
+                      <Grid container wrap="nowrap" spacing={2}>
+                        <Grid item>
+                          <Image property={VCARD.hasPhoto} style={{ width: 100, height: 100, borderRadius: "50%" }} errorComponent={() =>
+                            <Avatar sx={{ width: 100, height: 100 }} />
+                          } />
+                        </Grid>
+                        <Grid justifyContent="left" item xs zeroMinWidth>
+                          <h4 style={{ margin: 0, textAlign: "left" }}><Text property={FOAF.name} errorComponent={() =>
+                            <>{review.author.substring(8).split('.')[0]}</>
+                          } /></h4>
+                          <Rating sx={{ marginTop: "0.30em", marginLeft: "-0.15em" }} value={review.score} readOnly />
+                          {review.comment && <p style={{ textAlign: "left", wordBreak: "break-all", marginTop: "0em" }}>
+                            {review.comment}
+                          </p>}
+                          <p style={{ textAlign: "left", color: "gray" }}>
+                            {t("DetailedInfoWindow.posted")}{timeSince(review.date)}
+                          </p>
+                        </Grid>
                       </Grid>
-                      <Grid justifyContent="left" item xs zeroMinWidth>
-                        <h4 style={{ margin: 0, textAlign: "left" }}><Text property={FOAF.name} errorComponent={() =>
-                          <>{review.author.substring(8).split('.')[0]}</>
-                        } /></h4>
-                        <Rating sx={{ marginTop: "0.30em", marginLeft: "-0.15em" }} value={review.score} readOnly />
-                        {review.comment && <p style={{ textAlign: "left", wordBreak: "break-all", marginTop: "0em" }}>
-                          {review.comment}
-                        </p>}
-                        <p style={{ textAlign: "left", color: "gray" }}>
-                          {t("DetailedInfoWindow.posted")}{timeSince(review.date)}
-                        </p>
-                      </Grid>
-                    </Grid>
-                    {review.pictureURL && <img src={review.pictureURL} alt={`Imagen de ${review.author}`} style={{ width: 550 }} />}
-                  </CombinedDataProvider>
-                  {index !== markerShown.reviews.length - 1 && <Divider variant="fullWidth" style={{ margin: "30px 0" }} />}
-                </>)}
-            </Paper>
+                      {review.pictureURL && <img src={review.pictureURL} alt={`Imagen de ${review.author}`} style={{ width: 550 }} />}
+                    </CombinedDataProvider>
+                    {index !== markerShown.reviews.length - 1 && <Divider variant="fullWidth" style={{ margin: "30px 0" }} />}
+                  </>)}
+              </Paper>
+            ) : (
+              <h1 style={{ textAlign: 'center', padding: "1em" }}>{t("DetailedInfoWindow.noReviews")}</h1>
+            )}
           </Dialog>
         </Stack>
       </Slide>

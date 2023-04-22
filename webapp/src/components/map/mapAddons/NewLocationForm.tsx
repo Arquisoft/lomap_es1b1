@@ -1,8 +1,6 @@
+import React from 'react';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
-import React, { MutableRefObject } from 'react';
-import { useSession } from '@inrupt/solid-ui-react';
-import { IPMarker } from "../../../shared/SharedTypes";
 import { Slide, Stack, TextField, Select, MenuItem } from '@mui/material'
 
 interface INewLocationFormProps {
@@ -11,10 +9,9 @@ interface INewLocationFormProps {
   globalName: string;
   formOpened: boolean;
   globalAddress: string;
+  addMarker: () => void;
   globalCategory: string;
   globalDescription: string;
-  nextID: MutableRefObject<string>;
-  addMarker: (marker: IPMarker) => void;
   setGlobalLat: (globalLat: number) => void;
   setGlobalLng: (globalLng: number) => void;
   setGlobalName: (globalName: string) => void;
@@ -26,16 +23,10 @@ interface INewLocationFormProps {
 
 const NewUbicationForm: React.FC<INewLocationFormProps> = (props) => {
   const { t } = useTranslation();
-  const { session } = useSession();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    props.addMarker({
-      id: props.nextID.current, date: new Date(), name: props.globalName, description: props.globalDescription,
-      lat: props.globalLat, lng: props.globalLng, category: props.globalCategory, isPublic: false,
-      address: props.globalAddress, reviews: [], webId: session.info.webId!
-    });
+    props.addMarker();
   }
 
   return (
