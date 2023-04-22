@@ -21,7 +21,7 @@ const UbicationsView = () => {
                             <Box sx={{ padding: '1em', bgcolor: 'white', border: 'solid', borderRadius: '2em' }}>
                                 <h1 style={{ marginTop: '0em' }}>{ubication.name}</h1>
                                 <p style={{ marginTop: '0em' }}>{t("LocationsView.address")}{ubication.address}</p>
-                                <p>{t("LocationsView.category")}{ubication.category}</p>
+                                <p>{t("LocationsView.category")}{t(`Map.${ubication.category.toLowerCase()}`)}</p>
                                 <p>{t("LocationsView.description")}{ubication.description}</p>
                                 <Button onClick={() => dispatch({ type: Types.DELETE_MARKER, payload: { id: ubication.id } })}>{t("LocationsView.delete")}</Button>
                             </Box>
