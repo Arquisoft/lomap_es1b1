@@ -19,10 +19,28 @@ export async function addUbicacion(ubicacion: IPMarker): Promise<boolean> {
       'webId': ubicacion.webId,
       'address': ubicacion.address,
       'category': ubicacion.category,
-      'isdPublic': ubicacion.isPublic,
+      'isPublic': ubicacion.isPublic,
       'ratings': ubicacion.ratings,
       'comments': ubicacion.comments,
       'descripcion': ubicacion.description,
+    })
+  });
+  if (response.status === 200)
+    return true;
+  else
+    return false;
+}
+
+export async function updateReviewUbicacion(ubicacion: IPMarker): Promise<boolean> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+  let response = await fetch(apiEndPoint + '/ubicaciones/update', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      'id':ubicacion.id,
+      'name': ubicacion.name,
+      'ratings': ubicacion.ratings,
+      'comments': ubicacion.comments,
     })
   });
   if (response.status === 200)

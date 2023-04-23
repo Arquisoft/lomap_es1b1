@@ -36,6 +36,14 @@ api.get(
   }
 );
 
+api.post("/ubicaciones/update", [
+  check('webid').isLength({ min: 1 }).trim().escape(),
+],
+async (req: Request, res: Response): Promise<Response> => {
+  await Ubicacion.findOneAndUpdate({name:req.body.name}, { $set: {comments: req.body.comments, ratings: req.body.ratings}})
+  return res.sendStatus(200);
+})
+
 api.post("/ubicaciones/add", [
   check('webid').isLength({ min: 1 }).trim().escape(),
 ],

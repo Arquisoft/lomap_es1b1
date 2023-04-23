@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
 import { deletePublicMarker, savePublicMarker } from '../../../helpers/SolidHelper';
 import { Slide, Stack, TextField, Dialog, Rating, Button, IconButton, FormGroup, Switch, FormControlLabel } from '@mui/material';
+import { updateReviewUbicacion } from '../../../api/API';
 
 const DetailedUbicationView: React.FC<{
   markerShown: IPMarker;
@@ -45,7 +46,7 @@ const DetailedUbicationView: React.FC<{
 
       dispatch({ type: Types.UPDATE_MARKER, payload: { id: marker.id, marker: marker } });
       if (!marker.id.includes('-')) {
-        //actualizar db
+        updateReviewUbicacion(marker);
       } else if (marker.webId !== session.info.webId!) {
         await savePublicMarker(marker, marker.webId);
       }
