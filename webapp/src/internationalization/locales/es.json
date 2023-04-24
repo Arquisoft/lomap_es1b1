@@ -1,0 +1,101 @@
+{
+    "NavBar": {
+        "map": "Mapa",
+        "login": "Iniciar sesión",
+        "logout": "Cerrar sesión",
+        "myFriends": "Mis amigos",
+        "myLocations": "Mis ubicaciones"
+    },
+    "HomeView": {
+        "welcome": "¡Bienvenido"
+    },
+    "Map": {
+        "m": "Museos",
+        "p": "Parques",
+        "ti": "Tiendas",
+        "f": "Farmacias",
+        "ed": "Edificios",
+        "tr": "Transporte",
+        "r": "Restaurantes",
+        "noName": "Sin nombre",
+        "en": "Entretenimiento",
+        "noDescription": "Sin descripción"
+    },
+    "NewLocationForm": {
+        "name": "Nombre",
+        "parks": "Parques",
+        "shops": "Tiendas",
+        "accept": "Aceptar",
+        "museums": "Museos",
+        "cancel": "Cancelar",
+        "latitude": "Latitud",
+        "longitude": "Longitud",
+        "buildings": "Edificios",
+        "pharmacies": "Farmacias",
+        "description": "Descripción",
+        "restaurants": "Restaurantes",
+        "transportation": "Transporte",
+        "entertainment": "Entretenimiento",
+        "isPublic": "Ubicación pública"
+    },
+    "MapView": {
+        "name": "Nombre",
+        "parks": "Parques",
+        "shops": "Tiendas",
+        "museums": "Museos",
+        "filters": "Filtros",
+        "explore": "Explorar",
+        "buildings": "Edificios",
+        "pharmacies": "Farmacias",
+        "categories": "Categorías",
+        "restaurants": "Restaurantes",
+        "transportation": "Transporte",
+        "newLocation": "Nueva ubicación",
+        "myLocations": "Mis ubicaciones",
+        "entertainment": "Entretenimiento",
+        "filterLocations": "Filtra ubicaciones",
+        "friendsLocations": "Ubicaciones de amigos"
+    },
+    "LocationsView": {
+        "delete": "Eliminar",
+        "address": "Dirección: ",
+        "category": "Categoría: ",
+        "description": "Descripción: ",
+        "noLocations": "Aún no has creado ninguna ubicación",
+        "visibility": "Visibilidad: ",
+        "public": "Pública",
+        "friends": "Amigos",
+        "private": "Privada"
+    },
+    "DetailedInfoWindow": {
+        "send": "Enviar",
+        "daysAgo": " día(s)",
+        "yearsAgo": " año(s)",
+        "hoursAgo": " hora(s)",
+        "comment": "Comentario",
+        "monthsAgo": " mese(s)",
+        "address": "Dirección: ",
+        "category": "Categoría: ",
+        "minutesAgo": " minuto(s)",
+        "imageURL": "URL de imagen",
+        "secondsAgo": " segundo(s)",
+        "seeReviews": "Ver reseñas",
+        "posted": "publicada hace ",
+        "noReviews": "No hay reseñas",
+        "description": "Descripción: ",
+        "writeReview": "Escribir reseña",
+        "shareLocation": "Compartir ubicación",
+        "rateLocation": "Valora esta ubicación",
+        "reviewsSummary": "Resumen de las reseñas"
+    },
+    "LoginForm": {
+        "login": "Iniciar sesión",
+        "otherProvider": "Otro proveedor",
+        "selectProvider": "Por favor, seleccione un proveedor."
+    },
+    "FriendsView": {
+        "delete": "Eliminar",
+        "addFriend": "Añadir amigo",
+        "noFriends": "Aún no has añadido ningún amigo"
+    }
+}

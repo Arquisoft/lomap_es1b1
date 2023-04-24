@@ -1,5 +1,6 @@
 import './Map.css';
 import { v4 as uuid } from 'uuid';
+import { useTranslation } from 'react-i18next';
 import { IPMarker } from '../../shared/SharedTypes';
 import { useSession } from '@inrupt/solid-ui-react';
 import { MarkerContext, Types } from '../../context/MarkerContextProvider';
@@ -24,10 +25,12 @@ type GoogleMarker = google.maps.Marker;
 type GoogleInfoWindow = google.maps.InfoWindow;
 
 interface IMapProps {
+    locale: string;
     globalLat: number;
     globalLng: number;
     globalName: string;
     globalMode: string;
+    formOpened: boolean;
     globalAddress: string;
     globalCategory: string;
     acceptedMarker: boolean;
@@ -46,6 +49,7 @@ interface IMapProps {
 }
 
 const Map: React.FC<IMapProps> = (props) => {
+    const { t } = useTranslation();
     const { session } = useSession();
     const ref = useRef<HTMLDivElement>(null);
     const [map, setMap] = useState<GoogleMap>();
@@ -59,10 +63,6 @@ const Map: React.FC<IMapProps> = (props) => {
         if (!map) {
             defaultMapStart();
         } else {
-            if (session.info.isLoggedIn) {
-                addInitMarker();
-                initEventListener();
-            }
             addHomeMarker(map.getCenter());
         }
     };
@@ -85,6 +85,16 @@ const Map: React.FC<IMapProps> = (props) => {
         }
     };
 
+    useEffect(() => {
+        if (props.formOpened) {
+            addInitMarker();
+            initEventListener();
+        } else {
+            disableMap();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.formOpened]);
+
     const initEventListener = (): void => {
         listenerRef.current = google.maps.event.addListener(map!, 'click', async function (e) {
             props.setGlobalLat(e.latLng.lat());
@@ -100,10 +110,10 @@ const Map: React.FC<IMapProps> = (props) => {
         })
     };
 
-    session.onLogout(() => {
+    const disableMap = (): void => {
         lastAddedCouple?.marker.setMap(null);
         google.maps.event.removeListener(listenerRef.current!);
-    });
+    }
 
     useEffect(() => {
         if (marker) {
@@ -117,11 +127,11 @@ const Map: React.FC<IMapProps> = (props) => {
     }, [marker]);
 
     const formatName = (): string => {
-        return props.globalName ? props.globalName : "Sin nombre";
+        return props.globalName ? props.globalName : t("Map.noName");
     }
 
     const formatDescription = (): string => {
-        return props.globalDescription ? props.globalDescription : "Sin descripción";
+        return props.globalDescription ? props.globalDescription : t("Map.noDescription");
     }
 
     const addMarker = (iMarker: IMarker): void => {
@@ -171,7 +181,7 @@ const Map: React.FC<IMapProps> = (props) => {
     const generateInfoWindowContent = (name: string, category: string, description: string, address: string): string => {
         let result = ""
 
-        result += `<h1>${name} (${category})</h1>`
+        result += `<h1>${name} (${t(`Map.${category.toLowerCase()}`)})</h1>`
         result += `<h2>${address}</h2>`
         result += `<p>${description}</p>`
 
@@ -223,7 +233,7 @@ const Map: React.FC<IMapProps> = (props) => {
             );
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.globalName, props.globalDescription, props.globalCategory, props.globalAddress]);
+    }, [props.globalName, props.globalDescription, props.globalCategory, props.globalAddress, props.locale]);
 
     const updateMarkerListeners = () => {
         let updatedMarker = markers.find(marker => marker.id === props.nextID.current)!;
@@ -247,6 +257,7 @@ const Map: React.FC<IMapProps> = (props) => {
     }, [props.acceptedMarker]);
 
     useEffect(() => {
+        props.setDetailedIWOpen(false);
         deleteAllMarkers();
 
         switch (props.globalMode) {
@@ -263,7 +274,7 @@ const Map: React.FC<IMapProps> = (props) => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.globalMode, props.globalFilterName, props.globalFilterCategories]);
+    }, [props.globalMode, props.globalFilterName, props.globalFilterCategories, props.locale]);
 
     const deleteAllMarkers = (): void => {
         googleMarkers.forEach((googleMarker) => {

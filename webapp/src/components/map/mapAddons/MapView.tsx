@@ -1,9 +1,10 @@
 import Map from '../Map';
 import { v4 as uuid } from 'uuid';
 import { Close } from '@mui/icons-material';
-import NewUbicationForm from './NewUbicationForm';
+import { useTranslation } from 'react-i18next';
+import NewUbicationForm from './NewLocationForm';
 import { useSession } from '@inrupt/solid-ui-react';
-import { useState, useContext, useRef } from 'react';
+import { useState, useContext, useRef, useEffect } from 'react';
 import { IPMarker } from "../../../shared/SharedTypes";
 import DetailedUbicationView from './DetailedInfoWindow';
 import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
@@ -20,8 +21,14 @@ import {
     ToggleButton,
     ToggleButtonGroup,
 } from '@mui/material';
+import { addUbicacion } from '../../../api/API';
 
-const MapView = () => {
+interface IMapViewProps {
+    locale: string;
+}
+
+const MapView: React.FC<IMapViewProps> = (props) => {
+    const { t } = useTranslation();
     const { session } = useSession();
     const nextID = useRef<string>(uuid());
     const { dispatch } = useContext(MarkerContext);
@@ -29,25 +36,42 @@ const MapView = () => {
     const [globalLng, setGlobalLng] = useState<number>(0);
     const [globalName, setGlobalName] = useState<string>("");
     const [globalMode, setGlobalMode] = useState<string>("E");
-    const [isFormOpened, setFormOpened] = useState<boolean>(false);
+    const [isFormOpen, setFormOpen] = useState<boolean>(false);
     const [globalAddress, setGlobalAddress] = useState<string>("");
     const [isFilterOpen, setFilterOpen] = useState<boolean>(false);
+    const [globalCategory, setGlobalCategory] = useState<string>("P");
     const [globalFilterName, setGlobalFilterName] = useState<string>("");
     const [acceptedMarker, setAcceptedMarker] = useState<boolean>(false);
     const [globalDescription, setGlobalDescription] = useState<string>("");
-    const [globalCategory, setGlobalCategory] = useState<string>("Museos");
     const [isDetailedIWOpen, setDetailedIWOpen] = useState<boolean>(false);
     const [globalFilterCategories, setGlobalFilterCategories] = useState([
-        'Museos', 'Parques', 'Tiendas', 'Edificios',
-        'Farmacias', 'Transporte', 'Restaurantes', 'Entretenimiento'
+        'M', 'P', 'Ti', 'Ed', 'F', 'Tr', 'R', 'En'
     ]);
     const [markerShown, setMarkerShown] = useState<IPMarker>({
         id: "", date: new Date(), lat: 0, lng: 0, name: "Sin nombre", address: "Sin dirección",
-        category: "Sin categoría", isPublic: false, description: "Sin descripción", ratings: [], comments: [], webId: ""
+        category: "Sin categoría", isPublic: false, description: "Sin descripción",
+        reviews: [], webId: ""
     });
 
-    const addMarker = (marker: IPMarker) => {
-        dispatch({ type: Types.ADD_MARKER, payload: { marker: marker } });
+    const addMarker = (isVeryPublic: boolean) => {
+        let marker = {
+            id: nextID.current, date: new Date(), lat: globalLat, lng: globalLng, name: globalName,
+            webId: session.info.webId!, address: globalAddress, category: globalCategory, isPublic: false,
+            description: globalDescription, reviews: []
+        }
+
+        if (isVeryPublic) {
+            addUbicacion(marker);
+        } else {
+            dispatch({ type: Types.ADD_MARKER, payload: { marker: marker } });
+        }
+
+        setGlobalLat(0);
+        setGlobalLng(0);
+        setGlobalName("");
+        setGlobalCategory("P");
+        setGlobalDescription("");
+
         setAcceptedMarker(true);
     };
 
@@ -60,9 +84,16 @@ const MapView = () => {
 
     session.onLogout(() => {
         setGlobalMode("E");
-        setFormOpened(false);
-        setDetailedIWOpen(false);
     });
+
+    useEffect(() => {
+        closeForms();
+    }, [globalMode]);
+
+    const closeForms = () => {
+        setFormOpen(false);
+        setDetailedIWOpen(false);
+    }
 
     return (
         <Grid container sx={{ width: '100%', height: '100%' }}>
@@ -74,57 +105,57 @@ const MapView = () => {
                             onChange={(e) => setGlobalMode(e.target.value)}
                             sx={{ width: '15em', height: '3em', bgcolor: 'white', margin: '1em' }}
                         >
-                            <MenuItem value={'E'}>Explorar</MenuItem>
-                            <MenuItem value={'M'}>Mis ubicaciones</MenuItem>
-                            <MenuItem value={'A'}>Ubicaciones de amigo</MenuItem>
+                            <MenuItem value={'E'}>{t("MapView.explore")}</MenuItem>
+                            <MenuItem value={'M'}>{t("MapView.myLocations")}</MenuItem>
+                            <MenuItem value={'A'}>{t("MapView.friendsLocations")}</MenuItem>
                         </Select>
                         :
                         <Select
                             value={'E'}
                             sx={{ width: '15em', height: '3em', bgcolor: 'white', margin: '1em' }}
                         >
-                            <MenuItem value={'E'}>Explorar</MenuItem>
+                            <MenuItem value={'E'}>{t("MapView.explore")}</MenuItem>
                         </Select>}
                     <Button sx={{ fontSize: 'large' }} variant="contained" onClick={() => setFilterOpen(true)}>
-                        Filtros
+                        {t("MapView.filters")}
                     </Button>
                     <Dialog onClose={() => setFilterOpen(false)} open={isFilterOpen}>
                         <Stack direction='column' padding={'1em'}>
                             <Stack direction='row'>
-                                <h1 style={{ margin: '0' }}>Filtra las ubicaciones</h1>
+                                <h1 style={{ margin: '0' }}>{t("MapView.filterLocations")}</h1>
                                 <IconButton sx={{ marginLeft: 'auto', marginRight: '0em' }} onClick={async () => setFilterOpen(false)}><Close /></IconButton>
                             </Stack>
-                            <h2>Nombre</h2>
+                            <h2>{t("MapView.name")}</h2>
                             <TextField value={globalFilterName} onChange={(e) => setGlobalFilterName(e.target.value as string)}></TextField>
-                            <h2>Categorías</h2>
+                            <h2>{t("MapView.categories")}</h2>
                             <ToggleButtonGroup
                                 onChange={handleCategories}
                                 value={globalFilterCategories}
                                 aria-label="Categorías seleccionadas"
                                 sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                                <ToggleButton sx={{ flex: '1' }} value="Museos" aria-label="museos">Museos</ToggleButton>
-                                <ToggleButton sx={{ flex: '1' }} value="Parques" aria-label="parques">Parques</ToggleButton>
-                                <ToggleButton sx={{ flex: '1' }} value="Tiendas" aria-label="tiendas">Tiendas</ToggleButton>
-                                <ToggleButton sx={{ flex: '1' }} value="Edificios" aria-label="edificios">Edificios</ToggleButton>
-                                <ToggleButton sx={{ flex: '1' }} value="Farmacias" aria-label="farmacias">Farmacias</ToggleButton>
-                                <ToggleButton sx={{ flex: '1' }} value="Transporte" aria-label="transporte">Transporte</ToggleButton>
-                                <ToggleButton sx={{ flex: '1' }} value="Restaurantes" aria-label="restaurantes">Restaurantes</ToggleButton>
-                                <ToggleButton sx={{ flex: '1' }} value="Entretenimiento" aria-label="entretenimiento">Entretenimiento</ToggleButton>
+                                <ToggleButton sx={{ flex: '1' }} value="M" aria-label="museos">{t("MapView.museums")}</ToggleButton>
+                                <ToggleButton sx={{ flex: '1' }} value="P" aria-label="parques">{t("MapView.parks")}</ToggleButton>
+                                <ToggleButton sx={{ flex: '1' }} value="Ti" aria-label="tiendas">{t("MapView.shops")}</ToggleButton>
+                                <ToggleButton sx={{ flex: '1' }} value="Ed" aria-label="edificios">{t("MapView.buildings")}</ToggleButton>
+                                <ToggleButton sx={{ flex: '1' }} value="F" aria-label="farmacias">{t("MapView.pharmacies")}</ToggleButton>
+                                <ToggleButton sx={{ flex: '1' }} value="Tr" aria-label="transporte">{t("MapView.transportation")}</ToggleButton>
+                                <ToggleButton sx={{ flex: '1' }} value="R" aria-label="restaurantes">{t("MapView.restaurants")}</ToggleButton>
+                                <ToggleButton sx={{ flex: '1' }} value="En" aria-label="entretenimiento">{t("MapView.entertainment")}</ToggleButton>
                             </ToggleButtonGroup>
                         </Stack>
                     </Dialog>
                     <Box sx={{ flexGrow: 2 }}></Box>
-                    {session.info.isLoggedIn &&
+                    {globalMode === 'M' &&
                         <Button
                             variant="contained"
                             sx={{
                                 width: '15em',
                                 margin: '1em',
                                 fontSize: 'large',
-                                display: isFormOpened ? 'none' : '',
+                                display: isFormOpen ? 'none' : '',
                             }}
-                            onClick={async () => setFormOpened(!isFormOpened)}
-                        >Nueva ubicación</Button>
+                            onClick={async () => setFormOpen(!isFormOpen)}
+                        >{t("MapView.newLocation")}</Button>
                     }
                 </Stack>
             </Grid>
@@ -135,14 +166,16 @@ const MapView = () => {
                     setDetailedIWOpen={setDetailedIWOpen}
                 />
             </Grid>
-            <Grid item xs={12 - (isFormOpened ? 3 : 0) - (isDetailedIWOpen ? 3 : 0)} sx={{ width: '100%', height: '100%' }}>
+            <Grid item xs={12 - (isFormOpen ? 3 : 0) - (isDetailedIWOpen ? 3 : 0)} sx={{ width: '100%', height: '100%' }}>
                 <Map
                     nextID={nextID}
+                    locale={props.locale}
                     mapTypeControl={true}
                     globalLat={globalLat}
                     globalLng={globalLng}
                     globalMode={globalMode}
                     globalName={globalName}
+                    formOpened={isFormOpen}
                     setGlobalLat={setGlobalLat}
                     setGlobalLng={setGlobalLng}
                     globalAddress={globalAddress}
@@ -160,16 +193,15 @@ const MapView = () => {
             </Grid>
             <Grid item xs={3}>
                 <NewUbicationForm
-                    nextID={nextID}
                     globalLat={globalLat}
                     globalLng={globalLng}
                     addMarker={addMarker}
                     globalName={globalName}
-                    formOpened={isFormOpened}
+                    formOpened={isFormOpen}
                     setGlobalLat={setGlobalLat}
                     setGlobalLng={setGlobalLng}
                     setGlobalName={setGlobalName}
-                    setFormOpened={setFormOpened}
+                    setFormOpened={setFormOpen}
                     globalAddress={globalAddress}
                     globalCategory={globalCategory}
                     globalDescription={globalDescription}

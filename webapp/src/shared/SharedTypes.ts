@@ -15,7 +15,14 @@ export interface IPMarker {
   address: string,
   category: string,
   isPublic: boolean,
-  ratings: number[],
-  comments: string[],
-  description: string
+  description: string,
+  reviews: Review[]
+}
+
+export type Review = {
+  date: Date,
+  score: number,
+  author: string,
+  comment: string,
+  pictureURL: string
 }

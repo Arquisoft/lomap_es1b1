@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { LoginButton } from "@inrupt/solid-ui-react";
 import { Button, Dialog, FormGroup, Stack, Select, MenuItem, TextField, Container } from "@mui/material";
 
@@ -8,6 +9,7 @@ export interface LoginProps {
 }
 
 const LoginForm: React.FC<LoginProps> = (props) => {
+  const { t } = useTranslation();
   const { onClose, isOpen } = props;
   const [disabled, setDisabled] = useState<boolean>(true);
   const [oidcIssuer, setOidcIssuer] = useState<string>("");
@@ -30,7 +32,7 @@ const LoginForm: React.FC<LoginProps> = (props) => {
     <Dialog onClose={handleClose} open={isOpen}>
       <Container sx={{ display: 'flex', padding: '0.5em !important' }}>
         <div style={{ margin: '1em' }}>
-          <p>Por favor, seleccione un proveedor.</p>
+          <p>{t("LoginForm.selectProvider")}</p>
         </div>
         <div>
           <Stack direction={{ xs: 'column', sm: 'row' }} alignItems='center' sx={{ flexGrow: '2' }} justifyContent='flex-end' spacing={{ xs: 1, sm: 2, md: 4 }}>
@@ -43,7 +45,7 @@ const LoginForm: React.FC<LoginProps> = (props) => {
               >
                 <MenuItem value={"https://inrupt.net/"}>Inrupt</MenuItem>
                 <MenuItem value={"https://solidcommunity.net/"}>SOLID community</MenuItem>
-                <MenuItem value={"otro"}>Otro proveedor</MenuItem>
+                <MenuItem value={"otro"}>{t("LoginForm.otherProvider")}</MenuItem>
               </Select>
               <TextField
                 role="txtRole"
@@ -55,7 +57,7 @@ const LoginForm: React.FC<LoginProps> = (props) => {
               />
               <LoginButton oidcIssuer={oidcIssuer} redirectUrl="http://localhost:3000">
                 <Button variant="contained" sx={{ width: '17.25em', margin: '0.5em' }}>
-                  Iniciar sesión
+                  {t("LoginForm.login")}
                 </Button>
               </LoginButton>
             </FormGroup>

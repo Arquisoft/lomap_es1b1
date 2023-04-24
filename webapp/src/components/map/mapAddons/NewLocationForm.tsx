@@ -1,20 +1,17 @@
 import Button from '@mui/material/Button';
-import React, { MutableRefObject, useState } from 'react';
-import { useSession } from '@inrupt/solid-ui-react';
-import { IPMarker } from "../../../shared/SharedTypes";
+import React, { useState } from 'react';
 import { Slide, Stack, TextField, Select, MenuItem, FormGroup, FormControlLabel, Switch } from '@mui/material'
-import { addUbicacion } from '../../../api/API';
+import { useTranslation } from 'react-i18next';
 
-interface INewUbicationFormProps {
+interface INewLocationFormProps {
   globalLat: number;
   globalLng: number;
   globalName: string;
   formOpened: boolean;
   globalAddress: string;
+  addMarker: (isVeryPublic: boolean) => void;
   globalCategory: string;
   globalDescription: string;
-  nextID: MutableRefObject<string>;
-  addMarker: (marker: IPMarker) => void;
   setGlobalLat: (globalLat: number) => void;
   setGlobalLng: (globalLng: number) => void;
   setGlobalName: (globalName: string) => void;
@@ -24,26 +21,15 @@ interface INewUbicationFormProps {
   setGlobalDescription: (globalDescription: string) => void;
 }
 
-const NewUbicationForm: React.FC<INewUbicationFormProps> = (props) => {
+const NewUbicationForm: React.FC<INewLocationFormProps> = (props) => {
   const [isSwitchChecked, setIsSwitchChecked] = useState(false);
-  const { session } = useSession();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let newMarker = {
-      id: props.nextID.current, date: new Date(), name: props.globalName, description: props.globalDescription,
-      lat: props.globalLat, lng: props.globalLng, category: props.globalCategory, isPublic: false,
-      address: props.globalAddress, ratings: [], comments: [], webId: session.info.webId!
-    }
+    props.addMarker(isSwitchChecked);
 
-    if (isSwitchChecked) {
-      addUbicacion(newMarker)
-    } else {
-      props.addMarker(newMarker);
-    }
-
-    
   }
 
   return (
@@ -55,7 +41,7 @@ const NewUbicationForm: React.FC<INewUbicationFormProps> = (props) => {
               required
               type='number'
               name="latitude"
-              label="Latitud"
+              label={t("NewLocationForm.latitude")}
               variant='filled'
               value={props.globalLat}
               onChange={e => props.setGlobalLat(e.target.value as unknown as number)}
@@ -65,7 +51,7 @@ const NewUbicationForm: React.FC<INewUbicationFormProps> = (props) => {
               required
               type='number'
               name="longitude"
-              label="Longitud"
+              label={t("NewLocationForm.longitude")}
               variant='filled'
               value={props.globalLng}
               onChange={e => props.setGlobalLng(e.target.value as unknown as number)}
@@ -74,7 +60,7 @@ const NewUbicationForm: React.FC<INewUbicationFormProps> = (props) => {
             <TextField
               required
               name="name"
-              label="Nombre"
+              label={t("NewLocationForm.name")}
               variant='filled'
               value={props.globalName}
               onChange={e => props.setGlobalName(e.target.value)}
@@ -83,7 +69,7 @@ const NewUbicationForm: React.FC<INewUbicationFormProps> = (props) => {
             <TextField
               required
               name="description"
-              label="Descripción"
+              label={t("NewLocationForm.description")}
               variant='filled'
               value={props.globalDescription}
               onChange={e => props.setGlobalDescription(e.target.value)}
@@ -94,24 +80,24 @@ const NewUbicationForm: React.FC<INewUbicationFormProps> = (props) => {
               onChange={(e) => props.setGlobalCategory(e.target.value as string)}
               sx={{ my: 2, bgcolor: 'white' }}
             >
-              <MenuItem value={'Museos'}>Museos</MenuItem>
-              <MenuItem value={'Parques'}>Parques</MenuItem>
-              <MenuItem value={'Tiendas'}>Tiendas</MenuItem>
-              <MenuItem value={'Edificios'}>Edificios</MenuItem>
-              <MenuItem value={'Farmacias'}>Farmacias</MenuItem>
-              <MenuItem value={'Transporte'}>Transporte</MenuItem>
-              <MenuItem value={'Restaurantes'}>Restaurantes</MenuItem>
-              <MenuItem value={'Entretenimiento'}>Entretenimiento</MenuItem>
+              <MenuItem value={'P'}>{t("NewLocationForm.parks")}</MenuItem>
+              <MenuItem value={'Ti'}>{t("NewLocationForm.shops")}</MenuItem>
+              <MenuItem value={'M'}>{t("NewLocationForm.museums")}</MenuItem>
+              <MenuItem value={'Ed'}>{t("NewLocationForm.buildings")}</MenuItem>
+              <MenuItem value={'F'}>{t("NewLocationForm.pharmacies")}</MenuItem>
+              <MenuItem value={'R'}>{t("NewLocationForm.restaurants")}</MenuItem>
+              <MenuItem value={'Tr'}>{t("NewLocationForm.transportation")}</MenuItem>
+              <MenuItem value={'En'}>{t("NewLocationForm.entertainment")}</MenuItem>
             </Select>
             <FormGroup>
               <FormControlLabel control={<Switch
                 checked={isSwitchChecked}
                 onChange={e => setIsSwitchChecked(e.target.checked)}
                 inputProps={{ 'aria-label': 'controlled' }}
-              />} sx={{ color: 'white' }} label="Ubicación pública" />
+              />} sx={{ color: 'white' }} label={t("NewLocationForm.isPublic")} /> {/*i18n!!*/}
             </FormGroup>
-            <Button variant="contained" type="submit" sx={{ my: 2 }}>Aceptar</Button>
-            <Button variant="contained" onClick={() => props.setFormOpened(false)} sx={{ my: 2 }}>Cancelar</Button>
+            <Button variant="contained" type="submit" sx={{ my: 2 }}>{t("NewLocationForm.accept")}</Button>
+            <Button variant="contained" onClick={() => props.setFormOpened(false)} sx={{ my: 2 }}>{t("NewLocationForm.cancel")}</Button>
           </Stack>
         </form>
       </Slide>

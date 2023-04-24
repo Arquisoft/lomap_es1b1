@@ -52,7 +52,7 @@ export async function readFriendMarkers(webId: string) {
                 });
 
         } catch (error) {
-            console.error(error);
+            //console.error(error);
         }
     });
 

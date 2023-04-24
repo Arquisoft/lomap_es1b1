@@ -1,5 +1,6 @@
 import HomeView from './components/HomeView';
 import { NavBar } from './components/NavBar';
+import i18n from './internationalization/i18n';
 import { IPMarker } from './shared/SharedTypes';
 import { Routes, Route } from "react-router-dom";
 import { useSession } from '@inrupt/solid-ui-react';
@@ -7,7 +8,7 @@ import { loadMapApi } from './utils/GoogleMapsUtils';
 import { useContext, useEffect, useState } from 'react';
 import MapView from './components/map/mapAddons/MapView';
 import { FriendsView } from './components/friends/FriendsView';
-import UbicationsView from './components/map/mapAddons/UbicationsView';
+import UbicationsView from './components/map/mapAddons/LocationsView';
 import { MarkerContext, Types } from './context/MarkerContextProvider';
 import { readFriendMarkers, readMarkers, saveMarkers } from './helpers/SolidHelper';
 import { getUbicaciones } from './api/API';
@@ -15,6 +16,7 @@ import { getUbicaciones } from './api/API';
 function App(): JSX.Element {
   const { session } = useSession();
   const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [locale, setLocale] = useState<string>(i18n.language);
   const { state: markers, dispatch } = useContext(MarkerContext);
 
   session.onLogin(async () => {
@@ -59,13 +61,16 @@ function App(): JSX.Element {
 
   return (
     <>
-      <NavBar />
+      <NavBar
+        locale={locale}
+        setLocale={setLocale}
+      />
       <Routes>
         <Route path="/" element={
           <HomeView />
         } />
         <Route path="/map" element={scriptLoaded &&
-          (<MapView />)
+          (<MapView locale={locale} />)
         } />
         <Route path="/ubications" element={
           <UbicationsView />
