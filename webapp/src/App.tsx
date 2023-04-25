@@ -1,3 +1,4 @@
+import { getPublicLocations } from './api/api';
 import HomeView from './components/HomeView';
 import { NavBar } from './components/NavBar';
 import i18n from './internationalization/i18n';
@@ -11,7 +12,6 @@ import { FriendsView } from './components/friends/FriendsView';
 import UbicationsView from './components/map/mapAddons/LocationsView';
 import { MarkerContext, Types } from './context/MarkerContextProvider';
 import { readFriendMarkers, readMarkers, saveMarkers } from './helpers/SolidHelper';
-import { getUbicaciones } from './api/API';
 
 function App(): JSX.Element {
   const { session } = useSession();
@@ -19,30 +19,35 @@ function App(): JSX.Element {
   const [locale, setLocale] = useState<string>(i18n.language);
   const { state: markers, dispatch } = useContext(MarkerContext);
 
-  session.onLogin(async () => {
+  session.onLogin(loadMarkers);
+  session.onSessionRestore(loadMarkers);
+
+  session.onLogout(() => {
+    setMarkers([]);
+  })
+
+  async function loadMarkers() {
     let markers = await readFriendMarkers(session.info.webId!);
     (await readMarkers(session.info.webId!)).forEach(m => markers.push(m));
-    parseFromDB(await getUbicaciones()).forEach(m => markers.push(m))
+    parseFromDB(await getPublicLocations()).forEach(m => markers.push(m));
     setMarkers(markers);
-  })
-
-  session.onLogout(async () => {
-    setMarkers(parseFromDB(await getUbicaciones()))
-  })
-
-  function setMarkers(markers: IPMarker[]) {
-    dispatch({ type: Types.SET_MARKERS, payload: { markers: markers } });
   }
 
   const parseFromDB = (json: any[]): IPMarker[] => {
-    let ubications: IPMarker[] = []
+    let ubications: IPMarker[] = [];
     json.forEach(e => {
       let mark: IPMarker = e
       mark.isPublic = false
       mark.id = e._id
+
       ubications.push(mark)
     });
+
     return ubications
+  }
+
+  function setMarkers(markers: IPMarker[]) {
+    dispatch({ type: Types.SET_MARKERS, payload: { markers: markers } });
   }
 
   useEffect(() => {
@@ -53,11 +58,13 @@ function App(): JSX.Element {
   }, [markers]);
 
   useEffect(() => {
+    session.setMaxListeners(0);
+
     const googleMapScript = loadMapApi();
     googleMapScript.addEventListener('load', function () {
       setScriptLoaded(true);
     });
-  }, []);
+  }, [session]);
 
   return (
     <>
@@ -76,7 +83,7 @@ function App(): JSX.Element {
           <UbicationsView />
         } />
         <Route path="/friends" element={
-          <FriendsView />
+          <FriendsView loadMarkers={loadMarkers} />
         } />
       </Routes>
     </>

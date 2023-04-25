@@ -5,7 +5,11 @@ import { Box, Grid, Button, TextField, Avatar } from '@mui/material';
 import { CombinedDataProvider, useSession, Image, Text } from '@inrupt/solid-ui-react';
 import { addFriendByWebId, deleteFriendByWebId, getFriendList } from '../../helpers/SolidHelper';
 
-export const FriendsView = () => {
+interface IFriendsViewProps {
+  loadMarkers: () => void;
+}
+
+export const FriendsView: React.FC<IFriendsViewProps> = (props) => {
   const { t } = useTranslation();
   const { session } = useSession();
   const [friendList, setFriendList] = useState<string[]>([]);
@@ -13,6 +17,9 @@ export const FriendsView = () => {
 
   useEffect(() => {
     loadFriends();
+    return () => {
+      setFriendList([]);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

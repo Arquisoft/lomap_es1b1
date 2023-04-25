@@ -34,9 +34,9 @@
         "pharmacies": "Pharmacies",
         "description": "Description",
         "restaurants": "Restaurants",
+        "isPublic": "Public location",
         "entertainment": "Entertainment",
-        "transportation": "Transportation",
-        "isPublic": "Public ubication"
+        "transportation": "Transportation"
     },
     "MapView": {
         "name": "Name",

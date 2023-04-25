@@ -1,12 +1,12 @@
 import { IPMarker, User } from '../shared/SharedTypes';
 
-export async function getUbicaciones(): Promise<any[]> {
+export async function getPublicLocations(): Promise<any[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   let response = await fetch(apiEndPoint + '/ubicaciones/list');
   return response.json()
 }
 
-export async function addUbicacion(ubicacion: IPMarker): Promise<boolean> {
+export async function addPublicLocation(ubicacion: IPMarker): Promise<boolean> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   let response = await fetch(apiEndPoint + '/ubicaciones/add', {
     method: 'POST',
@@ -30,13 +30,13 @@ export async function addUbicacion(ubicacion: IPMarker): Promise<boolean> {
     return false;
 }
 
-export async function updateReviewUbicacion(ubicacion: IPMarker): Promise<boolean> {
+export async function updatePublicLocation(ubicacion: IPMarker): Promise<boolean> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   let response = await fetch(apiEndPoint + '/ubicaciones/update', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      'id':ubicacion.id,
+      'id': ubicacion.id,
       'name': ubicacion.name,
       'reviews': ubicacion.reviews,
     })
@@ -86,12 +86,3 @@ export async function addFriend(userId: string, friendId: string): Promise<boole
   else
     return false;
 }
-
-/*
-export async function getUserFriends(userId: string): Promise<User[]> {
-  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-  let response = await fetch(apiEndPoint + '/users/' + userId + '/friends');
-  //The objects returned by the api are directly convertible to Friend objects
-  return response.json()
-}
-*/

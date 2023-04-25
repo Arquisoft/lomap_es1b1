@@ -43,7 +43,7 @@ export const NavBar: React.FC<INavBarProps> = (props) => {
                   sx={{ background: "white", height: "2.5em" }}
                 >
                   <MenuItem value={"en"}>English</MenuItem>
-                  <MenuItem value={"es"}>Español</MenuItem>
+                  <MenuItem value={"es-ES"}>Español</MenuItem>
                 </Select>
               </FormControl>
               <CombinedDataProvider
@@ -69,7 +69,7 @@ export const NavBar: React.FC<INavBarProps> = (props) => {
                 sx={{ background: "white", height: "2.5em" }}
               >
                 <MenuItem value={"en"}>English</MenuItem>
-                <MenuItem value={"es"}>Español</MenuItem>
+                <MenuItem value={"es-ES"}>Español</MenuItem>
               </Select>
             </FormControl>
             <Button variant="contained" onClick={() => setOpen(true)} sx={{ margin: "1em !important", marginLeft: "0em" }}>

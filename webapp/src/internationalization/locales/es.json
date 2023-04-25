@@ -35,8 +35,8 @@
         "description": "Descripción",
         "restaurants": "Restaurantes",
         "transportation": "Transporte",
-        "entertainment": "Entretenimiento",
-        "isPublic": "Ubicación pública"
+        "isPublic": "Ubicación pública",
+        "entertainment": "Entretenimiento"
     },
     "MapView": {
         "name": "Nombre",

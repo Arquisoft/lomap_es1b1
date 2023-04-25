@@ -10,7 +10,7 @@ import "./internationalization/i18n";
 
 ReactDOM.render(
   <React.StrictMode>
-    <SessionProvider session-id="login">
+    <SessionProvider session-id="login" restorePreviousSession={true}>
       <MarkerContextProvider>
         <BrowserRouter>
           <App />

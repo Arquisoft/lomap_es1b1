@@ -22,14 +22,13 @@ interface INewLocationFormProps {
 }
 
 const NewUbicationForm: React.FC<INewLocationFormProps> = (props) => {
-  const [isSwitchChecked, setIsSwitchChecked] = useState(false);
   const { t } = useTranslation();
+  const [isPublic, setIsPublic] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    props.addMarker(isSwitchChecked);
-
+    props.addMarker(isPublic);
   }
 
   return (
@@ -86,13 +85,13 @@ const NewUbicationForm: React.FC<INewLocationFormProps> = (props) => {
               <MenuItem value={'Ed'}>{t("NewLocationForm.buildings")}</MenuItem>
               <MenuItem value={'F'}>{t("NewLocationForm.pharmacies")}</MenuItem>
               <MenuItem value={'R'}>{t("NewLocationForm.restaurants")}</MenuItem>
-              <MenuItem value={'Tr'}>{t("NewLocationForm.transportation")}</MenuItem>
               <MenuItem value={'En'}>{t("NewLocationForm.entertainment")}</MenuItem>
+              <MenuItem value={'Tr'}>{t("NewLocationForm.transportation")}</MenuItem>
             </Select>
             <FormGroup>
               <FormControlLabel control={<Switch
-                checked={isSwitchChecked}
-                onChange={e => setIsSwitchChecked(e.target.checked)}
+                checked={isPublic}
+                onChange={e => setIsPublic(e.target.checked)}
                 inputProps={{ 'aria-label': 'controlled' }}
               />} sx={{ color: 'white' }} label={t("NewLocationForm.isPublic")} /> {/*i18n!!*/}
             </FormGroup>

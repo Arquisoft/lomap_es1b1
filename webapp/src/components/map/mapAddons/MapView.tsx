@@ -4,9 +4,10 @@ import { Close } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import NewUbicationForm from './NewLocationForm';
 import { useSession } from '@inrupt/solid-ui-react';
-import { useState, useContext, useRef, useEffect } from 'react';
+import { addPublicLocation } from '../../../api/api';
 import { IPMarker } from "../../../shared/SharedTypes";
 import DetailedUbicationView from './DetailedInfoWindow';
+import { useState, useContext, useRef, useEffect } from 'react';
 import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
 import {
     Box,
@@ -21,7 +22,6 @@ import {
     ToggleButton,
     ToggleButtonGroup,
 } from '@mui/material';
-import { addUbicacion } from '../../../api/API';
 
 interface IMapViewProps {
     locale: string;
@@ -48,20 +48,20 @@ const MapView: React.FC<IMapViewProps> = (props) => {
         'M', 'P', 'Ti', 'Ed', 'F', 'Tr', 'R', 'En'
     ]);
     const [markerShown, setMarkerShown] = useState<IPMarker>({
-        id: "", date: new Date(), lat: 0, lng: 0, name: "Sin nombre", address: "Sin dirección",
-        category: "Sin categoría", isPublic: false, description: "Sin descripción",
-        reviews: [], webId: ""
+        id: "", date: new Date(), lat: 0, lng: 0, name: "Sin nombre",
+        webId: "", address: "Sin dirección", category: "Sin categoría", isPublic: false,
+        description: "Sin descripción", canFriendsSee: false, reviews: []
     });
 
-    const addMarker = (isVeryPublic: boolean) => {
+    const addMarker = (isPublic: boolean) => {
         let marker = {
             id: nextID.current, date: new Date(), lat: globalLat, lng: globalLng, name: globalName,
-            webId: session.info.webId!, address: globalAddress, category: globalCategory, isPublic: false,
-            description: globalDescription, reviews: []
+            webId: session.info.webId!, address: globalAddress, category: globalCategory, isPublic: isPublic,
+            description: globalDescription, canFriendsSee: false, reviews: []
         }
 
-        if (isVeryPublic) {
-            addUbicacion(marker);
+        if (isPublic) {
+            addPublicLocation(marker);
         } else {
             dispatch({ type: Types.ADD_MARKER, payload: { marker: marker } });
         }
@@ -133,13 +133,13 @@ const MapView: React.FC<IMapViewProps> = (props) => {
                                 value={globalFilterCategories}
                                 aria-label="Categorías seleccionadas"
                                 sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                                <ToggleButton sx={{ flex: '1' }} value="M" aria-label="museos">{t("MapView.museums")}</ToggleButton>
                                 <ToggleButton sx={{ flex: '1' }} value="P" aria-label="parques">{t("MapView.parks")}</ToggleButton>
+                                <ToggleButton sx={{ flex: '1' }} value="M" aria-label="museos">{t("MapView.museums")}</ToggleButton>
                                 <ToggleButton sx={{ flex: '1' }} value="Ti" aria-label="tiendas">{t("MapView.shops")}</ToggleButton>
                                 <ToggleButton sx={{ flex: '1' }} value="Ed" aria-label="edificios">{t("MapView.buildings")}</ToggleButton>
                                 <ToggleButton sx={{ flex: '1' }} value="F" aria-label="farmacias">{t("MapView.pharmacies")}</ToggleButton>
-                                <ToggleButton sx={{ flex: '1' }} value="Tr" aria-label="transporte">{t("MapView.transportation")}</ToggleButton>
                                 <ToggleButton sx={{ flex: '1' }} value="R" aria-label="restaurantes">{t("MapView.restaurants")}</ToggleButton>
+                                <ToggleButton sx={{ flex: '1' }} value="Tr" aria-label="transporte">{t("MapView.transportation")}</ToggleButton>
                                 <ToggleButton sx={{ flex: '1' }} value="En" aria-label="entretenimiento">{t("MapView.entertainment")}</ToggleButton>
                             </ToggleButtonGroup>
                         </Stack>

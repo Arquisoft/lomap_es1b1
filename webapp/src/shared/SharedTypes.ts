@@ -16,6 +16,7 @@ export interface IPMarker {
   category: string,
   isPublic: boolean,
   description: string,
+  canFriendsSee: boolean,
   reviews: Review[]
 }
 

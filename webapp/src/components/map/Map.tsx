@@ -293,10 +293,10 @@ const Map: React.FC<IMapProps> = (props) => {
     const loadFriendMarkers = (): void => {
         loadMarkers(markers.filter(m => m.webId !== session.info.webId!));
     }
-    
+
     const loadPublicMarkers = async () => {
-        loadMarkers(markers.filter(m => !m.id.includes('-')));
-    } 
+        loadMarkers(markers.filter(m => m.isPublic));
+    }
 
     const loadMarkers = (markers: IPMarker[]): void => {
         markers.filter(m => props.globalFilterCategories.includes(m.category)

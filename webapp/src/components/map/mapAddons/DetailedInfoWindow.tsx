@@ -2,10 +2,10 @@ import { Close } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
 import { IPMarker } from "../../../shared/SharedTypes";
+import { updatePublicLocation } from '../../../api/api';
 import React, { useContext, useEffect, useState } from 'react';
 import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
 import { deletePublicMarker, savePublicMarker } from '../../../helpers/SolidHelper';
-import { updateReviewUbicacion } from '../../../api/API';
 import { CombinedDataProvider, useSession, Image, Text } from '@inrupt/solid-ui-react';
 import { Slide, Stack, TextField, Dialog, Rating, Button, IconButton, FormGroup, Switch, FormControlLabel, Grid, Avatar, Paper, Divider } from '@mui/material';
 
@@ -17,26 +17,26 @@ const DetailedUbicationView: React.FC<{
   const { t } = useTranslation();
   const { session } = useSession();
   const [comment, setComment] = useState<string>("");
-  const [isPublic, setPublic] = useState<boolean>(false);
   const [pictureURL, setPictureURL] = useState<string>("");
   const [reviewScore, setReviewScore] = useState<number>(0);
   const { state: markers, dispatch } = useContext(MarkerContext);
   const [isRatingOpen, setRatingOpen] = useState<boolean>(false);
+  const [canFriendsSee, setCanFriendsSee] = useState<boolean>(false);
   const [isCommentsOpen, setCommentsOpen] = useState<boolean>(false);
 
-  const handlePublicChange = async (isPublic: boolean) => {
+  const handleCanFriendsSeeChange = async (canFriendsSee: boolean) => {
     let marker = markers.find(marker => marker.id === markerShown?.id);
     if (marker) {
-      marker.isPublic = isPublic;
+      marker.canFriendsSee = canFriendsSee;
 
-      if (isPublic) {
+      if (canFriendsSee) {
         await savePublicMarker(marker, session.info.webId!);
       } else {
         await deletePublicMarker(marker, session.info.webId!);
       }
 
       dispatch({ type: Types.UPDATE_MARKER, payload: { id: marker.id, marker: marker } });
-      setPublic(isPublic);
+      setCanFriendsSee(canFriendsSee);
     }
   }
 
@@ -49,8 +49,8 @@ const DetailedUbicationView: React.FC<{
       marker.reviews.push({ author: session.info.webId!, date: new Date(), score: reviewScore, comment: comment, pictureURL: pictureURL });
 
       dispatch({ type: Types.UPDATE_MARKER, payload: { id: marker.id, marker: marker } });
-      if (!marker.id.includes('-')) {
-        updateReviewUbicacion(marker);
+      if (marker.isPublic) {
+        updatePublicLocation(marker);
       } else if (marker.webId !== session.info.webId!) {
         await savePublicMarker(marker, marker.webId);
       }
@@ -102,7 +102,7 @@ const DetailedUbicationView: React.FC<{
   }
 
   useEffect(() => {
-    setPublic(markerShown.isPublic);
+    setCanFriendsSee(markerShown.canFriendsSee);
   }, [markerShown]);
 
   return (
@@ -121,9 +121,9 @@ const DetailedUbicationView: React.FC<{
             <FormGroup>
               <FormControlLabel control={
                 <Switch
-                  checked={isPublic}
+                  checked={canFriendsSee}
                   inputProps={{ 'aria-label': 'controlled' }}
-                  onChange={e => handlePublicChange(e.target.checked)}
+                  onChange={e => handleCanFriendsSeeChange(e.target.checked)}
                 />
               }
                 sx={{ color: 'white', my: 2 }} label={t("DetailedInfoWindow.shareLocation")} />

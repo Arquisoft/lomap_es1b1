@@ -5,7 +5,7 @@
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@inrupt/solid-client": "^1.25.2",
-    "@inrupt/solid-client-authn-browser": "^1.13.2",
+    "@inrupt/solid-client-authn-browser": "^1.13.4",
     "@inrupt/solid-ui-react": "^2.8.2",
     "@inrupt/vocab-common-rdf": "^1.0.5",
     "@inrupt/vocab-solid": "^1.0.4",
@@ -28,7 +28,7 @@
     "rdf-namespaces": "^1.10.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-i18next": "^12.2.0",
+    "react-i18next": "^12.2.2",
     "react-router-dom": "^6.6.1",
     "typescript": "^4.9.4",
     "web-vitals": "^2.1.2"
