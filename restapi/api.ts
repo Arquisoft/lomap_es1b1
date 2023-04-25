@@ -14,8 +14,7 @@ const ubicacionSchema = new mongoose.Schema({
   address: String,
   category: String,
   isPublic: Boolean,
-  ratings: [Number],
-  comments: [String],
+  reviews: [],
   descripcion: String
 })
 
@@ -40,7 +39,7 @@ api.post("/ubicaciones/update", [
   check('webid').isLength({ min: 1 }).trim().escape(),
 ],
 async (req: Request, res: Response): Promise<Response> => {
-  await Ubicacion.findOneAndUpdate({name:req.body.name}, { $set: {comments: req.body.comments, ratings: req.body.ratings}})
+  await Ubicacion.findOneAndUpdate({name:req.body.name}, { $set: {reviews: req.body.reviews}})
   return res.sendStatus(200);
 })
 
@@ -55,10 +54,9 @@ async (req: Request, res: Response): Promise<Response> => {
   let webId = req.body.webId;
   let address = req.body.address;
   let category = req.body.category;
-  let ratings = req.body.ratings;
-  let comments = req.body.comments;
+  let reviews = req.body.reviews;
   let descripcion = req.body.descripcion;
-  new Ubicacion({date, lat, lng, name, webId, address, category, ratings, comments, descripcion}).save();
+  new Ubicacion({date, lat, lng, name, webId, address, category, reviews, descripcion}).save();
   return res.sendStatus(200);
 })
 

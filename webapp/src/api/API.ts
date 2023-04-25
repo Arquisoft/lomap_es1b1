@@ -20,8 +20,7 @@ export async function addUbicacion(ubicacion: IPMarker): Promise<boolean> {
       'address': ubicacion.address,
       'category': ubicacion.category,
       'isPublic': ubicacion.isPublic,
-      'ratings': ubicacion.ratings,
-      'comments': ubicacion.comments,
+      'reviews': ubicacion.reviews,
       'descripcion': ubicacion.description,
     })
   });
@@ -39,8 +38,7 @@ export async function updateReviewUbicacion(ubicacion: IPMarker): Promise<boolea
     body: JSON.stringify({
       'id':ubicacion.id,
       'name': ubicacion.name,
-      'ratings': ubicacion.ratings,
-      'comments': ubicacion.comments,
+      'reviews': ubicacion.reviews,
     })
   });
   if (response.status === 200)
