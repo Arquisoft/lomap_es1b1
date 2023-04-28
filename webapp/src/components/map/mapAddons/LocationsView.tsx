@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Grid, Box, Button } from '@mui/material';
 import { useSession } from '@inrupt/solid-ui-react';
 import { IPMarker } from "../../../shared/SharedTypes";
+import { deletePublicMarker } from '../../../helpers/SolidHelper';
 import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
 
 const UbicationsView = () => {
@@ -26,6 +27,13 @@ const UbicationsView = () => {
         return mapImage;
     }
 
+    const deleteLocation = async (location: IPMarker) => {
+        dispatch({ type: Types.DELETE_MARKER, payload: { id: location.id } });
+        if (location.canFriendsSee) {
+            await deletePublicMarker(location, session.info.webId!);
+        }
+    }
+
     return (
         <>
             {myLocations.length > 0 ? (
@@ -39,7 +47,7 @@ const UbicationsView = () => {
                                 <p>{t("LocationsView.category")}{t(`Map.${location.category.toLowerCase()}`)}</p>
                                 <p>{t("LocationsView.description")}{location.description}</p>
                                 <p>{t("LocationsView.visibility")}{location.id.includes("-") ? (location.isPublic ? t("LocationsView.friends") : t("LocationsView.private")) : t("LocationsView.public")}</p>
-                                <Button onClick={() => dispatch({ type: Types.DELETE_MARKER, payload: { id: location.id } })}>{t("LocationsView.delete")}</Button>
+                                <Button onClick={() => deleteLocation(location)}>{t("LocationsView.delete")}</Button>
                             </Box>
                         </Grid>
                     ))}

@@ -30,6 +30,13 @@ export async function readMarkers(webId: string) {
     return markers;
 };
 
+export async function readFriendsCanSeeMarkers(webId: string) {
+    let fileURL = `${parseURL(webId)}public/lomap/markers.json`;
+    let markers = await readMarkersFromFile(fileURL);
+
+    return markers;
+};
+
 export async function readFriendMarkers(webId: string) {
     let markers: IPMarker[] = [];
 

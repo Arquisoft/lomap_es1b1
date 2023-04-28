@@ -2,6 +2,7 @@ import { v4 as uuid } from 'uuid';
 import { useTranslation } from 'react-i18next';
 import { IPMarker } from '../../shared/SharedTypes';
 import { useSession } from '@inrupt/solid-ui-react';
+import { deletePublicMarker } from '../../helpers/SolidHelper';
 import { MarkerContext, Types } from '../../context/MarkerContextProvider';
 import React, { useEffect, useRef, useState, useContext, MutableRefObject } from 'react';
 
@@ -164,12 +165,16 @@ const Map: React.FC<IMapProps> = (props) => {
             }
         });
 
-        marker.addListener('rightclick', () => {
-            if (markers.find(marker => marker.id === id)) {
+        marker.addListener('rightclick', async () => {
+            let markerToDelete = markers.find(marker => marker.id === id);
+            if (markerToDelete) {
                 props.setDetailedIWOpen(false);
 
                 marker.setMap(null);
                 dispatch({ type: Types.DELETE_MARKER, payload: { id: id } });
+                if (markerToDelete.canFriendsSee) {
+                    await deletePublicMarker(markerToDelete, session.info.webId!);
+                }
             }
         });
 

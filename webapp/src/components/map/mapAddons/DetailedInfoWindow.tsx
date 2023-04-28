@@ -1,13 +1,13 @@
 import { Close } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
-import { IPMarker } from "../../../shared/SharedTypes";
 import { updatePublicLocation } from '../../../api/API';
+import { IPMarker, Review } from "../../../shared/SharedTypes";
 import React, { useContext, useEffect, useState } from 'react';
 import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
-import { deletePublicMarker, savePublicMarker } from '../../../helpers/SolidHelper';
 import { CombinedDataProvider, useSession, Image, Text } from '@inrupt/solid-ui-react';
-import { Slide, Stack, TextField, Dialog, Rating, Button, IconButton, FormGroup, Switch, FormControlLabel, Grid, Avatar, Paper, Divider } from '@mui/material';
+import { deletePublicMarker, savePublicMarker, readFriendsCanSeeMarkers } from '../../../helpers/SolidHelper';
+import { Slide, Stack, TextField, Dialog, Rating, Button, IconButton, FormGroup, Switch, FormControlLabel, Grid, Avatar, Paper, Divider, Box } from '@mui/material';
 
 const DetailedUbicationView: React.FC<{
   markerShown: IPMarker;
@@ -17,12 +17,14 @@ const DetailedUbicationView: React.FC<{
   const { t } = useTranslation();
   const { session } = useSession();
   const [comment, setComment] = useState<string>("");
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [pictureURL, setPictureURL] = useState<string>("");
   const [reviewScore, setReviewScore] = useState<number>(0);
   const { state: markers, dispatch } = useContext(MarkerContext);
   const [isRatingOpen, setRatingOpen] = useState<boolean>(false);
   const [canFriendsSee, setCanFriendsSee] = useState<boolean>(false);
   const [isCommentsOpen, setCommentsOpen] = useState<boolean>(false);
+
 
   const handleCanFriendsSeeChange = async (canFriendsSee: boolean) => {
     let marker = markers.find(marker => marker.id === markerShown?.id);
@@ -47,6 +49,7 @@ const DetailedUbicationView: React.FC<{
 
     if (marker) {
       marker.reviews.push({ author: session.info.webId!, date: new Date(), score: reviewScore, comment: comment, pictureURL: pictureURL });
+      setReviews(marker.reviews);
 
       dispatch({ type: Types.UPDATE_MARKER, payload: { id: marker.id, marker: marker } });
       if (marker.isPublic) {
@@ -58,12 +61,12 @@ const DetailedUbicationView: React.FC<{
   }
 
   const getRatingMean = () => {
-    let total = markerShown.reviews.length;
+    let total = reviews.length;
     if (total === 0) {
       return 0;
     }
 
-    let sum = markerShown.reviews
+    let sum = reviews
       .map(r => r.score)
       .reduce((previous, current) => current += previous, 0);
     let result = sum / total;
@@ -101,8 +104,23 @@ const DetailedUbicationView: React.FC<{
     return Math.floor(seconds) + t("DetailedInfoWindow.secondsAgo");
   }
 
+  async function updateReviews() {
+    if (markerShown.webId === session.info.webId! && markerShown.canFriendsSee) {
+      let updatedMarker = (await readFriendsCanSeeMarkers(session.info.webId!)).find(m => m.webId = markerShown.webId)!;
+      dispatch({ type: Types.UPDATE_MARKER, payload: { id: markerShown.id, marker: updatedMarker } });
+      markerShown = updatedMarker;
+    }
+
+    setReviews(markerShown.reviews);
+  };
+
   useEffect(() => {
     setCanFriendsSee(markerShown.canFriendsSee);
+    updateReviews();
+    return () => {
+      setReviews([]);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [markerShown]);
 
   return (
@@ -116,7 +134,7 @@ const DetailedUbicationView: React.FC<{
           <p style={{ marginTop: '0em' }}>{t("DetailedInfoWindow.address")}{markerShown.address}</p>
           <p>{t("DetailedInfoWindow.category")}{t(`Map.${markerShown.category.toLowerCase()}`)}</p>
           <p>{t("DetailedInfoWindow.description")}{markerShown.description}</p>
-          {markerShown.webId === session.info.webId && markerShown.id.includes('-')
+          {markerShown.webId === session.info.webId && !markerShown.isPublic
             &&
             <FormGroup>
               <FormControlLabel control={
@@ -132,17 +150,19 @@ const DetailedUbicationView: React.FC<{
           <h2>{t("DetailedInfoWindow.reviewsSummary")}</h2>
           <Rating value={getRatingMean()} readOnly />
           <ul style={{ overflow: "auto" }}>
-            {markerShown.reviews.sort(() => 0.5 - Math.random()).slice(0, 3).map((review =>
-              <>
+            {reviews.sort(() => 0.5 - Math.random()).slice(0, 3).map(((review, index) =>
+              <li key={index} style={{ wordBreak: "break-all" }}>
                 <CombinedDataProvider datasetUrl={review.author} thingUrl={review.author}>
-                  <li key={review.comment} style={{ wordBreak: "break-all" }}><Text property={FOAF.name} errorComponent={() =>
+                  <Text property={FOAF.name} errorComponent={() =>
                     <>{review.author.substring(8).split('.')[0]}</>
-                  } />: {review.comment}</li>
+                  } />: {review.comment}
                 </CombinedDataProvider>
-              </>
+              </li>
             ))}
           </ul>
-          <Button variant="contained" sx={{ my: 2 }} onClick={() => setRatingOpen(true)}>{t("DetailedInfoWindow.writeReview")}</Button>
+          {markerShown.webId !== session.info.webId &&
+            <Button variant="contained" sx={{ my: 2 }} onClick={() => setRatingOpen(true)}>{t("DetailedInfoWindow.writeReview")}</Button>
+          }
           <Dialog onClose={() => setRatingOpen(false)} open={isRatingOpen}>
             <form name="newRating" onSubmit={handleSubmit}>
               <Stack direction='column' sx={{ width: '30em', padding: '1em' }}>
@@ -179,10 +199,10 @@ const DetailedUbicationView: React.FC<{
           </Dialog>
           <Button variant="contained" sx={{ my: 2 }} onClick={() => setCommentsOpen(true)}>{t("DetailedInfoWindow.seeReviews")}</Button>
           <Dialog onClose={() => setCommentsOpen(false)} open={isCommentsOpen}>
-            {markerShown.reviews.length > 0 ? (
+            {reviews.length > 0 ? (
               <Paper style={{ padding: "40px 20px", maxHeight: 700, overflow: 'auto' }}>
-                {markerShown.reviews.map((review, index) =>
-                  <>
+                {reviews.map((review, index) =>
+                  <Box key={index}>
                     <CombinedDataProvider datasetUrl={review.author} thingUrl={review.author}>
                       <Grid container wrap="nowrap" spacing={2}>
                         <Grid item>
@@ -205,8 +225,9 @@ const DetailedUbicationView: React.FC<{
                       </Grid>
                       {review.pictureURL && <img src={review.pictureURL} alt={`Imagen de ${review.author}`} style={{ width: 550 }} />}
                     </CombinedDataProvider>
-                    {index !== markerShown.reviews.length - 1 && <Divider variant="fullWidth" style={{ margin: "30px 0" }} />}
-                  </>)}
+                    {index !== reviews.length - 1 && <Divider variant="fullWidth" style={{ margin: "30px 0" }} />}
+                  </Box>
+                )}
               </Paper>
             ) : (
               <h1 style={{ textAlign: 'center', padding: "1em" }}>{t("DetailedInfoWindow.noReviews")}</h1>
