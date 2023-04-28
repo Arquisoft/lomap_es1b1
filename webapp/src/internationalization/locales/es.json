@@ -53,6 +53,7 @@
         "newLocation": "Nueva ubicación",
         "myLocations": "Mis ubicaciones",
         "entertainment": "Entretenimiento",
+        "creatorWebID": "WebID del creador",
         "filterLocations": "Filtra ubicaciones",
         "friendsLocations": "Ubicaciones de amigos"
     },

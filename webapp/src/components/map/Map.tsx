@@ -35,6 +35,7 @@ interface IMapProps {
     acceptedMarker: boolean;
     globalFilterName: string;
     mapTypeControl?: boolean;
+    globalFilterWebID: string;
     globalDescription: string;
     mapType: google.maps.MapTypeId;
     globalFilterCategories: string[];
@@ -273,7 +274,7 @@ const Map: React.FC<IMapProps> = (props) => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.globalMode, props.globalFilterName, props.globalFilterCategories, props.locale]);
+    }, [props.globalMode, props.globalFilterName, props.globalFilterCategories, props.globalFilterWebID, props.locale]);
 
     const deleteAllMarkers = (): void => {
         googleMarkers.forEach((googleMarker) => {
@@ -299,7 +300,8 @@ const Map: React.FC<IMapProps> = (props) => {
 
     const loadMarkers = (markers: IPMarker[]): void => {
         markers.filter(m => props.globalFilterCategories.includes(m.category)
-            && m.name.includes(props.globalFilterName)).forEach((marker) => {
+            && m.name.includes(props.globalFilterName)
+            && (!props.globalFilterWebID || m.webId.split("profile")[0] === props.globalFilterWebID)).forEach((marker) => {
                 generateMarker(parseMarker(marker), marker.id);
             })
     }
@@ -358,7 +360,7 @@ const Map: React.FC<IMapProps> = (props) => {
     };
 
     return (
-        <div ref={ref} style={{height: "100%"}} className="map"></div>
+        <div ref={ref} style={{ height: "100%" }} className="map"></div>
     );
 };
 

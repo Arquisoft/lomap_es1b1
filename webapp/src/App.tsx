@@ -18,8 +18,8 @@ import { readFriendMarkers, readMarkers, saveMarkers } from './helpers/SolidHelp
 function App(): JSX.Element {
   const { session } = useSession();
   const [scriptLoaded, setScriptLoaded] = useState(false);
-  const [locale, setLocale] = useState<string>(i18n.language);
   const { state: markers, dispatch } = useContext(MarkerContext);
+  const [locale, setLocale] = useState<string>(["en", "es-ES"].includes(i18n.language) ? i18n.language : "en");
 
   function setMarkers(markers: IPMarker[]) {
     dispatch({ type: Types.SET_MARKERS, payload: { markers: markers } });

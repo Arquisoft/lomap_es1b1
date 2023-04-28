@@ -42,6 +42,7 @@ const MapView: React.FC<IMapViewProps> = (props) => {
     const [globalCategory, setGlobalCategory] = useState<string>("P");
     const [globalFilterName, setGlobalFilterName] = useState<string>("");
     const [acceptedMarker, setAcceptedMarker] = useState<boolean>(false);
+    const [globalFilterWebId, setGlobalFilterWebId] = useState<string>("");
     const [globalDescription, setGlobalDescription] = useState<string>("");
     const [isDetailedIWOpen, setDetailedIWOpen] = useState<boolean>(false);
     const [globalFilterCategories, setGlobalFilterCategories] = useState([
@@ -127,6 +128,8 @@ const MapView: React.FC<IMapViewProps> = (props) => {
                             </Stack>
                             <h2>{t("MapView.name")}</h2>
                             <TextField value={globalFilterName} onChange={(e) => setGlobalFilterName(e.target.value as string)}></TextField>
+                            <h2>{t("MapView.creatorWebID")}</h2>
+                            <TextField value={globalFilterWebId} onChange={(e) => setGlobalFilterWebId(e.target.value as string)}></TextField>
                             <h2>{t("MapView.categories")}</h2>
                             <ToggleButtonGroup
                                 onChange={handleCategories}
@@ -184,6 +187,7 @@ const MapView: React.FC<IMapViewProps> = (props) => {
                     setMarkerShown={setMarkerShown}
                     setGlobalAddress={setGlobalAddress}
                     globalFilterName={globalFilterName}
+                    globalFilterWebID={globalFilterWebId}
                     setAcceptedMarker={setAcceptedMarker}
                     globalDescription={globalDescription}
                     setDetailedIWOpen={setDetailedIWOpen}
