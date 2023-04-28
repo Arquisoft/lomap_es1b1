@@ -1,7 +1,7 @@
-import Button from '@mui/material/Button';
 import React, { useState } from 'react';
-import { Slide, Stack, TextField, Select, MenuItem, FormGroup, FormControlLabel, Switch } from '@mui/material'
+import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
+import { Slide, Stack, TextField, Select, MenuItem, FormGroup, FormControlLabel, Switch } from '@mui/material'
 
 interface INewLocationFormProps {
   globalLat: number;
@@ -9,31 +9,45 @@ interface INewLocationFormProps {
   globalName: string;
   formOpened: boolean;
   globalAddress: string;
-  addMarker: (isVeryPublic: boolean) => void;
   globalCategory: string;
   globalDescription: string;
-  setGlobalLat: (globalLat: number) => void;
-  setGlobalLng: (globalLng: number) => void;
-  setGlobalName: (globalName: string) => void;
+  setGlobalName: (name: string) => void;
+  addMarker: (isPublic: boolean) => void;
+  setGlobalLat: (latitude: number) => void;
+  setGlobalLng: (longitude: number) => void;
   setFormOpened: (formOpened: boolean) => void;
-  setGlobalCategory: (globalCategory: string) => void;
+  setGlobalCategory: (category: string) => void;
+  setGlobalDescription: (description: string) => void;
   setAcceptedMarker: (acceptedMarker: boolean) => void;
-  setGlobalDescription: (globalDescription: string) => void;
 }
 
-const NewUbicationForm: React.FC<INewLocationFormProps> = (props) => {
+const NewUbicationForm: React.FC<INewLocationFormProps> = ({
+  globalLat,
+  globalLng,
+  addMarker,
+  globalName,
+  formOpened,
+  setGlobalLat,
+  setGlobalLng,
+  setGlobalName,
+  setFormOpened,
+  globalCategory,
+  globalDescription,
+  setGlobalCategory,
+  setGlobalDescription
+}) => {
   const { t } = useTranslation();
   const [isPublic, setIsPublic] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    props.addMarker(isPublic);
+    addMarker(isPublic);
   }
 
   return (
     <>
-      <Slide direction="left" in={props.formOpened} mountOnEnter unmountOnExit >
+      <Slide direction="left" in={formOpened} mountOnEnter unmountOnExit >
         <form name="newUbication" onSubmit={handleSubmit}>
           <Stack alignItems="right" sx={{ margin: 2 }}>
             <TextField
@@ -42,8 +56,8 @@ const NewUbicationForm: React.FC<INewLocationFormProps> = (props) => {
               name="latitude"
               label={t("NewLocationForm.latitude")}
               variant='filled'
-              value={props.globalLat}
-              onChange={e => props.setGlobalLat(e.target.value as unknown as number)}
+              value={globalLat}
+              onChange={e => setGlobalLat(e.target.value as unknown as number)}
               sx={{ marginBottom: '1em', bgcolor: 'white' }}
             />
             <TextField
@@ -52,8 +66,8 @@ const NewUbicationForm: React.FC<INewLocationFormProps> = (props) => {
               name="longitude"
               label={t("NewLocationForm.longitude")}
               variant='filled'
-              value={props.globalLng}
-              onChange={e => props.setGlobalLng(e.target.value as unknown as number)}
+              value={globalLng}
+              onChange={e => setGlobalLng(e.target.value as unknown as number)}
               sx={{ my: 2, bgcolor: 'white' }}
             />
             <TextField
@@ -61,8 +75,8 @@ const NewUbicationForm: React.FC<INewLocationFormProps> = (props) => {
               name="name"
               label={t("NewLocationForm.name")}
               variant='filled'
-              value={props.globalName}
-              onChange={e => props.setGlobalName(e.target.value)}
+              value={globalName}
+              onChange={e => setGlobalName(e.target.value)}
               sx={{ my: 2, bgcolor: 'white' }}
             />
             <TextField
@@ -70,13 +84,13 @@ const NewUbicationForm: React.FC<INewLocationFormProps> = (props) => {
               name="description"
               label={t("NewLocationForm.description")}
               variant='filled'
-              value={props.globalDescription}
-              onChange={e => props.setGlobalDescription(e.target.value)}
+              value={globalDescription}
+              onChange={e => setGlobalDescription(e.target.value)}
               sx={{ my: 2, bgcolor: 'white' }}
             />
             <Select
-              value={props.globalCategory}
-              onChange={(e) => props.setGlobalCategory(e.target.value as string)}
+              value={globalCategory}
+              onChange={(e) => setGlobalCategory(e.target.value as string)}
               sx={{ my: 2, bgcolor: 'white' }}
             >
               <MenuItem value={'P'}>{t("NewLocationForm.parks")}</MenuItem>
@@ -93,10 +107,10 @@ const NewUbicationForm: React.FC<INewLocationFormProps> = (props) => {
                 checked={isPublic}
                 onChange={e => setIsPublic(e.target.checked)}
                 inputProps={{ 'aria-label': 'controlled' }}
-              />} sx={{ color: 'white' }} label={t("NewLocationForm.isPublic")} /> {/*i18n!!*/}
+              />} sx={{ color: 'white' }} label={t("NewLocationForm.isPublic")} />
             </FormGroup>
             <Button variant="contained" type="submit" sx={{ my: 2 }}>{t("NewLocationForm.accept")}</Button>
-            <Button variant="contained" onClick={() => props.setFormOpened(false)} sx={{ my: 2 }}>{t("NewLocationForm.cancel")}</Button>
+            <Button variant="contained" onClick={() => setFormOpened(false)} sx={{ my: 2 }}>{t("NewLocationForm.cancel")}</Button>
           </Stack>
         </form>
       </Slide>

@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import LoginForm from './login/LoginForm';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import i18n from '../internationalization/i18n';
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
 import { Stack, Button, Avatar, FormControl, Select, MenuItem } from '@mui/material';
 import { useSession, LogoutButton, CombinedDataProvider, Image, Text } from '@inrupt/solid-ui-react';
@@ -13,13 +12,13 @@ interface INavBarProps {
 }
 
 export const NavBar: React.FC<INavBarProps> = (props) => {
-  const { t } = useTranslation();
   const { session } = useSession();
+  const { t, i18n } = useTranslation();
   const [isOpen, setOpen] = useState(false);
 
   useEffect(() => {
     i18n.changeLanguage(props.locale);
-  }, [props.locale]);
+  }, [props.locale, i18n]);
 
   return (
     <nav>
@@ -46,13 +45,9 @@ export const NavBar: React.FC<INavBarProps> = (props) => {
                   <MenuItem value={"es-ES"}>Español</MenuItem>
                 </Select>
               </FormControl>
-              <CombinedDataProvider
-                datasetUrl={session.info.webId!}
-                thingUrl={session.info.webId!}>
+              <CombinedDataProvider datasetUrl={session.info.webId!} thingUrl={session.info.webId!}>
                 <Text style={{ color: 'white' }} property={FOAF.name} errorComponent={() => <>{session.info.webId!.substring(8).split('.')[0]}</>} />
-                <Image property={VCARD.hasPhoto} style={{ width: 40, height: 40, borderRadius: "50%" }} errorComponent={() =>
-                  <Avatar />
-                } />
+                <Image property={VCARD.hasPhoto} style={{ width: 40, height: 40, borderRadius: "50%" }} errorComponent={() => <Avatar sx={{ width: 40, height: 40 }} />} />
               </CombinedDataProvider>
               <LogoutButton>
                 <Button variant="contained" sx={{ margin: "1em", marginLeft: "0em" }}>
@@ -75,10 +70,7 @@ export const NavBar: React.FC<INavBarProps> = (props) => {
             <Button variant="contained" onClick={() => setOpen(true)} sx={{ margin: "1em !important", marginLeft: "0em" }}>
               {t("NavBar.login")}
             </Button>
-            <LoginForm
-              isOpen={isOpen}
-              onClose={() => setOpen(false)}
-            />
+            <LoginForm isOpen={isOpen} onClose={() => setOpen(false)} />
           </Stack>}
       </Stack>
     </nav>

@@ -57,15 +57,15 @@
         "friendsLocations": "Ubicaciones de amigos"
     },
     "LocationsView": {
+        "friends": "Amigos",
+        "public": "Pública",
+        "private": "Privada",
         "delete": "Eliminar",
         "address": "Dirección: ",
         "category": "Categoría: ",
-        "description": "Descripción: ",
-        "noLocations": "Aún no has creado ninguna ubicación",
         "visibility": "Visibilidad: ",
-        "public": "Pública",
-        "friends": "Amigos",
-        "private": "Privada"
+        "description": "Descripción: ",
+        "noLocations": "Aún no has creado ninguna ubicación"
     },
     "DetailedInfoWindow": {
         "send": "Enviar",

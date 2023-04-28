@@ -21,44 +21,16 @@ function App(): JSX.Element {
   const [locale, setLocale] = useState<string>(i18n.language);
   const { state: markers, dispatch } = useContext(MarkerContext);
 
-  session.onLogin(loadMarkers);
-  session.onSessionRestore(loadMarkers);
-
-  session.onLogout(() => {
-    setMarkers([]);
-  })
-
-  async function loadMarkers() {
-    let markers = await readFriendMarkers(session.info.webId!);
-    (await readMarkers(session.info.webId!)).forEach(m => markers.push(m));
-    //parseFromDB(await getPublicLocations()).forEach(m => markers.push(m));
-    setMarkers(markers);
-  }
-
-  const parseFromDB = (json: any[]): IPMarker[] => {
-    let ubications: IPMarker[] = [];
-    json.forEach(e => {
-      let mark: IPMarker = e
-      mark.isPublic = true
-      mark.canFriendsSee = false
-      mark.id = e._id
-
-      ubications.push(mark)
-    });
-
-    return ubications
-  }
-
   function setMarkers(markers: IPMarker[]) {
     dispatch({ type: Types.SET_MARKERS, payload: { markers: markers } });
   }
 
-  useEffect(() => {
-    if (session.info.isLoggedIn) {
-      saveMarkers(markers.filter((marker) => marker.webId === session.info.webId! && marker.id.includes('-')), session.info.webId!);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [markers]);
+  async function loadMarkers() {
+    let markers = await readFriendMarkers(session.info.webId!);
+    (await readMarkers(session.info.webId!)).forEach(m => markers.push(m));
+    //(await getPublicLocations()).forEach(m => markers.push(m));
+    setMarkers(markers);
+  }
 
   useEffect(() => {
     session.setMaxListeners(0);
@@ -68,6 +40,20 @@ function App(): JSX.Element {
       setScriptLoaded(true);
     });
   }, [session]);
+
+  useEffect(() => {
+    if (session.info.isLoggedIn) {
+      saveMarkers(markers.filter((marker) => marker.webId === session.info.webId! && !marker.isPublic), session.info.webId!);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [markers]);
+
+  session.onLogin(loadMarkers);
+  session.onSessionRestore(loadMarkers);
+
+  session.onLogout(() => {
+    setMarkers([]);
+  })
 
   return (
     <>

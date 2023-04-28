@@ -1,3 +1,11 @@
+export type Review = {
+  date: Date,
+  score: number,
+  author: string,
+  comment: string,
+  pictureURL: string
+}
+
 export interface IPMarker {
   id: string,
   date: Date,
@@ -8,15 +16,7 @@ export interface IPMarker {
   address: string,
   category: string,
   isPublic: boolean,
+  reviews: Review[],
   description: string,
-  canFriendsSee: boolean,
-  reviews: Review[]
-}
-
-export type Review = {
-  date: Date,
-  score: number,
-  author: string,
-  comment: string,
-  pictureURL: string
+  canFriendsSee: boolean
 }

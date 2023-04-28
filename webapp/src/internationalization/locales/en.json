@@ -57,15 +57,15 @@
         "friendsLocations": "Friends' locations"
     },
     "LocationsView": {
+        "public": "Public",
         "delete": "Delete",
+        "friends": "Friends",
+        "private": "Private",
         "address": "Address: ",
         "category": "Category: ",
-        "description": "Description: ",
-        "noLocations": "You haven't created any locations yet",
         "visibility": "Visibility: ",
-        "public": "Public",
-        "friends": "Friends",
-        "private": "Private"
+        "description": "Description: ",
+        "noLocations": "You haven't created any locations yet"
     },
     "DetailedInfoWindow": {
         "send": "Send",

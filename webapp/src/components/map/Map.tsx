@@ -1,4 +1,3 @@
-import './Map.css';
 import { v4 as uuid } from 'uuid';
 import { useTranslation } from 'react-i18next';
 import { IPMarker } from '../../shared/SharedTypes';
@@ -359,7 +358,7 @@ const Map: React.FC<IMapProps> = (props) => {
     };
 
     return (
-        <div ref={ref} className="map"></div>
+        <div ref={ref} style={{height: "100%"}} className="map"></div>
     );
 };
 

@@ -1,28 +1,17 @@
 import { IPMarker } from '../shared/SharedTypes';
 
 export async function getPublicLocations(): Promise<any[]> {
-  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api';
   let response = await fetch(apiEndPoint + '/ubicaciones/list');
-  return response.json()
+  return response.json();
 }
 
-export async function addPublicLocation(ubicacion: IPMarker): Promise<boolean> {
-  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+export async function addPublicLocation(location: IPMarker): Promise<boolean> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api';
   let response = await fetch(apiEndPoint + '/ubicaciones/add', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      'date': ubicacion.date,
-      'lat': ubicacion.lat,
-      'lng': ubicacion.lng,
-      'name': ubicacion.name,
-      'webId': ubicacion.webId,
-      'address': ubicacion.address,
-      'category': ubicacion.category,
-      'isPublic': ubicacion.isPublic,
-      'reviews': ubicacion.reviews,
-      'descripcion': ubicacion.description,
-    })
+    body: JSON.stringify(location),
+    headers: { 'Content-Type': 'application/json' }
   });
   if (response.status === 200)
     return true;
@@ -30,16 +19,16 @@ export async function addPublicLocation(ubicacion: IPMarker): Promise<boolean> {
     return false;
 }
 
-export async function updatePublicLocation(ubicacion: IPMarker): Promise<boolean> {
+export async function updatePublicLocation(location: IPMarker): Promise<boolean> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   let response = await fetch(apiEndPoint + '/ubicaciones/update', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      'id': ubicacion.id,
-      'name': ubicacion.name,
-      'reviews': ubicacion.reviews,
-    })
+      'id': location.id,
+      'name': location.name,
+      'reviews': location.reviews
+    }),
+    headers: { 'Content-Type': 'application/json' }
   });
   if (response.status === 200)
     return true;

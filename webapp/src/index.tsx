@@ -2,11 +2,11 @@ import './index.css';
 import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import "./internationalization/i18n";
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { SessionProvider } from "@inrupt/solid-ui-react";
 import { MarkerContextProvider } from './context/MarkerContextProvider';
-import "./internationalization/i18n";
 
 ReactDOM.render(
   <React.StrictMode>

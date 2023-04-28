@@ -4,22 +4,23 @@ import { FOAF } from "@inrupt/vocab-common-rdf";
 import { CombinedDataProvider, Text, useSession } from "@inrupt/solid-ui-react";
 
 const HomeView = () => {
-    const { t } = useTranslation();
-    const { session } = useSession();
+  const { t } = useTranslation();
+  const { session: { info: { isLoggedIn, webId } } } = useSession();
 
-    return (
-        <Box sx={{ color: 'white', height: '85%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <h1>
-                {t("HomeView.welcome")}
-                {session.info.isLoggedIn ?
-                    <CombinedDataProvider datasetUrl={session.info.webId!} thingUrl={session.info.webId!}>
-                        <span>, </span><Text property={FOAF.name} errorComponent={() => <>{session.info.webId!.substring(8).split('.')[0]}</>} />
-                    </CombinedDataProvider> : ""
-                }
-                !
-            </h1>
-        </Box>
-    );
+  return (
+    <Box sx={{ color: 'white', textAlign: 'center' }}>
+      <h1>
+        {t("HomeView.welcome")}
+        {isLoggedIn && (
+          <CombinedDataProvider datasetUrl={webId!} thingUrl={webId!}>
+            <span>, </span>
+            <Text property={FOAF.name} errorComponent={() => <>{webId!.substring(8).split('.')[0]}</>} />
+          </CombinedDataProvider>
+        )}
+        !
+      </h1>
+    </Box>
+  );
 }
 
 export default HomeView;

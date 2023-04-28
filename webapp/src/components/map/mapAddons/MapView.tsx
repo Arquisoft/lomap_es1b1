@@ -200,8 +200,8 @@ const MapView: React.FC<IMapViewProps> = (props) => {
                     formOpened={isFormOpen}
                     setGlobalLat={setGlobalLat}
                     setGlobalLng={setGlobalLng}
-                    setGlobalName={setGlobalName}
                     setFormOpened={setFormOpen}
+                    setGlobalName={setGlobalName}
                     globalAddress={globalAddress}
                     globalCategory={globalCategory}
                     globalDescription={globalDescription}
