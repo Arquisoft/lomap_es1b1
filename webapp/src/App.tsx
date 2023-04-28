@@ -1,4 +1,4 @@
-import { getPublicLocations } from './api/api';
+import { getPublicLocations } from './api/API';
 import HomeView from './components/HomeView';
 import { NavBar } from './components/NavBar';
 import i18n from './internationalization/i18n';
@@ -38,7 +38,8 @@ function App(): JSX.Element {
     let ubications: IPMarker[] = [];
     json.forEach(e => {
       let mark: IPMarker = e
-      mark.isPublic = false
+      mark.isPublic = true
+      mark.canFriendsSee = false
       mark.id = e._id
 
       ubications.push(mark)

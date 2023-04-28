@@ -2,7 +2,7 @@ import { Close } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
 import { IPMarker } from "../../../shared/SharedTypes";
-import { updatePublicLocation } from '../../../api/api';
+import { updatePublicLocation } from '../../../api/API';
 import React, { useContext, useEffect, useState } from 'react';
 import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
 import { deletePublicMarker, savePublicMarker } from '../../../helpers/SolidHelper';

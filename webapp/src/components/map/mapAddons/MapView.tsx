@@ -4,7 +4,7 @@ import { Close } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import NewUbicationForm from './NewLocationForm';
 import { useSession } from '@inrupt/solid-ui-react';
-import { addPublicLocation } from '../../../api/api';
+import { addPublicLocation } from '../../../api/API';
 import { IPMarker } from "../../../shared/SharedTypes";
 import DetailedUbicationView from './DetailedInfoWindow';
 import { useState, useContext, useRef, useEffect } from 'react';
