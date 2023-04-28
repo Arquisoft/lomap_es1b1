@@ -12,6 +12,7 @@ import { FriendsView } from './components/friends/FriendsView';
 import UbicationsView from './components/map/mapAddons/LocationsView';
 import { MarkerContext, Types } from './context/MarkerContextProvider';
 import { readFriendMarkers, readMarkers, saveMarkers } from './helpers/SolidHelper';
+import { CircularProgress } from '@mui/material';
 
 function App(): JSX.Element {
   const { session } = useSession();
@@ -76,16 +77,21 @@ function App(): JSX.Element {
         <Route path="/" element={
           <HomeView />
         } />
-        <Route path="/map" element={scriptLoaded &&
-          (<MapView locale={locale} />)
-        } />
+        <Route path="/map" element={scriptLoaded ? (
+          <MapView locale={locale} />
+        ) : (
+          <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <CircularProgress />
+          </div>
+        )}
+        />
         <Route path="/ubications" element={
           <UbicationsView />
         } />
         <Route path="/friends" element={
           <FriendsView loadMarkers={loadMarkers} />
         } />
-      </Routes>
+      </Routes >
     </>
   );
 }
