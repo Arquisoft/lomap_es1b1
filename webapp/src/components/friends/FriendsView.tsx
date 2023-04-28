@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
-import { Box, Grid, Button, TextField, Avatar, CircularProgress } from '@mui/material';
+import { Box, Grid, Button, TextField, Avatar, CircularProgress, Container } from '@mui/material';
 import { CombinedDataProvider, useSession, Image, Text } from '@inrupt/solid-ui-react';
 import { addFriendByWebId, deleteFriendByWebId, getFriendList } from '../../helpers/SolidHelper';
 
@@ -77,9 +77,9 @@ export const FriendsView: React.FC<IFriendsViewProps> = (props) => {
         </Grid>
       </form>
       {isLoading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Container sx={{ height: '62.5%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <CircularProgress />
-        </div>
+        </Container>
       ) : (
         <>
           {friendList.length > 0 ? (
@@ -119,7 +119,9 @@ export const FriendsView: React.FC<IFriendsViewProps> = (props) => {
               )}
             </Grid>
           ) : (
-            <h1 style={{ color: 'white', textAlign: 'center' }}>{t("FriendsView.noFriends")}</h1>
+            <Container sx={{ color: 'white', height: '62.5%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <h1 >{t("FriendsView.noFriends")}</h1>
+            </Container>
           )}
         </>
       )}

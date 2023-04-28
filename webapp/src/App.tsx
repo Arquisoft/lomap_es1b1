@@ -1,8 +1,9 @@
-import { getPublicLocations } from './api/API';
 import HomeView from './components/HomeView';
 import { NavBar } from './components/NavBar';
+import { getPublicLocations } from './api/API';
 import i18n from './internationalization/i18n';
 import { IPMarker } from './shared/SharedTypes';
+import { CircularProgress } from '@mui/material';
 import { Routes, Route } from "react-router-dom";
 import { useSession } from '@inrupt/solid-ui-react';
 import { loadMapApi } from './utils/GoogleMapsUtils';
@@ -12,7 +13,7 @@ import { FriendsView } from './components/friends/FriendsView';
 import UbicationsView from './components/map/mapAddons/LocationsView';
 import { MarkerContext, Types } from './context/MarkerContextProvider';
 import { readFriendMarkers, readMarkers, saveMarkers } from './helpers/SolidHelper';
-import { CircularProgress } from '@mui/material';
+
 
 function App(): JSX.Element {
   const { session } = useSession();
@@ -30,7 +31,7 @@ function App(): JSX.Element {
   async function loadMarkers() {
     let markers = await readFriendMarkers(session.info.webId!);
     (await readMarkers(session.info.webId!)).forEach(m => markers.push(m));
-    parseFromDB(await getPublicLocations()).forEach(m => markers.push(m));
+    //parseFromDB(await getPublicLocations()).forEach(m => markers.push(m));
     setMarkers(markers);
   }
 

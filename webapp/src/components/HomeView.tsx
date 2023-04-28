@@ -8,7 +8,7 @@ const HomeView = () => {
     const { session } = useSession();
 
     return (
-        <Container sx={{ color: 'white', textAlign: 'center' }}>
+        <Container sx={{ color: 'white', height: '85%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <div>
                 <h1>
                     {t("HomeView.welcome")}
