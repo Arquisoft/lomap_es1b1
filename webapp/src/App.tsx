@@ -3,10 +3,10 @@ import { NavBar } from './components/NavBar';
 import { getPublicLocations } from './api/API';
 import i18n from './internationalization/i18n';
 import { IPMarker } from './shared/SharedTypes';
-import { CircularProgress } from '@mui/material';
 import { Routes, Route } from "react-router-dom";
 import { useSession } from '@inrupt/solid-ui-react';
 import { loadMapApi } from './utils/GoogleMapsUtils';
+import { Box, CircularProgress } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import MapView from './components/map/mapAddons/MapView';
 import { FriendsView } from './components/friends/FriendsView';
@@ -82,9 +82,9 @@ function App(): JSX.Element {
         <Route path="/map" element={scriptLoaded ? (
           <MapView locale={locale} />
         ) : (
-          <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Box sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <CircularProgress />
-          </div>
+          </Box>
         )}
         />
         <Route path="/ubications" element={
@@ -93,7 +93,7 @@ function App(): JSX.Element {
         <Route path="/friends" element={
           <FriendsView loadMarkers={loadMarkers} />
         } />
-      </Routes >
+      </Routes>
     </>
   );
 }

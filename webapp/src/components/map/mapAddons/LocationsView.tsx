@@ -30,7 +30,7 @@ const UbicationsView = () => {
     return (
         <>
             {myUbications.length > 0 ? (
-                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ height: '100%', padding: '2em', overflow: 'scroll', }}>
+                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ padding: '2em' }}>
                     {myUbications.map((ubication: IPMarker) => (
                         <Grid item xs={6} sm={4} md={3} key={ubication.id}>
                             <Box sx={{ padding: '1em', bgcolor: 'white', borderRadius: '0.5em' }}>
@@ -46,9 +46,7 @@ const UbicationsView = () => {
                     ))}
                 </Grid>
             ) : (
-                <Container sx={{ color: 'white', height: '85%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <h1>{t("LocationsView.noLocations")}</h1>
-                </Container>
+                <h1 style={{ color: 'white', textAlign: 'center' }}>{t("LocationsView.noLocations")}</h1>
             )}
         </>
     );

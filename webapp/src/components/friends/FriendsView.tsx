@@ -52,7 +52,7 @@ export const FriendsView: React.FC<IFriendsViewProps> = (props) => {
   }
 
   return (
-    <>
+    <Box sx={{ margin: "2em" }}>
       <form name="addFriend" onSubmit={handleSubmit}>
         <Grid container>
           <Grid item>
@@ -63,10 +63,10 @@ export const FriendsView: React.FC<IFriendsViewProps> = (props) => {
               variant="filled"
               value={newFriendWebID}
               onChange={e => setNewFriendWebID(e.target.value)}
-              sx={{ bgcolor: 'white', width: "20em", margin: "1.5em", marginRight: "0em", borderRadius: "4px" }}
+              sx={{ bgcolor: 'white', width: "20em", marginRight: "1em", borderRadius: "4px" }}
             />
           </Grid>
-          <Grid item alignItems="stretch" style={{ display: "flex", margin: "1.5em" }}>
+          <Grid item alignItems="stretch" style={{ display: "flex" }}>
             <Button variant="contained" type="submit" sx={{
               bgcolor: 'green',
               ":hover": {
@@ -83,7 +83,7 @@ export const FriendsView: React.FC<IFriendsViewProps> = (props) => {
       ) : (
         <>
           {friendList.length > 0 ? (
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ padding: '0em 2em 0em' }}>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ padding: "2em 0em 2em" }}>
               {friendList.map((friendWebId) =>
                 <Grid item key={friendWebId}>
                   <Box sx={{ padding: '2em', bgcolor: 'white', border: 'solid', borderRadius: '2em' }}>
@@ -119,12 +119,10 @@ export const FriendsView: React.FC<IFriendsViewProps> = (props) => {
               )}
             </Grid>
           ) : (
-            <Container sx={{ color: 'white', height: '62.5%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <h1 >{t("FriendsView.noFriends")}</h1>
-            </Container>
+            <h1 style={{ color: 'white', textAlign: 'center' }}>{t("FriendsView.noFriends")}</h1>
           )}
         </>
       )}
-    </>
+    </Box>
   )
 }
