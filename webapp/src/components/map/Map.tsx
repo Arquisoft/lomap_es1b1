@@ -137,7 +137,7 @@ const Map: React.FC<IMapProps> = (props) => {
             addMarker(marker);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [marker]);
+    }, [marker, props.globalCategory]);
 
     const formatName = (): string => {
         return props.globalName ? props.globalName : t("Map.noName");
@@ -158,7 +158,7 @@ const Map: React.FC<IMapProps> = (props) => {
     const generateMarker = (notAddedMarker: IMarker, id: string): ICouple => {
         const marker: GoogleMarker = new google.maps.Marker({
             position: notAddedMarker.latLng,
-            icon: "blue_marker.png",
+            icon: "markers/" + notAddedMarker.category + "_marker.png",
             map: map
         });
 
@@ -207,7 +207,7 @@ const Map: React.FC<IMapProps> = (props) => {
 
     const addHomeMarker = (location: GoogleLatLng): void => {
         const homeMarkerConst: GoogleMarker = new google.maps.Marker({
-            icon: "blue_marker.png",
+            icon: "markers/you_marker.png",
             position: location,
             map: map
         });
