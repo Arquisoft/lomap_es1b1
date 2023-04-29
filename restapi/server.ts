@@ -23,8 +23,6 @@ app.listen(port, ():void => {
     console.error('Error occured: ' + error.message);
 });
 
-const user = process.env.REACT_APP_MONGODB_USER
-const password = process.env.REACT_APP_MONGODB_PASSWORD
-const database = process.env.REACT_APP_MONGODB_DATABASE
+const uri = process.env.MONGODB_URI
 
-mongoose.connect('mongodb+srv://' + user + ':' + password + '@' + database +'/LoMapDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); 
+mongoose.connect('mongodb+srv://' + uri +'/LoMapDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); 

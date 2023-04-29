@@ -2,6 +2,7 @@ import './index.css';
 import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import "./internationalization/i18n";
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { SessionProvider } from "@inrupt/solid-ui-react";
@@ -9,7 +10,7 @@ import { MarkerContextProvider } from './context/MarkerContextProvider';
 
 ReactDOM.render(
   <React.StrictMode>
-    <SessionProvider session-id="login">
+    <SessionProvider session-id="login" restorePreviousSession={true}>
       <MarkerContextProvider>
         <BrowserRouter>
           <App />

@@ -1,16 +1,26 @@
-import { Container } from "@mui/material"
-import { useSession } from "@inrupt/solid-ui-react";
+import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { FOAF } from "@inrupt/vocab-common-rdf";
+import { CombinedDataProvider, Text, useSession } from "@inrupt/solid-ui-react";
 
 const HomeView = () => {
-    const { session } = useSession();
+  const { t } = useTranslation();
+  const { session: { info: { isLoggedIn, webId } } } = useSession();
 
-    return (
-        <Container sx={{ color: 'white', textAlign: 'center' }}>
-            <div>
-                <h1>¡Bienvenido{session.info.isLoggedIn && `, ${session.info.webId?.substring(8).split('.')[0]}`}!</h1>
-            </div>
-        </Container>
-    );
+  return (
+    <Box sx={{ color: 'white', textAlign: 'center' }}>
+      <h1>
+        {t("HomeView.welcome")}
+        {isLoggedIn && (
+          <CombinedDataProvider datasetUrl={webId!} thingUrl={webId!}>
+            <span>, </span>
+            <Text property={FOAF.name} errorComponent={() => <>{webId!.substring(8).split('.')[0]}</>} />
+          </CombinedDataProvider>
+        )}
+        !
+      </h1>
+    </Box>
+  );
 }
 
 export default HomeView;
