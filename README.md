@@ -37,34 +37,34 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+      <a href="#-about-the-project">About The Project</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#-built-with">Built With</a></li>
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#-getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#-prerequisites">Prerequisites</a></li>
+        <li><a href="#-installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#-contact">Contact</a></li>
   </ol>
 </details>
 
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## 📚 About The Project
 
 ![LOMAP_screenshot](https://github.com/Arquisoft/lomap_es1b1/blob/develop/docs/images/screenshot.png)
+<p align="justify">The software development company HappySw has been hired by the Council of Brussels to develop a software system called <a href="https://arquisoft.github.io/course2223/labAssignmentDescription.html">LoMap.</a></p>
+<p align="justify">This system will allow citizens to have personalized maps of places and local businesses in their city. The places that can be mapped include shops, bars, restaurants, sights, and cultural attractions, among others. Users will have full control over their personalized maps and the shared information will be stored in a personal pod according to the <a href="https://solidproject.org/">SOLID principles</a>.</p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-### Built With
+### 🚧 Built With
 * [Docker](https://www.docker.com/)
 * [Node.js](https://nodejs.org/es/)
 * [React.js](https://reactjs.org/)
@@ -79,12 +79,12 @@
 
 
 <!-- GETTING STARTED -->
-## Getting Started
-### Prerequisites
+## 🦶 Getting Started
+### 📋 Prerequisites
 
 <p align="justify">If you already have Node.js and npm, ensure that you update them before trying to construct the images. To run the project, you'll need <a href="https://nodejs.org/en/download">Node.js</a>, <a href="https://www.docker.com/">Docker</a>, <a href="https://docs.npmjs.com/downloading-and-installing-node-js-and-npm">npm</a> and <a href="https://git-scm.com/downloads">git</a> installed on your machine. Make certain that all four are installed.</p>
 
-### Installation
+### 🛠 Installation
 <p align="justify">You can obtain the project by using the command <code>git clone https://github.com/Arquisoft/lomap_es1b1</code>.</p>
 
 #### With Docker
@@ -117,7 +117,7 @@ You should be able to access the application in [http://localhost:3000](http://l
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
-## Contact
+## 📮 Contact
 Joaquín Hermida Giganto - [Jhergig](https://github.com/Jhergig)
 
 Óscar Davila Sampedro - [OscarDavilaSampedro](https://github.com/OscarDavilaSampedro)
