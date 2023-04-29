@@ -62,8 +62,6 @@
 <p align="justify">The software development company HappySw has been hired by the Council of Brussels to develop a software system called <a href="https://arquisoft.github.io/course2223/labAssignmentDescription.html">LoMap.</a></p>
 <p align="justify">This system will allow citizens to have personalized maps of places and local businesses in their city. The places that can be mapped include shops, bars, restaurants, sights, and cultural attractions, among others. Users will have full control over their personalized maps and the shared information will be stored in a personal pod according to the <a href="https://solidproject.org/">SOLID principles</a>.</p>
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ### 🚧 Built With
 * [Docker](https://www.docker.com/)
 * [Node.js](https://nodejs.org/es/)
