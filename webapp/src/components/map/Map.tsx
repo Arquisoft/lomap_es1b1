@@ -59,24 +59,26 @@ const Map: React.FC<IMapProps> = (props) => {
     const { state: markers, dispatch } = useContext(MarkerContext);
     const [lastAddedCouple, setLastAddedCouple] = useState<ICouple>();
     const [googleMarkers, setGoogleMarkers] = useState<GoogleMarker[]>([]);
+    const styles: Record<string, google.maps.MapTypeStyle[]> = {
+        hide: [
+            {
+                featureType: "poi",
+                stylers: [{ visibility: "off" }],
+            },
+            {
+                featureType: "transit",
+                elementType: "labels.icon",
+                stylers: [{ visibility: "off" }],
+            },
+        ],
+    };
 
     const startMap = (): void => {
         if (!map) {
             defaultMapStart();
         } else {
+            reloadMarkers();
             addHomeMarker(map.getCenter());
-            switch (props.globalMode) {
-                case 'M':
-                    loadContextMarkers();
-                    break;
-                case 'A':
-                    loadFriendMarkers();
-                    break;
-                case 'E':
-                    loadPublicMarkers();
-                    break;
-                default:
-            }
         }
     };
 
@@ -137,7 +139,7 @@ const Map: React.FC<IMapProps> = (props) => {
             addMarker(marker);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [marker, props.globalCategory]);
+    }, [marker]);
 
     const formatName = (): string => {
         return props.globalName ? props.globalName : t("Map.noName");
@@ -157,8 +159,8 @@ const Map: React.FC<IMapProps> = (props) => {
 
     const generateMarker = (notAddedMarker: IMarker, id: string): ICouple => {
         const marker: GoogleMarker = new google.maps.Marker({
+            icon: `markers/${notAddedMarker.category}_marker.png`,
             position: notAddedMarker.latLng,
-            icon: "markers/" + notAddedMarker.category + "_marker.png",
             map: map
         });
 
@@ -240,6 +242,7 @@ const Map: React.FC<IMapProps> = (props) => {
 
     useEffect(() => {
         if (lastAddedCouple) {
+            lastAddedCouple.marker.setIcon(`markers/${props.globalCategory}_marker.png`)
             lastAddedCouple.infoWindow.setContent(
                 generateInfoWindowContent(
                     formatName(),
@@ -274,6 +277,11 @@ const Map: React.FC<IMapProps> = (props) => {
     }, [props.acceptedMarker]);
 
     useEffect(() => {
+        reloadMarkers();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.globalMode, props.globalFilterName, props.globalFilterCategories, props.globalFilterWebID, props.locale]);
+
+    const reloadMarkers = () => {
         props.setDetailedIWOpen(false);
         deleteAllMarkers();
 
@@ -289,9 +297,7 @@ const Map: React.FC<IMapProps> = (props) => {
                 break;
             default:
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.globalMode, props.globalFilterName, props.globalFilterCategories, props.globalFilterWebID, props.locale]);
+    }
 
     const deleteAllMarkers = (): void => {
         googleMarkers.forEach((googleMarker) => {
@@ -365,6 +371,7 @@ const Map: React.FC<IMapProps> = (props) => {
                     zoomControl: true,
                     scaleControl: true,
                     rotateControl: false,
+                    styles: styles["hide"],
                     mapTypeId: props.mapType,
                     streetViewControl: false,
                     fullscreenControl: false,
