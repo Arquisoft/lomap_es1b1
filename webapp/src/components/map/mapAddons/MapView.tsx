@@ -63,9 +63,9 @@ const MapView: React.FC<IMapViewProps> = (props) => {
 
         if (isPublic) {
             addPublicLocation(marker);
-        } else {
-            dispatch({ type: Types.ADD_MARKER, payload: { marker: marker } });
         }
+        dispatch({ type: Types.ADD_MARKER, payload: { marker: marker } });
+
 
         setGlobalLat(0);
         setGlobalLng(0);

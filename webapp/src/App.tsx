@@ -25,12 +25,21 @@ function App(): JSX.Element {
     dispatch({ type: Types.SET_MARKERS, payload: { markers: markers } });
   }
 
+  async function loadPublicMarkers() {
+    let markers: IPMarker[] = [];
+    (await getPublicLocations()).forEach(m => markers.push(m));
+    setMarkers(markers);
+  }
+
   async function loadMarkers() {
     let markers = await readFriendMarkers(session.info.webId!);
     (await readMarkers(session.info.webId!)).forEach(m => markers.push(m));
-    //(await getPublicLocations()).forEach(m => markers.push(m));
+    (await getPublicLocations()).forEach(m => markers.push(m));
     setMarkers(markers);
   }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {loadPublicMarkers()}, [])
 
   useEffect(() => {
     session.setMaxListeners(0);
@@ -50,10 +59,7 @@ function App(): JSX.Element {
 
   session.onLogin(loadMarkers);
   session.onSessionRestore(loadMarkers);
-
-  session.onLogout(() => {
-    setMarkers([]);
-  })
+  session.onLogout(loadPublicMarkers)
 
   return (
     <>

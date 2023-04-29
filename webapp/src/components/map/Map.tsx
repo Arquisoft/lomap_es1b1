@@ -65,6 +65,18 @@ const Map: React.FC<IMapProps> = (props) => {
             defaultMapStart();
         } else {
             addHomeMarker(map.getCenter());
+            switch (props.globalMode) {
+                case 'M':
+                    loadContextMarkers();
+                    break;
+                case 'A':
+                    loadFriendMarkers();
+                    break;
+                case 'E':
+                    loadPublicMarkers();
+                    break;
+                default:
+            }
         }
     };
 
@@ -273,7 +285,7 @@ const Map: React.FC<IMapProps> = (props) => {
                 loadFriendMarkers();
                 break;
             case 'E':
-                loadPublicMarkers();// <- Cargar marcadores
+                loadPublicMarkers();
                 break;
             default:
         }

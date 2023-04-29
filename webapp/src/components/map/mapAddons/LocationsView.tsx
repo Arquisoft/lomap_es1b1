@@ -1,10 +1,11 @@
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, Box, Button } from '@mui/material';
+import { Box, Button, Stack } from '@mui/material';
 import { useSession } from '@inrupt/solid-ui-react';
 import { IPMarker } from "../../../shared/SharedTypes";
 import { deletePublicMarker } from '../../../helpers/SolidHelper';
 import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
+import { deletePublicLocation } from '../../../api/API';
 
 const UbicationsView = () => {
     const { t } = useTranslation();
@@ -32,26 +33,27 @@ const UbicationsView = () => {
         if (location.canFriendsSee) {
             await deletePublicMarker(location, session.info.webId!);
         }
+        if (location.isPublic) {
+            await deletePublicLocation(location);
+        }
     }
 
     return (
         <>
             {myLocations.length > 0 ? (
-                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ padding: '2em' }}>
+                <Stack direction="row" flexWrap={'wrap'} sx={{ padding: '2em' }}>
                     {myLocations.map((location: IPMarker) => (
-                        <Grid item xs={6} sm={4} md={3} key={location.id}>
-                            <Box sx={{ padding: '1em', bgcolor: 'white', borderRadius: '0.5em' }}>
-                                <h1 style={{ marginTop: '0em' }}>{location.name}</h1>
-                                <img src={loadStaticMap(location.lat, location.lng)} width='100%' alt="imagen-mapa" />
-                                <p style={{ marginTop: '0em' }}>{t("LocationsView.address")}{location.address}</p>
-                                <p>{t("LocationsView.category")}{t(`Map.${location.category.toLowerCase()}`)}</p>
-                                <p>{t("LocationsView.description")}{location.description}</p>
-                                <p>{t("LocationsView.visibility")}{location.id.includes("-") ? (location.isPublic ? t("LocationsView.friends") : t("LocationsView.private")) : t("LocationsView.public")}</p>
-                                <Button onClick={() => deleteLocation(location)}>{t("LocationsView.delete")}</Button>
-                            </Box>
-                        </Grid>
+                        <Box sx={{ margin: '1em', padding: '1em', bgcolor: 'white', borderRadius: '0.5em' }}>
+                            <h1 style={{ marginTop: '0em' }}>{location.name}</h1>
+                            <img src={loadStaticMap(location.lat, location.lng)} width={'100%'} alt="imagen-mapa" />
+                            <p style={{ marginTop: '0em' }}>{t("LocationsView.address")}{location.address}</p>
+                            <p>{t("LocationsView.category")}{t(`Map.${location.category.toLowerCase()}`)}</p>
+                            <p>{t("LocationsView.description")}{location.description}</p>
+                            <p>{t("LocationsView.visibility")}{location.isPublic ? t("LocationsView.public") : (location.canFriendsSee ? t("LocationsView.friends") : t("LocationsView.private"))}</p>
+                            <Button onClick={() => deleteLocation(location)}>{t("LocationsView.delete")}</Button>
+                        </Box>
                     ))}
-                </Grid>
+                </Stack>
             ) : (
                 <h1 style={{ color: 'white', textAlign: 'center' }}>{t("LocationsView.noLocations")}</h1>
             )}

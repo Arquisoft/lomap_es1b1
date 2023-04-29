@@ -5,7 +5,8 @@ const api:Router = express.Router()
 
 const mongoose = require("mongoose");
 
-const ubicacionSchema = new mongoose.Schema({
+const locationSchema = new mongoose.Schema({
+  id: String,
   date: Date,
   lat: Number,
   lng: Number,
@@ -15,38 +16,25 @@ const ubicacionSchema = new mongoose.Schema({
   category: String,
   isPublic: Boolean,
   reviews: [],
-  descripcion: String
+  descripcion: String,
+  canFriendsSee: Boolean
 })
 
-const Ubicacion = mongoose.model("ubicaciones", ubicacionSchema);
-
-interface User {
-    id: string;
-    name: string;
-    email: string;
-    friends: Array<string>;
-}
+const Location = mongoose.model("locations", locationSchema);
 
 api.get(
-  "/ubicaciones/list",
+  "/locations/list",
   async (req: Request, res: Response): Promise<Response> => { 
-    const ubicaciones = await Ubicacion.find()
-    return res.status(200).send(ubicaciones);
+    const locations = await Location.find()
+    return res.status(200).send(locations);
   }
 );
 
-api.post("/ubicaciones/update", [
+api.post("/locations/add", [
   check('webid').isLength({ min: 1 }).trim().escape(),
 ],
 async (req: Request, res: Response): Promise<Response> => {
-  await Ubicacion.findOneAndUpdate({name:req.body.name}, { $set: {reviews: req.body.reviews}})
-  return res.sendStatus(200);
-})
-
-api.post("/ubicaciones/add", [
-  check('webid').isLength({ min: 1 }).trim().escape(),
-],
-async (req: Request, res: Response): Promise<Response> => {
+  let id = req.body.id;
   let date = req.body.date;
   let lat = req.body.lat;
   let lng = req.body.lng;
@@ -54,9 +42,27 @@ async (req: Request, res: Response): Promise<Response> => {
   let webId = req.body.webId;
   let address = req.body.address;
   let category = req.body.category;
+  let isPublic = req.body.isPublic;
   let reviews = req.body.reviews;
   let descripcion = req.body.descripcion;
-  new Ubicacion({date, lat, lng, name, webId, address, category, reviews, descripcion}).save();
+  let canFriendsSee = req.body.canFriendsSee;
+  new Location({id, date, lat, lng, name, webId, address, category, isPublic, reviews, descripcion, canFriendsSee}).save();
+  return res.sendStatus(200);
+})
+
+api.post("/locations/update", [
+  check('webid').isLength({ min: 1 }).trim().escape(),
+],
+async (req: Request, res: Response): Promise<Response> => {
+  await Location.findOneAndUpdate({id:req.body.id}, { $set: {reviews: req.body.reviews}})
+  return res.sendStatus(200);
+})
+
+api.post("/locations/delete", [
+  check('webid').isLength({ min: 1 }).trim().escape(),
+],
+async (req: Request, res: Response): Promise<Response> => {
+  await Location.findOneAndRemove({id:req.body.id})
   return res.sendStatus(200);
 })
 
