@@ -41,9 +41,15 @@ const UbicationsView = () => {
     return (
         <>
             {myLocations.length > 0 ? (
-                <Stack direction="row" flexWrap={'wrap'} sx={{ padding: '2em' }}>
+                <Stack direction="row" flexWrap={'wrap'} justifyContent={'center'}>
                     {myLocations.map((location: IPMarker) => (
-                        <Box sx={{ margin: '1em', padding: '1em', bgcolor: 'white', borderRadius: '0.5em' }}>
+                        <Box key={location.id} sx={{ margin: '1em', padding: '1em', bgcolor: 'white', borderRadius: '0.5em', overflow: 'hidden', width: {
+                            xs: '80%',
+                            sm: '33%',
+                            md: '25%',
+                            lg: '25%',
+                            xl: '20%',
+                          }, }}>
                             <h1 style={{ marginTop: '0em' }}>{location.name}</h1>
                             <img src={loadStaticMap(location.lat, location.lng)} width={'100%'} alt="imagen-mapa" />
                             <p style={{ marginTop: '0em' }}>{t("LocationsView.address")}{location.address}</p>
