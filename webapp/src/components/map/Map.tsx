@@ -59,19 +59,6 @@ const Map: React.FC<IMapProps> = (props) => {
     const { state: markers, dispatch } = useContext(MarkerContext);
     const [lastAddedCouple, setLastAddedCouple] = useState<ICouple>();
     const [googleMarkers, setGoogleMarkers] = useState<GoogleMarker[]>([]);
-    const styles: Record<string, google.maps.MapTypeStyle[]> = {
-        hide: [
-            {
-                featureType: "poi",
-                stylers: [{ visibility: "off" }],
-            },
-            {
-                featureType: "transit",
-                elementType: "labels.icon",
-                stylers: [{ visibility: "off" }],
-            },
-        ],
-    };
 
     const startMap = (): void => {
         if (!map) {
@@ -371,13 +358,146 @@ const Map: React.FC<IMapProps> = (props) => {
                     zoomControl: true,
                     scaleControl: true,
                     rotateControl: false,
-                    styles: styles["hide"],
                     mapTypeId: props.mapType,
                     streetViewControl: false,
                     fullscreenControl: false,
                     draggableCursor: 'pointer',
                     gestureHandling: 'cooperative',
-                    mapTypeControl: props.mapTypeControl
+                    mapTypeControl: props.mapTypeControl,
+                    styles: [
+                        {
+                            "featureType": "all",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#202c3e"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "all",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "gamma": 0.01
+                                },
+                                {
+                                    "lightness": 20
+                                },
+                                {
+                                    "weight": 1.39
+                                },
+                                {
+                                    "color": "#ffffff"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "all",
+                            "elementType": "labels.text.stroke",
+                            "stylers": [
+                                {
+                                    "weight": 0.96
+                                },
+                                {
+                                    "saturation": 9
+                                },
+                                {
+                                    "visibility": "on"
+                                },
+                                {
+                                    "color": "#000000"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "all",
+                            "elementType": "labels.icon",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "landscape",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "lightness": 30
+                                },
+                                {
+                                    "saturation": 9
+                                },
+                                {
+                                    "color": "#29446b"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "all",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "lightness": 10
+                                },
+                                {
+                                    "saturation": -30
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "color": "#193a55"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road",
+                            "elementType": "geometry.stroke",
+                            "stylers": [
+                                {
+                                    "saturation": 25
+                                },
+                                {
+                                    "lightness": 25
+                                },
+                                {
+                                    "weight": 0.01
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "transit",
+                            "elementType": "all",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "all",
+                            "stylers": [
+                                {
+                                    "lightness": -20
+                                }
+                            ]
+                        }
+                    ]
                 })
             );
         }
