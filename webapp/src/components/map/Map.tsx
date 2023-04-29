@@ -364,6 +364,7 @@ const Map: React.FC<IMapProps> = (props) => {
                     draggableCursor: 'pointer',
                     gestureHandling: 'cooperative',
                     mapTypeControl: props.mapTypeControl,
+                    mapTypeControlOptions: { mapTypeIds: [] },
                     styles: [
                         {
                             "featureType": "all",
