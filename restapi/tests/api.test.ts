@@ -79,4 +79,22 @@ describe('product ', () => {
         expect(response.statusCode).toBe(200);
     });
 
+    it('can be deleted', async () => {
+        const response: Response = await request(app).post("/api/ubicaciones/delete").send({
+            id: "1",
+            date: new Date(),
+            lat: 0,
+            lng: 0,
+            name: "Test marker 1",
+            webId: "https://example.com/user1#me",
+            address: "123 Main St",
+            category: "Test",
+            isPublic: false,
+            reviews: [],
+            description: "This is a test marker",
+            canFriendsSee: false,
+        });
+        expect(response.statusCode).toBe(200);
+    });
+
 });

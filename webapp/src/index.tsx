@@ -10,7 +10,7 @@ import { MarkerContextProvider } from './context/MarkerContextProvider';
 
 ReactDOM.render(
   <React.StrictMode>
-    <SessionProvider session-id="login" restorePreviousSession={true}>
+    <SessionProvider session-id="login">
       <MarkerContextProvider>
         <BrowserRouter>
           <App />

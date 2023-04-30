@@ -25,4 +25,4 @@ app.listen(port, (): void => {
 
 const uri = process.env.REACT_APP_MONGODB_URI;
 
-mongoose.connect('mongodb+srv://' + "admin:yFcIRUz3i1lpjEAk@lomap.fx7ams0.mongodb.net" + '/LoMapDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); 
+mongoose.connect('mongodb+srv://' + uri + '/LoMapDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); 

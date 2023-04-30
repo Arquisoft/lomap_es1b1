@@ -25,18 +25,18 @@ defineFeature(feature, test => {
 
     given('An user in the home page', async () => {
       const text = await page.evaluate(() => document.body.textContent);
-      await expect(text).toContain('HomeView.welcome')
+      await expect(text).toContain('Welcome')
     });
 
     when('The user clicks on the map link in the navbar', async () => {
       const text = await page.evaluate(() => document.body.textContent);
-      await expect(text).toContain('NavBar.map')
-      await expect(page).toClick('a', { text: 'NavBar.map' })
+      await expect(text).toContain('Map')
+      await expect(page).toClick('a', { text: 'Map' })
     });
 
     then('The map page should be shown', async () => {
       const text = await page.evaluate(() => document.body.textContent);
-      await expect(text).toContain('MapView.filters')
+      await expect(text).toContain('Filters')
     });
   })
 
