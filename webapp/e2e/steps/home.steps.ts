@@ -15,7 +15,7 @@ defineFeature(feature, test => {
     page = await browser.newPage();
 
     await page
-      .goto(process.env.REACT_APP_APP_URI || "http://localhost:443/", {
+      .goto(process.env.REACT_APP_APP_URI || "https://localhost:443/", {
         waitUntil: "networkidle0",
       })
       .catch(() => { });
