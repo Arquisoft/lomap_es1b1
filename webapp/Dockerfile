@@ -5,7 +5,7 @@ WORKDIR /app
 #Install the dependencies
 RUN npm install
 
-ARG API_URI="http://localhost:5000/api"
+ARG API_URI="https://localhost:5000/api"
 ARG APP_URI="https://localhost:443"
 ARG API_KEY_GOOGLE_MAPS
 ENV REACT_APP_API_URI=$API_URI
