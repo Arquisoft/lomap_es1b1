@@ -55,43 +55,40 @@ const NewUbicationForm: React.FC<INewLocationFormProps> = ({
               type='number'
               name="latitude"
               label={t("NewLocationForm.latitude")}
-              variant='filled'
+              color='primary'
               value={globalLat}
               onChange={e => setGlobalLat(e.target.value as unknown as number)}
-              sx={{ marginBottom: '1em', bgcolor: 'white' }}
+              sx={{ marginBottom: '1em', label: { color: 'white' }, input: { color: 'white' } }}
             />
             <TextField
               required
               type='number'
               name="longitude"
               label={t("NewLocationForm.longitude")}
-              variant='filled'
               value={globalLng}
               onChange={e => setGlobalLng(e.target.value as unknown as number)}
-              sx={{ my: 2, bgcolor: 'white' }}
+              sx={{ my: 2 }}
             />
             <TextField
               required
               name="name"
               label={t("NewLocationForm.name")}
-              variant='filled'
               value={globalName}
               onChange={e => setGlobalName(e.target.value)}
-              sx={{ my: 2, bgcolor: 'white' }}
+              sx={{ my: 2 }}
             />
             <TextField
               required
               name="description"
               label={t("NewLocationForm.description")}
-              variant='filled'
               value={globalDescription}
               onChange={e => setGlobalDescription(e.target.value)}
-              sx={{ my: 2, bgcolor: 'white' }}
+              sx={{ my: 2 }}
             />
             <Select
               value={globalCategory}
               onChange={(e) => setGlobalCategory(e.target.value as string)}
-              sx={{ my: 2, bgcolor: 'white' }}
+              sx={{ my: 2 }}
             >
               <MenuItem value={'P'}>{t("NewLocationForm.parks")}</MenuItem>
               <MenuItem value={'Ti'}>{t("NewLocationForm.shops")}</MenuItem>

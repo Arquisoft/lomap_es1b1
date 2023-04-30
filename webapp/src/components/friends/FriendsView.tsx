@@ -67,12 +67,7 @@ export const FriendsView: React.FC<IFriendsViewProps> = (props) => {
             />
           </Grid>
           <Grid item alignItems="stretch" style={{ display: "flex" }}>
-            <Button variant="contained" type="submit" sx={{
-              bgcolor: 'green',
-              ":hover": {
-                bgcolor: "green"
-              }
-            }}>{t("FriendsView.addFriend")}</Button>
+            <Button variant="contained" type="submit">{t("FriendsView.addFriend")}</Button>
           </Grid>
         </Grid>
       </form>
