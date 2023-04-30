@@ -30,4 +30,4 @@ yarn-error.log*
 docs/build
 
 # exclude all .env files from source control
-# *.env
+*.env
