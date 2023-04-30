@@ -1,0 +1,10 @@
+{
+  "simulation": "lomap_es1b1.LoginSimulation",
+  "simulationId": "loginsimulation-20230430181330225",
+  "start": 1682878411014,
+  "description": "",
+  "scenarios": ["LoginSimulation"],
+  "assertions": [
+
+  ]
+}
