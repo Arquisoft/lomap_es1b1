@@ -20,7 +20,8 @@ beforeAll(async () => {
     app.use(bp.json());
     app.use("/api", api)
 
-    mongoose.connect('mongodb+srv://' + "admin:yFcIRUz3i1lpjEAk@lomap.fx7ams0.mongodb.net" + '/LoMapDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+    const uri = process.env.REACT_APP_MONGODB_URI;
+    mongoose.connect('mongodb+srv://' + uri + '/LoMapDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
     server = app.listen(port, (): void => {
         console.log('Restapi server for testing listening on ' + port);
@@ -39,12 +40,12 @@ describe('product ', () => {
      * Test that we can list products without any error.
      */
     it('can be listed', async () => {
-        const response: Response = await request(app).get("/api/ubicaciones/list");
+        const response: Response = await request(app).get("/api/locations/list");
         expect(response.statusCode).toBe(200);
     });
 
     it('can be added', async () => {
-        const response: Response = await request(app).post("/api/ubicaciones/add").send({
+        const response: Response = await request(app).post("/api/locations/add").send({
             id: "1",
             date: new Date(),
             lat: 0,
@@ -62,7 +63,7 @@ describe('product ', () => {
     });
 
     it('can be updated', async () => {
-        const response: Response = await request(app).post("/api/ubicaciones/update").send({
+        const response: Response = await request(app).post("/api/locations/update").send({
             id: "1",
             date: new Date(),
             lat: 0,
@@ -80,7 +81,7 @@ describe('product ', () => {
     });
 
     it('can be deleted', async () => {
-        const response: Response = await request(app).post("/api/ubicaciones/delete").send({
+        const response: Response = await request(app).post("/api/locations/delete").send({
             id: "1",
             date: new Date(),
             lat: 0,
