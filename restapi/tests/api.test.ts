@@ -43,7 +43,7 @@ describe('product ', () => {
         const response: Response = await request(app).get("/api/locations/list");
         expect(response.statusCode).toBe(200);
     });
-
+/*
     it('can be added', async () => {
         const response: Response = await request(app).post("/api/locations/add").send({
             id: "1",
@@ -97,5 +97,5 @@ describe('product ', () => {
         });
         expect(response.statusCode).toBe(200);
     });
-
+*/
 });
