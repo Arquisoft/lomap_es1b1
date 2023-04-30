@@ -23,6 +23,6 @@ app.listen(port, (): void => {
     console.error('Error occured: ' + error.message);
 });
 
-const uri = process.env.REACT_APP_MONGODB_URI;
+const uri = process.env.MONGODB_URI;
 
 mongoose.connect('mongodb+srv://' + uri + '/LoMapDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); 
