@@ -7,7 +7,7 @@ let page: puppeteer.Page;
 let browser: puppeteer.Browser;
 
 defineFeature(feature, test => {
-  
+
   beforeAll(async () => {
     browser = process.env.GITHUB_ACTIONS
       ? await puppeteer.launch()
@@ -15,13 +15,13 @@ defineFeature(feature, test => {
     page = await browser.newPage();
 
     await page
-      .goto("http://localhost:3000/", {
+      .goto(process.env.REACT_APP_APP_URI || "http://localhost:443/", {
         waitUntil: "networkidle0",
       })
-      .catch(() => {});
+      .catch(() => { });
   });
 
-  test('The user views the map page of the app', ({given,when,then}) => {
+  test('The user views the map page of the app', ({ given, when, then }) => {
 
     given('An user in the home page', async () => {
       const text = await page.evaluate(() => document.body.textContent);
@@ -40,7 +40,7 @@ defineFeature(feature, test => {
     });
   })
 
-  afterAll(async ()=>{
+  afterAll(async () => {
     browser.close()
   })
 

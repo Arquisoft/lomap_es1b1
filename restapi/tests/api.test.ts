@@ -14,13 +14,13 @@ beforeAll(async () => {
     app = express();
     const port: number = 5000;
     const options: cors.CorsOptions = {
-        origin: ['http://localhost:3000']
+        origin: [process.env.REACT_APP_APP_URI || 'http://localhost:443']
     };
     app.use(cors(options));
     app.use(bp.json());
     app.use("/api", api)
 
-    mongoose.connect('mongodb+srv://' + "admin:yFcIRUz3i1lpjEAk@lomap.fx7ams0.mongodb.net" +'/LoMapDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect('mongodb+srv://' + "admin:yFcIRUz3i1lpjEAk@lomap.fx7ams0.mongodb.net" + '/LoMapDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
     server = app.listen(port, (): void => {
         console.log('Restapi server for testing listening on ' + port);
@@ -56,7 +56,7 @@ describe('product ', () => {
             isPublic: false,
             reviews: [],
             description: "This is a test marker",
-            canFriendsSee:false,
+            canFriendsSee: false,
         });
         expect(response.statusCode).toBe(200);
     });
@@ -74,7 +74,7 @@ describe('product ', () => {
             isPublic: false,
             reviews: [],
             description: "This is a test marker",
-            canFriendsSee:false,
+            canFriendsSee: false,
         });
         expect(response.statusCode).toBe(200);
     });
