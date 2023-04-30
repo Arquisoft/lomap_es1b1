@@ -6,7 +6,7 @@ import { IPMarker, Review } from "../../../shared/SharedTypes";
 import React, { useContext, useEffect, useState } from 'react';
 import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
 import { CombinedDataProvider, useSession, Image, Text } from '@inrupt/solid-ui-react';
-import { deletePublicMarker, savePublicMarker, readFriendsCanSeeMarkers } from '../../../helpers/SolidHelper';
+import { deleteFriendsCanSeeMarker, saveFriendsCanSeeMarker, readFriendsCanSeeMarkers } from '../../../helpers/SolidHelper';
 import { Slide, Stack, TextField, Dialog, Rating, Button, IconButton, FormGroup, Switch, FormControlLabel, Grid, Avatar, Paper, Divider, Box } from '@mui/material';
 
 const DetailedUbicationView: React.FC<{
@@ -32,9 +32,9 @@ const DetailedUbicationView: React.FC<{
       marker.canFriendsSee = canFriendsSee;
 
       if (canFriendsSee) {
-        await savePublicMarker(marker, session.info.webId!);
+        await saveFriendsCanSeeMarker(marker, session.info.webId!);
       } else {
-        await deletePublicMarker(marker, session.info.webId!);
+        await deleteFriendsCanSeeMarker(marker, session.info.webId!);
       }
 
       dispatch({ type: Types.UPDATE_MARKER, payload: { id: marker.id, marker: marker } });
@@ -55,7 +55,7 @@ const DetailedUbicationView: React.FC<{
       if (marker.isPublic) {
         updatePublicLocation(marker);
       } else if (marker.webId !== session.info.webId!) {
-        await savePublicMarker(marker, marker.webId);
+        await saveFriendsCanSeeMarker(marker, marker.webId);
       }
     }
   }
@@ -128,10 +128,10 @@ const DetailedUbicationView: React.FC<{
       <Slide style={{ color: 'white' }} direction="right" in={isDetailedIWOpen} mountOnEnter unmountOnExit>
         <Stack alignItems="right" sx={{ margin: 2, display: isDetailedIWOpen ? '' : 'none' }}>
           <Stack direction='row'>
-            <h1 style={{ marginTop: '0em' }}>{markerShown.name}</h1>
+            <h1 style={{ margin: '0em' }}>{markerShown.name}</h1>
             <IconButton sx={{ marginLeft: 'auto', marginRight: '0em' }} onClick={async () => setDetailedIWOpen(false)}><Close /></IconButton>
           </Stack>
-          <p style={{ marginTop: '0em' }}>{t("DetailedInfoWindow.address")}{markerShown.address}</p>
+          <p>{t("DetailedInfoWindow.address")}{markerShown.address}</p>
           <p>{t("DetailedInfoWindow.category")}{t(`Map.${markerShown.category.toLowerCase()}`)}</p>
           <p>{t("DetailedInfoWindow.description")}{markerShown.description}</p>
           {markerShown.webId === session.info.webId && !markerShown.isPublic
@@ -161,7 +161,7 @@ const DetailedUbicationView: React.FC<{
             ))}
           </ul>
           {markerShown.webId !== session.info.webId &&
-            <Button variant="contained" sx={{ my: 2 }} onClick={() => setRatingOpen(true)}>{t("DetailedInfoWindow.writeReview")}</Button>
+            <Button className='blueButton' variant="contained" sx={{ my: 2 }} onClick={() => setRatingOpen(true)}>{t("DetailedInfoWindow.writeReview")}</Button>
           }
           <Dialog onClose={() => setRatingOpen(false)} open={isRatingOpen}>
             <form name="newRating" onSubmit={handleSubmit}>
@@ -193,11 +193,11 @@ const DetailedUbicationView: React.FC<{
                   onChange={(e) => setComment(e.target.value as string)}
                   sx={{ margin: '0.5em 0em 0.5em' }}
                 />
-                <Button variant="contained" type="submit" sx={{ marginTop: '0.5em' }}>{t("DetailedInfoWindow.send")}</Button>
+                <Button className='blueButton' variant="contained" type="submit" sx={{ marginTop: '0.5em' }}>{t("DetailedInfoWindow.send")}</Button>
               </Stack>
             </form>
           </Dialog>
-          <Button variant="contained" sx={{ my: 2 }} onClick={() => setCommentsOpen(true)}>{t("DetailedInfoWindow.seeReviews")}</Button>
+          <Button className='blueButton' variant="contained" sx={{ my: 2 }} onClick={() => setCommentsOpen(true)}>{t("DetailedInfoWindow.seeReviews")}</Button>
           <Dialog onClose={() => setCommentsOpen(false)} open={isCommentsOpen}>
             {reviews.length > 0 ? (
               <Paper style={{ padding: "40px 20px", maxHeight: 700, overflow: 'auto' }}>

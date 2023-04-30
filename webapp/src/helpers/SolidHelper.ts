@@ -198,7 +198,7 @@ async function grantAccessToMarkers(webId: string, access: boolean) {
     await saveAclFor(myDatasetWithAcl, updatedAcl, { fetch: fetch });
 }
 
-export async function savePublicMarker(publicMarker: IPMarker, webId: string) {
+export async function saveFriendsCanSeeMarker(publicMarker: IPMarker, webId: string) {
     let { markers, fileURL } = await filterPublicMarker(webId, publicMarker);
     markers.push(publicMarker);
 
@@ -207,7 +207,7 @@ export async function savePublicMarker(publicMarker: IPMarker, webId: string) {
     return markers;
 }
 
-export async function deletePublicMarker(publicMarker: IPMarker, webId: string) {
+export async function deleteFriendsCanSeeMarker(publicMarker: IPMarker, webId: string) {
     let { markers, fileURL } = await filterPublicMarker(webId, publicMarker);
 
     await saveMarkersToFile(markers, fileURL);

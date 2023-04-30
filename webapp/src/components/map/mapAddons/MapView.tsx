@@ -64,6 +64,7 @@ const MapView: React.FC<IMapViewProps> = (props) => {
         if (isPublic) {
             addPublicLocation(marker);
         }
+
         dispatch({ type: Types.ADD_MARKER, payload: { marker: marker } });
 
 
@@ -117,7 +118,7 @@ const MapView: React.FC<IMapViewProps> = (props) => {
                         >
                             <MenuItem value={'E'}>{t("MapView.explore")}</MenuItem>
                         </Select>}
-                    <Button sx={{ fontSize: 'large' }} variant="contained" onClick={() => setFilterOpen(true)}>
+                    <Button className='blueButton' variant="contained" onClick={() => setFilterOpen(true)}>
                         {t("MapView.filters")}
                     </Button>
                     <Dialog onClose={() => setFilterOpen(false)} open={isFilterOpen}>
@@ -151,10 +152,10 @@ const MapView: React.FC<IMapViewProps> = (props) => {
                     {globalMode === 'M' &&
                         <Button
                             variant="contained"
+                            className='blueButton'
                             sx={{
                                 width: '15em',
                                 margin: '1em',
-                                fontSize: 'large',
                                 display: isFormOpen ? 'none' : '',
                             }}
                             onClick={async () => setFormOpen(!isFormOpen)}
