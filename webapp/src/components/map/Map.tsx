@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 import { useTranslation } from 'react-i18next';
 import { IPMarker } from '../../shared/SharedTypes';
 import { useSession } from '@inrupt/solid-ui-react';
-import { deletePublicMarker } from '../../helpers/SolidHelper';
+import { deleteFriendsCanSeeMarker } from '../../helpers/SolidHelper';
 import { MarkerContext, Types } from '../../context/MarkerContextProvider';
 import React, { useEffect, useRef, useState, useContext, MutableRefObject } from 'react';
 
@@ -174,7 +174,7 @@ const Map: React.FC<IMapProps> = (props) => {
                 marker.setMap(null);
                 dispatch({ type: Types.DELETE_MARKER, payload: { id: id } });
                 if (markerToDelete.canFriendsSee) {
-                    await deletePublicMarker(markerToDelete, session.info.webId!);
+                    await deleteFriendsCanSeeMarker(markerToDelete, session.info.webId!);
                 }
             }
         });
@@ -301,7 +301,7 @@ const Map: React.FC<IMapProps> = (props) => {
     }
 
     const loadFriendMarkers = (): void => {
-        loadMarkers(markers.filter(m => m.webId !== session.info.webId!));
+        loadMarkers(markers.filter(m => m.webId !== session.info.webId! && !m.isPublic));
     }
 
     const loadPublicMarkers = async () => {

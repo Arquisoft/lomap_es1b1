@@ -6,7 +6,7 @@ import { IPMarker, Review } from "../../../shared/SharedTypes";
 import React, { useContext, useEffect, useState } from 'react';
 import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
 import { CombinedDataProvider, useSession, Image, Text } from '@inrupt/solid-ui-react';
-import { deletePublicMarker, savePublicMarker, readFriendsCanSeeMarkers } from '../../../helpers/SolidHelper';
+import { deleteFriendsCanSeeMarker, saveFriendsCanSeeMarker, readFriendsCanSeeMarkers } from '../../../helpers/SolidHelper';
 import { Slide, Stack, TextField, Dialog, Rating, Button, IconButton, FormGroup, Switch, FormControlLabel, Grid, Avatar, Paper, Divider, Box } from '@mui/material';
 
 const DetailedUbicationView: React.FC<{
@@ -32,9 +32,9 @@ const DetailedUbicationView: React.FC<{
       marker.canFriendsSee = canFriendsSee;
 
       if (canFriendsSee) {
-        await savePublicMarker(marker, session.info.webId!);
+        await saveFriendsCanSeeMarker(marker, session.info.webId!);
       } else {
-        await deletePublicMarker(marker, session.info.webId!);
+        await deleteFriendsCanSeeMarker(marker, session.info.webId!);
       }
 
       dispatch({ type: Types.UPDATE_MARKER, payload: { id: marker.id, marker: marker } });
@@ -55,7 +55,7 @@ const DetailedUbicationView: React.FC<{
       if (marker.isPublic) {
         updatePublicLocation(marker);
       } else if (marker.webId !== session.info.webId!) {
-        await savePublicMarker(marker, marker.webId);
+        await saveFriendsCanSeeMarker(marker, marker.webId);
       }
     }
   }

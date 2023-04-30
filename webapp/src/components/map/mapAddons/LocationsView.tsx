@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { Box, Button, Stack } from '@mui/material';
 import { useSession } from '@inrupt/solid-ui-react';
 import { IPMarker } from "../../../shared/SharedTypes";
-import { deletePublicMarker } from '../../../helpers/SolidHelper';
-import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
 import { deletePublicLocation } from '../../../api/API';
+import { deleteFriendsCanSeeMarker } from '../../../helpers/SolidHelper';
+import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
 
 const UbicationsView = () => {
     const { t } = useTranslation();
@@ -31,7 +31,7 @@ const UbicationsView = () => {
     const deleteLocation = async (location: IPMarker) => {
         dispatch({ type: Types.DELETE_MARKER, payload: { id: location.id } });
         if (location.canFriendsSee) {
-            await deletePublicMarker(location, session.info.webId!);
+            await deleteFriendsCanSeeMarker(location, session.info.webId!);
         }
         if (location.isPublic) {
             await deletePublicLocation(location);

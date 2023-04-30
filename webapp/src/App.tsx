@@ -38,8 +38,11 @@ function App(): JSX.Element {
     setMarkers(markers);
   }
 
+
+  useEffect(() => {
+    loadPublicMarkers()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {loadPublicMarkers()}, [])
+  }, []);
 
   useEffect(() => {
     session.setMaxListeners(0);
@@ -58,8 +61,8 @@ function App(): JSX.Element {
   }, [markers]);
 
   session.onLogin(loadMarkers);
+  session.onLogout(loadPublicMarkers);
   session.onSessionRestore(loadMarkers);
-  session.onLogout(loadPublicMarkers)
 
   return (
     <>

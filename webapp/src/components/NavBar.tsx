@@ -23,10 +23,10 @@ export const NavBar: React.FC<INavBarProps> = (props) => {
   return (
     <nav>
       <Stack
-        direction={{ xs: 'column', sm: 'row' }}
-        spacing={{ xs: 1, sm: 2, md: 4 }}
         alignItems='center'
         justifyContent='left'
+        spacing={{ xs: 1, sm: 2, md: 4 }}
+        direction={{ xs: 'column', sm: 'row' }}
       >
         <Link to="/"><img src="/logo-no-background.png" className="App-logo" alt="logo" height="60" /></Link>
         <Link to="/map" style={{ color: 'white', textDecoration: 'none' }}>{t("NavBar.map")}</Link>
