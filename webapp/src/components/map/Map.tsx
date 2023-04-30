@@ -2,8 +2,7 @@ import { v4 as uuid } from 'uuid';
 import { useTranslation } from 'react-i18next';
 import { IPMarker } from '../../shared/SharedTypes';
 import { useSession } from '@inrupt/solid-ui-react';
-import { deleteFriendsCanSeeMarker } from '../../helpers/SolidHelper';
-import { MarkerContext, Types } from '../../context/MarkerContextProvider';
+import { MarkerContext } from '../../context/MarkerContextProvider';
 import React, { useEffect, useRef, useState, useContext, MutableRefObject } from 'react';
 
 interface IMarker {
@@ -55,8 +54,8 @@ const Map: React.FC<IMapProps> = (props) => {
     const ref = useRef<HTMLDivElement>(null);
     const [map, setMap] = useState<GoogleMap>();
     const [marker, setMarker] = useState<IMarker>();
+    const { state: markers } = useContext(MarkerContext);
     const listenerRef = useRef<google.maps.MapsEventListener>();
-    const { state: markers, dispatch } = useContext(MarkerContext);
     const [lastAddedCouple, setLastAddedCouple] = useState<ICouple>();
     const [googleMarkers, setGoogleMarkers] = useState<GoogleMarker[]>([]);
 
@@ -163,19 +162,6 @@ const Map: React.FC<IMapProps> = (props) => {
             if (detailedMarker) {
                 props.setMarkerShown(detailedMarker);
                 props.setDetailedIWOpen(true);
-            }
-        });
-
-        marker.addListener('rightclick', async () => {
-            let markerToDelete = markers.find(marker => marker.id === id);
-            if (markerToDelete) {
-                props.setDetailedIWOpen(false);
-
-                marker.setMap(null);
-                dispatch({ type: Types.DELETE_MARKER, payload: { id: id } });
-                if (markerToDelete.canFriendsSee) {
-                    await deleteFriendsCanSeeMarker(markerToDelete, session.info.webId!);
-                }
             }
         });
 
