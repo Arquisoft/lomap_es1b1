@@ -2,8 +2,7 @@ import { v4 as uuid } from 'uuid';
 import { useTranslation } from 'react-i18next';
 import { IPMarker } from '../../shared/SharedTypes';
 import { useSession } from '@inrupt/solid-ui-react';
-import { deletePublicMarker } from '../../helpers/SolidHelper';
-import { MarkerContext, Types } from '../../context/MarkerContextProvider';
+import { MarkerContext } from '../../context/MarkerContextProvider';
 import React, { useEffect, useRef, useState, useContext, MutableRefObject } from 'react';
 
 interface IMarker {
@@ -55,8 +54,8 @@ const Map: React.FC<IMapProps> = (props) => {
     const ref = useRef<HTMLDivElement>(null);
     const [map, setMap] = useState<GoogleMap>();
     const [marker, setMarker] = useState<IMarker>();
+    const { state: markers } = useContext(MarkerContext);
     const listenerRef = useRef<google.maps.MapsEventListener>();
-    const { state: markers, dispatch } = useContext(MarkerContext);
     const [lastAddedCouple, setLastAddedCouple] = useState<ICouple>();
     const [googleMarkers, setGoogleMarkers] = useState<GoogleMarker[]>([]);
 
@@ -64,19 +63,8 @@ const Map: React.FC<IMapProps> = (props) => {
         if (!map) {
             defaultMapStart();
         } else {
+            reloadMarkers();
             addHomeMarker(map.getCenter());
-            switch (props.globalMode) {
-                case 'M':
-                    loadContextMarkers();
-                    break;
-                case 'A':
-                    loadFriendMarkers();
-                    break;
-                case 'E':
-                    loadPublicMarkers();
-                    break;
-                default:
-            }
         }
     };
 
@@ -137,7 +125,7 @@ const Map: React.FC<IMapProps> = (props) => {
             addMarker(marker);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [marker, props.globalCategory]);
+    }, [marker]);
 
     const formatName = (): string => {
         return props.globalName ? props.globalName : t("Map.noName");
@@ -157,8 +145,8 @@ const Map: React.FC<IMapProps> = (props) => {
 
     const generateMarker = (notAddedMarker: IMarker, id: string): ICouple => {
         const marker: GoogleMarker = new google.maps.Marker({
+            icon: `markers/${notAddedMarker.category}_marker.png`,
             position: notAddedMarker.latLng,
-            icon: "markers/" + notAddedMarker.category + "_marker.png",
             map: map
         });
 
@@ -174,19 +162,6 @@ const Map: React.FC<IMapProps> = (props) => {
             if (detailedMarker) {
                 props.setMarkerShown(detailedMarker);
                 props.setDetailedIWOpen(true);
-            }
-        });
-
-        marker.addListener('rightclick', async () => {
-            let markerToDelete = markers.find(marker => marker.id === id);
-            if (markerToDelete) {
-                props.setDetailedIWOpen(false);
-
-                marker.setMap(null);
-                dispatch({ type: Types.DELETE_MARKER, payload: { id: id } });
-                if (markerToDelete.canFriendsSee) {
-                    await deletePublicMarker(markerToDelete, session.info.webId!);
-                }
             }
         });
 
@@ -240,6 +215,7 @@ const Map: React.FC<IMapProps> = (props) => {
 
     useEffect(() => {
         if (lastAddedCouple) {
+            lastAddedCouple.marker.setIcon(`markers/${props.globalCategory}_marker.png`)
             lastAddedCouple.infoWindow.setContent(
                 generateInfoWindowContent(
                     formatName(),
@@ -274,6 +250,11 @@ const Map: React.FC<IMapProps> = (props) => {
     }, [props.acceptedMarker]);
 
     useEffect(() => {
+        reloadMarkers();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.globalMode, props.globalFilterName, props.globalFilterCategories, props.globalFilterWebID, props.locale]);
+
+    const reloadMarkers = () => {
         props.setDetailedIWOpen(false);
         deleteAllMarkers();
 
@@ -289,9 +270,7 @@ const Map: React.FC<IMapProps> = (props) => {
                 break;
             default:
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.globalMode, props.globalFilterName, props.globalFilterCategories, props.globalFilterWebID, props.locale]);
+    }
 
     const deleteAllMarkers = (): void => {
         googleMarkers.forEach((googleMarker) => {
@@ -308,7 +287,7 @@ const Map: React.FC<IMapProps> = (props) => {
     }
 
     const loadFriendMarkers = (): void => {
-        loadMarkers(markers.filter(m => m.webId !== session.info.webId!));
+        loadMarkers(markers.filter(m => m.webId !== session.info.webId! && !m.isPublic));
     }
 
     const loadPublicMarkers = async () => {
@@ -370,7 +349,142 @@ const Map: React.FC<IMapProps> = (props) => {
                     fullscreenControl: false,
                     draggableCursor: 'pointer',
                     gestureHandling: 'cooperative',
-                    mapTypeControl: props.mapTypeControl
+                    mapTypeControl: props.mapTypeControl,
+                    mapTypeControlOptions: { mapTypeIds: [] },
+                    styles: [
+                        {
+                            "featureType": "all",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#202c3e"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "all",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "gamma": 0.01
+                                },
+                                {
+                                    "lightness": 20
+                                },
+                                {
+                                    "weight": 1.39
+                                },
+                                {
+                                    "color": "#ffffff"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "all",
+                            "elementType": "labels.text.stroke",
+                            "stylers": [
+                                {
+                                    "weight": 0.96
+                                },
+                                {
+                                    "saturation": 9
+                                },
+                                {
+                                    "visibility": "on"
+                                },
+                                {
+                                    "color": "#000000"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "all",
+                            "elementType": "labels.icon",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "landscape",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "lightness": 30
+                                },
+                                {
+                                    "saturation": 9
+                                },
+                                {
+                                    "color": "#29446b"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "all",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "lightness": 10
+                                },
+                                {
+                                    "saturation": -30
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "color": "#193a55"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road",
+                            "elementType": "geometry.stroke",
+                            "stylers": [
+                                {
+                                    "saturation": 25
+                                },
+                                {
+                                    "lightness": 25
+                                },
+                                {
+                                    "weight": 0.01
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "transit",
+                            "elementType": "all",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "all",
+                            "stylers": [
+                                {
+                                    "lightness": -20
+                                }
+                            ]
+                        }
+                    ]
                 })
             );
         }

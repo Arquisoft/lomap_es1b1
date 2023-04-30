@@ -23,10 +23,10 @@ export const NavBar: React.FC<INavBarProps> = (props) => {
   return (
     <nav>
       <Stack
-        direction={{ xs: 'column', sm: 'row' }}
-        spacing={{ xs: 1, sm: 2, md: 4 }}
         alignItems='center'
         justifyContent='left'
+        spacing={{ xs: 1, sm: 2, md: 4 }}
+        direction={{ xs: 'column', sm: 'row' }}
       >
         <Link to="/"><img src="/logo-no-background.png" className="App-logo" alt="logo" height="60" /></Link>
         <Link to="/map" style={{ color: 'white', textDecoration: 'none' }}>{t("NavBar.map")}</Link>
@@ -39,7 +39,7 @@ export const NavBar: React.FC<INavBarProps> = (props) => {
                 <Select
                   value={props.locale}
                   onChange={(e) => props.setLocale(e.target.value)}
-                  sx={{ background: "white", height: "2.5em" }}
+                  sx={{ height: '3em', bgcolor: 'white', margin: '1em', marginRight: '0' }}
                 >
                   <MenuItem value={"en"}>English</MenuItem>
                   <MenuItem value={"es-ES"}>Español</MenuItem>
@@ -50,7 +50,7 @@ export const NavBar: React.FC<INavBarProps> = (props) => {
                 <Image property={VCARD.hasPhoto} style={{ width: 40, height: 40, borderRadius: "50%" }} errorComponent={() => <Avatar sx={{ width: 40, height: 40 }} />} />
               </CombinedDataProvider>
               <LogoutButton>
-                <Button variant="contained" sx={{ margin: "1em", marginLeft: "0em" }}>
+                <Button className="blueButton" variant="contained" sx={{ margin: "1em", marginLeft: "0em" }}>
                   {t("NavBar.logout")}
                 </Button>
               </LogoutButton>
@@ -67,7 +67,7 @@ export const NavBar: React.FC<INavBarProps> = (props) => {
                 <MenuItem value={"es-ES"}>Español</MenuItem>
               </Select>
             </FormControl>
-            <Button variant="contained" onClick={() => setOpen(true)} sx={{ margin: "1em !important", marginLeft: "0em" }}>
+            <Button className="blueButton" variant="contained" onClick={() => setOpen(true)} sx={{ margin: "1em !important", marginLeft: "0em" }}>
               {t("NavBar.login")}
             </Button>
             <LoginForm isOpen={isOpen} onClose={() => setOpen(false)} />

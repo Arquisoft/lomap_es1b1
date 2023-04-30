@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { Box, Button, Stack } from '@mui/material';
 import { useSession } from '@inrupt/solid-ui-react';
 import { IPMarker } from "../../../shared/SharedTypes";
-import { deletePublicMarker } from '../../../helpers/SolidHelper';
-import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
 import { deletePublicLocation } from '../../../api/API';
+import { deleteFriendsCanSeeMarker } from '../../../helpers/SolidHelper';
+import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
 
 const UbicationsView = () => {
     const { t } = useTranslation();
@@ -31,7 +31,7 @@ const UbicationsView = () => {
     const deleteLocation = async (location: IPMarker) => {
         dispatch({ type: Types.DELETE_MARKER, payload: { id: location.id } });
         if (location.canFriendsSee) {
-            await deletePublicMarker(location, session.info.webId!);
+            await deleteFriendsCanSeeMarker(location, session.info.webId!);
         }
         if (location.isPublic) {
             await deletePublicLocation(location);
@@ -43,20 +43,22 @@ const UbicationsView = () => {
             {myLocations.length > 0 ? (
                 <Stack direction="row" flexWrap={'wrap'} justifyContent={'center'}>
                     {myLocations.map((location: IPMarker) => (
-                        <Box key={location.id} sx={{ margin: '1em', padding: '1em', bgcolor: 'white', borderRadius: '0.5em', overflow: 'hidden', width: {
-                            xs: '80%',
-                            sm: '33%',
-                            md: '25%',
-                            lg: '25%',
-                            xl: '20%',
-                          }, }}>
+                        <Box className='locationCard' key={location.id} sx={{
+                            margin: '1em', overflow: 'hidden', width: {
+                                xs: '80%',
+                                sm: '33%',
+                                md: '25%',
+                                lg: '25%',
+                                xl: '20%',
+                            },
+                        }}>
                             <h1 style={{ marginTop: '0em' }}>{location.name}</h1>
-                            <img src={loadStaticMap(location.lat, location.lng)} width={'100%'} alt="imagen-mapa" />
-                            <p style={{ marginTop: '0em' }}>{t("LocationsView.address")}{location.address}</p>
+                            <img style={{borderRadius: "20px"}} src={loadStaticMap(location.lat, location.lng)} width={'100%'} alt="imagen-mapa" />
+                            <p>{t("LocationsView.address")}{location.address}</p>
                             <p>{t("LocationsView.category")}{t(`Map.${location.category.toLowerCase()}`)}</p>
-                            <p>{t("LocationsView.description")}{location.description}</p>
                             <p>{t("LocationsView.visibility")}{location.isPublic ? t("LocationsView.public") : (location.canFriendsSee ? t("LocationsView.friends") : t("LocationsView.private"))}</p>
-                            <Button onClick={() => deleteLocation(location)}>{t("LocationsView.delete")}</Button>
+                            <p>{t("LocationsView.description")}{location.description}</p>
+                            <Button className='redButton' variant='contained' onClick={() => deleteLocation(location)}>{t("LocationsView.delete")}</Button>
                         </Box>
                     ))}
                 </Stack>

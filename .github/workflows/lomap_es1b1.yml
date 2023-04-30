@@ -56,13 +56,15 @@ jobs:
       uses: elgohr/Publish-Docker-Github-Action@v5
       env:
         API_URI: http://${{ secrets.DEPLOY_HOST }}:5000/api
+        APP_URI: http://${{ secrets.DEPLOY_HOST }}:3000
+        API_KEY_GOOGLE_MAPS: ${{ secrets.API_KEY_GOOGLE_MAPS }}
       with:
           name: arquisoft/lomap_es1b1/webapp
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_PUSH_TOKEN }}
           registry: ghcr.io
           workdir: webapp
-          buildargs: API_URI
+          buildargs: API_URI, APP_URI, API_KEY_GOOGLE_MAPS
   docker-push-restapi:
     name: Push restapi Docker Image to GitHub Packages
     runs-on: ubuntu-latest
@@ -71,12 +73,15 @@ jobs:
     - uses: actions/checkout@v3
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
+      env:
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
       with:
           name: arquisoft/lomap_es1b1/restapi
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_PUSH_TOKEN }}
           registry: ghcr.io
           workdir: restapi
+          buildargs: MONGODB_URI
   deploy:
     name: Deploy over SSH
     runs-on: ubuntu-latest
