@@ -4,4 +4,8 @@ COPY . /app
 WORKDIR /app
 #Install the dependencies
 RUN npm install
+
+ARG MONGODB_URI
+ENV REACT_APP_MONGODB_URI=$MONGODB_URI
+
 CMD [ "npm", "start" ]
