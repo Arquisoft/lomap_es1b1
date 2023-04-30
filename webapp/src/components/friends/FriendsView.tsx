@@ -67,7 +67,7 @@ export const FriendsView: React.FC<IFriendsViewProps> = (props) => {
             />
           </Grid>
           <Grid item alignItems="stretch" style={{ display: "flex" }}>
-            <Button variant="contained" type="submit">{t("FriendsView.addFriend")}</Button>
+            <Button className='greenButton' variant="contained" type="submit">{t("FriendsView.addFriend")}</Button>
           </Grid>
         </Grid>
       </form>
@@ -81,7 +81,7 @@ export const FriendsView: React.FC<IFriendsViewProps> = (props) => {
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ padding: "2em 0em 2em" }}>
               {friendList.map((friendWebId) =>
                 <Grid item key={friendWebId}>
-                  <Box sx={{ padding: '2em', bgcolor: 'white', border: 'solid', borderRadius: '2em' }}>
+                  <Box className='friendCard'>
                     <CombinedDataProvider datasetUrl={`${friendWebId}profile/card#me`} thingUrl={`${friendWebId}profile/card#me`}>
                       <Grid container direction="row" alignItems="center">
                         <Grid item>
@@ -102,12 +102,7 @@ export const FriendsView: React.FC<IFriendsViewProps> = (props) => {
                       alignItems="flex-end"
                       justifyContent="flex-end"
                     >
-                      <Button variant="contained" sx={{
-                        bgcolor: 'red',
-                        ":hover": {
-                          bgcolor: "red"
-                        }
-                      }} onClick={() => deleteFriend(friendWebId)}>{t("FriendsView.delete")}</Button>
+                      <Button className='redButton' variant="contained" onClick={() => deleteFriend(friendWebId)}>{t("FriendsView.delete")}</Button>
                     </Box>
                   </Box>
                 </Grid>

@@ -54,41 +54,44 @@ const NewUbicationForm: React.FC<INewLocationFormProps> = ({
               required
               type='number'
               name="latitude"
+              variant="filled"
               label={t("NewLocationForm.latitude")}
-              color='primary'
               value={globalLat}
               onChange={e => setGlobalLat(e.target.value as unknown as number)}
-              sx={{ marginBottom: '1em', label: { color: 'white' }, input: { color: 'white' } }}
+              sx={{ marginBottom: '1em', backgroundColor: "white", borderRadius: "4px" }}
             />
             <TextField
               required
               type='number'
               name="longitude"
+              variant="filled"
               label={t("NewLocationForm.longitude")}
               value={globalLng}
               onChange={e => setGlobalLng(e.target.value as unknown as number)}
-              sx={{ my: 2 }}
+              sx={{ my: 2, backgroundColor: "white", borderRadius: "4px" }}
             />
             <TextField
               required
               name="name"
+              variant="filled"
               label={t("NewLocationForm.name")}
               value={globalName}
               onChange={e => setGlobalName(e.target.value)}
-              sx={{ my: 2 }}
+              sx={{ my: 2, backgroundColor: "white", borderRadius: "4px" }}
             />
             <TextField
               required
               name="description"
+              variant="filled"
               label={t("NewLocationForm.description")}
               value={globalDescription}
               onChange={e => setGlobalDescription(e.target.value)}
-              sx={{ my: 2 }}
+              sx={{ my: 2, backgroundColor: "white", borderRadius: "4px" }}
             />
             <Select
               value={globalCategory}
               onChange={(e) => setGlobalCategory(e.target.value as string)}
-              sx={{ my: 2 }}
+              sx={{ my: 2, backgroundColor: "white", borderRadius: "4px" }}
             >
               <MenuItem value={'P'}>{t("NewLocationForm.parks")}</MenuItem>
               <MenuItem value={'Ti'}>{t("NewLocationForm.shops")}</MenuItem>
@@ -106,8 +109,8 @@ const NewUbicationForm: React.FC<INewLocationFormProps> = ({
                 inputProps={{ 'aria-label': 'controlled' }}
               />} sx={{ color: 'white' }} label={t("NewLocationForm.isPublic")} />
             </FormGroup>
-            <Button variant="contained" type="submit" sx={{ my: 2 }}>{t("NewLocationForm.accept")}</Button>
-            <Button variant="contained" onClick={() => setFormOpened(false)} sx={{ my: 2 }}>{t("NewLocationForm.cancel")}</Button>
+            <Button className='greenButton' variant="contained" type="submit" sx={{ my: 2 }}>{t("NewLocationForm.accept")}</Button>
+            <Button className='redButton' variant="contained" onClick={() => setFormOpened(false)} sx={{ my: 2 }}>{t("NewLocationForm.cancel")}</Button>
           </Stack>
         </form>
       </Slide>
