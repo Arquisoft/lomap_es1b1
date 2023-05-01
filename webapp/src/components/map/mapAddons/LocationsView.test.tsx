@@ -40,7 +40,7 @@ const marker2: IPMarker = {
     description: "This is another test marker",
 };
 const marker3: IPMarker = {
-    id: "2",
+    id: "3",
     date: new Date(),
     lat: 0,
     lng: 0,
@@ -58,12 +58,10 @@ const markerList = [marker1, marker2, marker3];
 
 
 describe("UbicationsView", () => {
-    
+
     it("displays a list of the user's ubications", async () => {
         render(
-            <MarkerContextProvider>
-                <UbicationsView tMarkers={markerList}/>
-            </MarkerContextProvider>
+            <UbicationsView tMarkers={markerList} />
         );
 
         const marker1Name = screen.getByText('Test marker 1');
@@ -72,9 +70,7 @@ describe("UbicationsView", () => {
 
     it("displays a message when the user has no ubications", async () => {
         render(
-            <MarkerContextProvider>
-                <UbicationsView />
-            </MarkerContextProvider>
+            <UbicationsView />
         );
 
         const mapElement = screen.getByText('LocationsView.noLocations');
@@ -83,9 +79,7 @@ describe("UbicationsView", () => {
 
     it("deletes a public location", async () => {
         render(
-            <MarkerContextProvider>
-                <UbicationsView tMarkers={markerList}/>
-            </MarkerContextProvider>
+            <UbicationsView tMarkers={markerList} />
         );
         const deleteButton = screen.getAllByRole('button', { name: 'LocationsView.delete' });
         fireEvent.click(deleteButton[1])
@@ -93,9 +87,7 @@ describe("UbicationsView", () => {
 
     it("deletes a shared location", async () => {
         render(
-            <MarkerContextProvider>
-                <UbicationsView tMarkers={markerList}/>
-            </MarkerContextProvider>
+            <UbicationsView tMarkers={markerList} />
         );
         const deleteButton = screen.getAllByRole('button', { name: 'LocationsView.delete' });
         fireEvent.click(deleteButton[2])
