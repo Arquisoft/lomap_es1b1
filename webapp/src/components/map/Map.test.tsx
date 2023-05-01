@@ -145,6 +145,75 @@ describe('Map component', () => {
     setGlobalAddress: jest.fn(),
     setAcceptedMarker: jest.fn(),
   };
+  const props3: any = {
+    globalLat: 0,
+    globalLng: 0,
+    globalName: '',
+    globalMode: 'M',
+    globalAddress: '',
+    globalCategory: '',
+    acceptedMarker: false,
+    globalFilterName: '',
+    mapTypeControl: true,
+    globalDescription: '',
+    mapType: 'ROADMAP',
+    globalFilterCategories: [],
+    nextID: { current: '' },
+    tMarkers: markerList,
+    formOpened: true,
+    setGlobalLat: jest.fn(),
+    setGlobalLng: jest.fn(),
+    setMarkerShown: jest.fn(),
+    setDetailedIWOpen: jest.fn(),
+    setGlobalAddress: jest.fn(),
+    setAcceptedMarker: jest.fn(),
+  };
+  const props4: any = {
+    globalLat: 0,
+    globalLng: 0,
+    globalName: '',
+    globalMode: 'A',
+    globalAddress: '',
+    globalCategory: '',
+    acceptedMarker: false,
+    globalFilterName: '',
+    mapTypeControl: true,
+    globalDescription: '',
+    mapType: 'ROADMAP',
+    globalFilterCategories: [],
+    nextID: { current: '' },
+    tMarkers: markerList,
+    formOpened: true,
+    setGlobalLat: jest.fn(),
+    setGlobalLng: jest.fn(),
+    setMarkerShown: jest.fn(),
+    setDetailedIWOpen: jest.fn(),
+    setGlobalAddress: jest.fn(),
+    setAcceptedMarker: jest.fn(),
+  };
+  const props5: any = {
+    globalLat: 0,
+    globalLng: 0,
+    globalName: '',
+    globalMode: 'E',
+    globalAddress: '',
+    globalCategory: '',
+    acceptedMarker: false,
+    globalFilterName: '',
+    mapTypeControl: true,
+    globalDescription: '',
+    mapType: 'ROADMAP',
+    globalFilterCategories: [],
+    nextID: { current: '' },
+    tMarkers: markerList,
+    formOpened: true,
+    setGlobalLat: jest.fn(),
+    setGlobalLng: jest.fn(),
+    setMarkerShown: jest.fn(),
+    setDetailedIWOpen: jest.fn(),
+    setGlobalAddress: jest.fn(),
+    setAcceptedMarker: jest.fn(),
+  };
 
   it('should render the component', () => {
     const {container} = render(<Map {...props1} />);
@@ -157,5 +226,22 @@ describe('Map component', () => {
     const mapElement = container.getElementsByClassName('map')
     expect(mapElement[0]).toBeInTheDocument();
   });
+
+  it('should render the component', () => {
+    const {container} = render(<Map {...props3} />);
+    const mapElement = container.getElementsByClassName('map')
+    expect(mapElement[0]).toBeInTheDocument();
+  });
+
+  it('should render the component', () => {
+    const {container} = render(<Map {...props4} />);
+    const mapElement = container.getElementsByClassName('map')
+    expect(mapElement[0]).toBeInTheDocument();
+  });
+
+  it('should render the component', () => {
+    const {container} = render(<Map {...props5} />);
+    const mapElement = container.getElementsByClassName('map')
+    expect(mapElement[0]).toBeInTheDocument();
+  });
 });
- 
