@@ -55,7 +55,7 @@ const LoginForm: React.FC<LoginProps> = (props) => {
                 sx={{ width: '15em', margin: '0.5em' }}
                 disabled={disabled}
               />
-              <LoginButton oidcIssuer={oidcIssuer} redirectUrl={process.env.REACT_APP_API_URI || "http://localhost:3000"}>
+              <LoginButton oidcIssuer={oidcIssuer} redirectUrl={window.location.href}>
                 <Button variant="contained" sx={{ width: '17.25em', margin: '0.5em' }}>
                   {t("LoginForm.login")}
                 </Button>

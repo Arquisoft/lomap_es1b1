@@ -57,8 +57,8 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       env:
-        API_URI: http://${{ secrets.DEPLOY_HOST }}:5000/api
-        APP_URI: http://${{ secrets.DEPLOY_HOST }}:3000
+        API_URI: https://${{ secrets.DEPLOY_HOST }}:5000/api
+        APP_URI: https://${{ secrets.DEPLOY_HOST }}:443
         API_KEY_GOOGLE_MAPS: ${{ secrets.API_KEY_GOOGLE_MAPS }}
       with:
           name: arquisoft/lomap_es1b1/webapp
