@@ -10,7 +10,7 @@ import { Box, CircularProgress } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import MapView from './components/map/mapAddons/MapView';
 import { FriendsView } from './components/friends/FriendsView';
-import UbicationsView from './components/map/mapAddons/LocationsView';
+import LocationsView from './components/map/mapAddons/LocationsView';
 import { MarkerContext, Types } from './context/MarkerContextProvider';
 import { readFriendMarkers, readMarkers, saveMarkers } from './helpers/SolidHelper';
 
@@ -83,7 +83,7 @@ function App(): JSX.Element {
         )}
         />
         <Route path="/ubications" element={
-          <UbicationsView />
+          <LocationsView />
         } />
         <Route path="/friends" element={
           <FriendsView loadMarkers={loadMarkers} />
