@@ -7,7 +7,11 @@
         "myLocations": "My locations"
     },
     "HomeView": {
-        "welcome": "Welcome"
+        "welcome": "Welcome",
+        "p1": "LoMap is a web application that allows you to create and store custom locations on a map of your own, and keep your location data safe and private in your personal Solid pod. ",
+        "p2": "With LoMap, you can easily add a marker anywhere in the world by simply clicking on the map at the desired location and customize it with titles, descriptions and custom tags.",
+        "p3": "You can share your locations with your friends or the world and you can rate the locations they share with you. Join the LoMap community today and start creating and sharing your custom locations securely and easily!",
+        "start": "Let's get started!"
     },
     "Map": {
         "p": "Parks",

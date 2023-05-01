@@ -7,7 +7,11 @@
         "myLocations": "Mis ubicaciones"
     },
     "HomeView": {
-        "welcome": "¡Bienvenido"
+        "welcome": "¡Bienvenido",
+        "p1": "LoMap es una aplicación web que te permite crear y almacenar ubicaciones personalizadas en un mapa propio, y mantener tus datos de ubicación seguros y privados en tu pod personal de Solid. ",
+        "p2": "Con LoMap, puedes agregar fácilmente un marcador en  cualquier lugar del mundo simplemente haciendo clic en el mapa en la ubicación deseada y personalizarlos con títulos, descripciones y etiquetas personalizadas.",
+        "p3": "Puedes compartir tus ubicaciones con tus amigos o con todo el mundo y podrás valorar las ubicaciones que compartan contigo. ¡Únete a la  comunidad LoMap hoy y comienza a crear y compartir tus ubicaciones personalizadas de manera segura y fácil!",
+        "start": "¡Empecemos!"
     },
     "Map": {
         "f": "Salud",
