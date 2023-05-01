@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
 import LoginForm from './login/LoginForm';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import i18n from '../internationalization/i18n';
+import { Link, useNavigate } from "react-router-dom";
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
 import { Stack, Button, Avatar, FormControl, Select, MenuItem } from '@mui/material';
 import { useSession, LogoutButton, CombinedDataProvider, Image, Text } from '@inrupt/solid-ui-react';
@@ -14,6 +14,7 @@ interface INavBarProps {
 
 export const NavBar: React.FC<INavBarProps> = (props) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { session } = useSession();
   const [isOpen, setOpen] = useState(false);
 
@@ -50,7 +51,7 @@ export const NavBar: React.FC<INavBarProps> = (props) => {
                 <Text style={{ color: 'white' }} property={FOAF.name} errorComponent={() => <>{session.info.webId!.substring(8).split('.')[0]}</>} />
                 <Image property={VCARD.hasPhoto} style={{ width: 40, height: 40, borderRadius: "50%" }} errorComponent={() => <Avatar sx={{ width: 40, height: 40 }} />} />
               </CombinedDataProvider>
-              <LogoutButton>
+              <LogoutButton onLogout={() => navigate("/")}>
                 <Button className="blueButton" variant="contained" sx={{ margin: "1em", marginLeft: "0em" }}>
                   {t("NavBar.logout")}
                 </Button>
