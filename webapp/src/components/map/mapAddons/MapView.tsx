@@ -170,14 +170,14 @@ const MapView: React.FC<IMapViewProps> = (props) => {
                     </Tooltip>}
                 </Stack>
             </Grid>
-            <Grid item xs={isDetailedIWOpen ? 3 : 0}>
+            <Grid item xs={isDetailedIWOpen ? 12 : 0} md={isDetailedIWOpen ? 3 : 0}>
                 <DetailedUbicationView
                     markerShown={markerShown}
                     isDetailedIWOpen={isDetailedIWOpen}
                     setDetailedIWOpen={setDetailedIWOpen}
                 />
             </Grid>
-            <Grid item xs={12 - (isFormOpen ? 3 : 0) - (isDetailedIWOpen ? 3 : 0)} sx={{ width: '100%', height: '100%' }}>
+            <Grid item xs={12} md={12 - (isFormOpen ? 3 : 0) - (isDetailedIWOpen ? 3 : 0)} sx={{ width: '100%', height: '100%' }}>
                 <Map
                     nextID={nextID}
                     locale={props.locale}
@@ -203,7 +203,7 @@ const MapView: React.FC<IMapViewProps> = (props) => {
                     globalFilterCategories={globalFilterCategories}
                 />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3} >
                 <NewUbicationForm
                     globalLat={globalLat}
                     globalLng={globalLng}
