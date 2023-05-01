@@ -31,6 +31,7 @@ interface IMapProps {
     globalMode: string;
     formOpened: boolean;
     globalAddress: string;
+    tMarkers?: IPMarker[];
     globalCategory: string;
     acceptedMarker: boolean;
     globalFilterName: string;
@@ -40,7 +41,6 @@ interface IMapProps {
     mapType: google.maps.MapTypeId;
     globalFilterCategories: string[];
     nextID: MutableRefObject<string>;
-    tMarkers?:IPMarker[];
     setGlobalLat: (globalLat: number) => void;
     setGlobalLng: (globalLng: number) => void;
     setMarkerShown: (marker: IPMarker) => void;
@@ -258,7 +258,7 @@ const Map: React.FC<IMapProps> = (props) => {
     const reloadMarkers = () => {
         props.setDetailedIWOpen(false);
         deleteAllMarkers();
-        const locations = (props.tMarkers === undefined) ? markers.filter((marker) => marker.webId === session.info.webId) : props.tMarkers;
+        const locations = (props.tMarkers === undefined) ? markers : props.tMarkers;
 
         switch (props.globalMode) {
             case 'M':

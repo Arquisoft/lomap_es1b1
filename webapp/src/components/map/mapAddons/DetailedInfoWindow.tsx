@@ -28,7 +28,7 @@ const DetailedUbicationView: React.FC<{
 
 
   const handleCanFriendsSeeChange = async (canFriendsSee: boolean) => {
-    const locations = (tMarkers === undefined) ? markers.filter((marker) => marker.webId === session.info.webId) : tMarkers;
+    const locations = (tMarkers === undefined) ? markers : tMarkers;
     let marker = locations.find(marker => marker.id === markerShown?.id);
     if (marker) {
       marker.canFriendsSee = canFriendsSee;
@@ -47,7 +47,7 @@ const DetailedUbicationView: React.FC<{
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const locations = (tMarkers === undefined) ? markers.filter((marker) => marker.webId === session.info.webId) : tMarkers;
+    const locations = (tMarkers === undefined) ? markers : tMarkers;
     let marker = locations.find(marker => marker.id === markerShown.id);
 
     if (marker) {
