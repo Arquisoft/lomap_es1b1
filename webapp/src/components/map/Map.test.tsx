@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
-import Map from './Map'
 import { IPMarker } from '../../shared/SharedTypes';
+import { render } from '@testing-library/react';
+import Map from './Map'
 
 const setupGoogleMock = () => {
   global.window.google = {

@@ -1,6 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import DetailedUbicationView from './DetailedInfoWindow';
-import { MarkerContextProvider } from '../../../context/MarkerContextProvider';
 import { IPMarker } from '../../../shared/SharedTypes';
 jest.mock('../../../helpers/SolidHelper');
 

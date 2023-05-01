@@ -71,15 +71,15 @@ const DetailedUbicationView: React.FC<{
 
     let sum = reviews
       .map(r => r.score)
-      .reduce((previous, current) => current += previous, 0);
+      .reduce((sum, current) => sum + current, 0);
     let result = sum / total;
 
     return result;
   }
 
   function timeSince(date: Date) {
-    var seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000);
-    var interval = seconds / 31536000;
+    let seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000);
+    let interval = seconds / 31536000;
 
     if (interval > 1) {
       return Math.floor(interval) + t("DetailedInfoWindow.yearsAgo");
@@ -184,7 +184,7 @@ const DetailedUbicationView: React.FC<{
                   value={pictureURL}
                   name="imageURL"
                   label={t("DetailedInfoWindow.imageURL")}
-                  onChange={(e) => setPictureURL(e.target.value as string)}
+                  onChange={(e) => setPictureURL(e.target.value)}
                   sx={{ margin: '0.5em 0em 0.5em' }}
                 />
                 <TextField
@@ -193,7 +193,7 @@ const DetailedUbicationView: React.FC<{
                   value={comment}
                   name="comment"
                   label={t("DetailedInfoWindow.comment")}
-                  onChange={(e) => setComment(e.target.value as string)}
+                  onChange={(e) => setComment(e.target.value)}
                   sx={{ margin: '0.5em 0em 0.5em' }}
                 />
                 <Button className='blueButton' variant="contained" type="submit" sx={{ marginTop: '0.5em' }}>{t("DetailedInfoWindow.send")}</Button>

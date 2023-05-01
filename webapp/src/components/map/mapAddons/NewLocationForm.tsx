@@ -90,7 +90,7 @@ const NewUbicationForm: React.FC<INewLocationFormProps> = ({
             />
             <Select
               value={globalCategory}
-              onChange={(e) => setGlobalCategory(e.target.value as string)}
+              onChange={(e) => setGlobalCategory(e.target.value)}
               sx={{ my: 2, backgroundColor: "white", borderRadius: "4px" }}
             >
               <MenuItem value={'P'}>{t("NewLocationForm.parks")}</MenuItem>
