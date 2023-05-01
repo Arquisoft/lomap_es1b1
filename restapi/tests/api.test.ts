@@ -14,7 +14,7 @@ beforeAll(async () => {
     app = express();
     const port: number = 5000;
     const options: cors.CorsOptions = {
-        origin: [process.env.REACT_APP_APP_URI || 'http://localhost:3000']
+        origin: [process.env.REACT_APP_APP_URI || 'https://localhost:443']
     };
     app.use(cors(options));
     app.use(bp.json());
