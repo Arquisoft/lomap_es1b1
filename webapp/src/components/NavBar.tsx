@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import LoginForm from './login/LoginForm';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import i18n from '../internationalization/i18n';
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
 import { Stack, Button, Avatar, FormControl, Select, MenuItem } from '@mui/material';
 import { useSession, LogoutButton, CombinedDataProvider, Image, Text } from '@inrupt/solid-ui-react';
-import i18n from '../internationalization/i18n';
 
 interface INavBarProps {
   locale: string;
@@ -13,8 +13,8 @@ interface INavBarProps {
 }
 
 export const NavBar: React.FC<INavBarProps> = (props) => {
-  const { session } = useSession();
   const { t } = useTranslation();
+  const { session } = useSession();
   const [isOpen, setOpen] = useState(false);
 
   useEffect(() => {

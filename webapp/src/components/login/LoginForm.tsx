@@ -40,7 +40,7 @@ const LoginForm: React.FC<LoginProps> = (props) => {
               <Select
                 role="slcRole"
                 value={itemSelected}
-                onChange={e => setItemSelected(e.target.value as string)}
+                onChange={e => setItemSelected(e.target.value)}
                 sx={{ width: '15em', margin: '0.5em' }}
               >
                 <MenuItem value={"https://inrupt.net/"}>Inrupt</MenuItem>
@@ -51,7 +51,7 @@ const LoginForm: React.FC<LoginProps> = (props) => {
                 role="txtRole"
                 type="url"
                 value={oidcIssuer}
-                onChange={e => setOidcIssuer(e.target.value as string)}
+                onChange={e => setOidcIssuer(e.target.value)}
                 sx={{ width: '15em', margin: '0.5em' }}
                 disabled={disabled}
               />

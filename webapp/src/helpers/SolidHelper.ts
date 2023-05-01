@@ -199,7 +199,7 @@ async function grantAccessToMarkers(webId: string, access: boolean) {
 }
 
 export async function saveFriendsCanSeeMarker(publicMarker: IPMarker, webId: string) {
-    let { markers, fileURL } = await filterPublicMarker(webId, publicMarker);
+    let { markers, fileURL } = await filterFriendsCanSeeMarker(webId, publicMarker);
     markers.push(publicMarker);
 
     await saveMarkersToFile(markers, fileURL);
@@ -208,12 +208,12 @@ export async function saveFriendsCanSeeMarker(publicMarker: IPMarker, webId: str
 }
 
 export async function deleteFriendsCanSeeMarker(publicMarker: IPMarker, webId: string) {
-    let { markers, fileURL } = await filterPublicMarker(webId, publicMarker);
+    let { markers, fileURL } = await filterFriendsCanSeeMarker(webId, publicMarker);
 
     await saveMarkersToFile(markers, fileURL);
 }
 
-async function filterPublicMarker(webId: string, publicMarker: IPMarker) {
+async function filterFriendsCanSeeMarker(webId: string, publicMarker: IPMarker) {
     let fileURL = `${parseURL(webId)}public/lomap/markers.json`;
     let markers = await readMarkersFromFile(fileURL);
 

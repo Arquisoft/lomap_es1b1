@@ -64,7 +64,6 @@ const Map: React.FC<IMapProps> = (props) => {
         if (!map) {
             defaultMapStart();
         } else {
-            reloadMarkers();
             addHomeMarker(map.getCenter());
         }
     };
@@ -251,15 +250,10 @@ const Map: React.FC<IMapProps> = (props) => {
     }, [props.acceptedMarker]);
 
     useEffect(() => {
-        reloadMarkers();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.globalMode, props.globalFilterName, props.globalFilterCategories, props.globalFilterWebID, props.locale]);
-
-    const reloadMarkers = () => {
         props.setDetailedIWOpen(false);
         deleteAllMarkers();
-        const locations = (props.tMarkers === undefined) ? markers : props.tMarkers;
 
+        const locations = (props.tMarkers === undefined) ? markers : props.tMarkers;
         switch (props.globalMode) {
             case 'M':
                 loadContextMarkers(locations);
@@ -272,7 +266,8 @@ const Map: React.FC<IMapProps> = (props) => {
                 break;
             default:
         }
-    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.globalMode, props.globalFilterName, props.globalFilterCategories, props.globalFilterWebID, props.locale]);
 
     const deleteAllMarkers = (): void => {
         googleMarkers.forEach((googleMarker) => {

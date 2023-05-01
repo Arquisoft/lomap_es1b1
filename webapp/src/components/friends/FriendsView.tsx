@@ -72,7 +72,7 @@ export const FriendsView: React.FC<IFriendsViewProps> = (props) => {
         </Grid>
       </form>
       {isLoading ? (
-        <Container sx={{ height: '62.5%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <CircularProgress />
         </Container>
       ) : (

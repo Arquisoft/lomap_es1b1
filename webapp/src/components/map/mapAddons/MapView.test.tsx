@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import MapView from './MapView';
 
 const setupGoogleMock = () => {
@@ -17,6 +17,7 @@ const setupGoogleMock = () => {
             },
             Marker: class {
                 public async addListener() {
+
                 }
             },
             getCenter: jest.fn(),

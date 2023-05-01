@@ -132,9 +132,9 @@ const MapView: React.FC<IMapViewProps> = (props) => {
                                 <IconButton sx={{ marginLeft: 'auto', marginRight: '0em' }} onClick={async () => setFilterOpen(false)}><Close /></IconButton>
                             </Stack>
                             <h2>{t("MapView.name")}</h2>
-                            <TextField value={globalFilterName} onChange={(e) => setGlobalFilterName(e.target.value as string)}></TextField>
+                            <TextField value={globalFilterName} onChange={(e) => setGlobalFilterName(e.target.value)}></TextField>
                             <h2>{t("MapView.creatorWebID")}</h2>
-                            <TextField value={globalFilterWebId} onChange={(e) => setGlobalFilterWebId(e.target.value as string)}></TextField>
+                            <TextField value={globalFilterWebId} onChange={(e) => setGlobalFilterWebId(e.target.value)}></TextField>
                             <h2>{t("MapView.categories")}</h2>
                             <ToggleButtonGroup
                                 onChange={handleCategories}

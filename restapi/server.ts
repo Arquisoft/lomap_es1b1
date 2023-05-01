@@ -1,21 +1,19 @@
-import express, { Application, RequestHandler } from "express";
+import api from "./api";
 import cors from 'cors';
 import bp from 'body-parser';
 import promBundle from 'express-prom-bundle';
-import api from "./api";
+import express, { Application, RequestHandler } from "express";
 
+const mongoose = require('mongoose');
 const app: Application = express();
 const port: number = 5000;
-
-const mongoose = require('mongoose')
 
 const metricsMiddleware: RequestHandler = promBundle({ includeMethod: true });
 app.use(metricsMiddleware);
 
 app.use(cors());
 app.use(bp.json());
-
-app.use("/api", api)
+app.use("/api", api);
 
 app.listen(port, (): void => {
     console.log('Restapi listening on ' + port);
@@ -23,6 +21,4 @@ app.listen(port, (): void => {
     console.error('Error occured: ' + error.message);
 });
 
-const uri = process.env.MONGODB_URI;
-
-mongoose.connect('mongodb+srv://' + uri + '/LoMapDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); 
+mongoose.connect('mongodb+srv://' + process.env.REACT_APP_MONGODB_URI + '/LoMapDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); 
