@@ -27,6 +27,8 @@ jobs:
     - run: npm --prefix restapi ci
     - run: npm --prefix webapp test --coverage --watchAll
     - run: npm --prefix restapi test --coverage --watchAll
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
     - name: Analyze with SonarCloud
       uses: sonarsource/sonarcloud-github-action@master
       env:

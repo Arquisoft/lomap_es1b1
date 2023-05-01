@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
 import { Stack, Button, Avatar, FormControl, Select, MenuItem } from '@mui/material';
 import { useSession, LogoutButton, CombinedDataProvider, Image, Text } from '@inrupt/solid-ui-react';
+import i18n from '../internationalization/i18n';
 
 interface INavBarProps {
   locale: string;
@@ -13,12 +14,12 @@ interface INavBarProps {
 
 export const NavBar: React.FC<INavBarProps> = (props) => {
   const { session } = useSession();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
 
   useEffect(() => {
     i18n.changeLanguage(props.locale);
-  }, [props.locale, i18n]);
+  }, [props.locale]);
 
   return (
     <nav>

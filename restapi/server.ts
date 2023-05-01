@@ -30,4 +30,4 @@ createServer(credentials, app)
         console.error("Error occured: " + error.message);
     });
 
-mongoose.connect('mongodb+srv://' + process.env.MONGODB_URI + '/LoMapDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); 
+mongoose.connect('mongodb+srv://' + process.env.MONGODB_URI + '/LoMapDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });

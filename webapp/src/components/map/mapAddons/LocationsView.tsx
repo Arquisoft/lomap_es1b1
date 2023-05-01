@@ -7,11 +7,15 @@ import { deletePublicLocation } from '../../../api/API';
 import { deleteFriendsCanSeeMarker } from '../../../helpers/SolidHelper';
 import { MarkerContext, Types } from '../../../context/MarkerContextProvider';
 
-const UbicationsView = () => {
+interface LocationsViewProps {
+    tMarkers?: IPMarker[];
+}
+
+const LocationsView = (props:LocationsViewProps) => {
     const { t } = useTranslation();
     const { session } = useSession();
     const { state: markers, dispatch } = useContext(MarkerContext);
-    const myLocations = markers.filter((marker) => marker.webId === session.info.webId);
+    const myLocations = (props.tMarkers === undefined) ? markers.filter((marker) => marker.webId === session.info.webId) : props.tMarkers;
 
     const loadStaticMap = (lat: number, lng: number) => {
         const APIKey = "&key=" + process.env.REACT_APP_API_KEY_GOOGLE_MAPS;
@@ -69,4 +73,4 @@ const UbicationsView = () => {
     );
 }
 
-export default UbicationsView;
+export default LocationsView;
