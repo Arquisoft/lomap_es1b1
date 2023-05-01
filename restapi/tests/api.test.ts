@@ -20,7 +20,7 @@ beforeAll(async () => {
     app.use(bp.json());
     app.use("/api", api)
 
-    const uri = process.env.MONGODB_URI;
+    const uri = process.env.REACT_APP_MONGODB_URI;
     mongoose.connect('mongodb+srv://' + uri + '/LoMapDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
     server = app.listen(port, (): void => {
