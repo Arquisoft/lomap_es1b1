@@ -1,6 +1,5 @@
 import HomeView from './components/HomeView';
 import { NavBar } from './components/NavBar';
-import { getPublicLocations } from './api/API';
 import i18n from './internationalization/i18n';
 import { IPMarker } from './shared/SharedTypes';
 import { Routes, Route } from "react-router-dom";
@@ -14,7 +13,6 @@ import LocationsView from './components/map/mapAddons/LocationsView';
 import { MarkerContext, Types } from './context/MarkerContextProvider';
 import { readFriendMarkers, readMarkers, saveMarkers } from './helpers/SolidHelper';
 
-
 function App(): JSX.Element {
   const { session } = useSession();
   const [scriptLoaded, setScriptLoaded] = useState(false);
@@ -25,24 +23,11 @@ function App(): JSX.Element {
     dispatch({ type: Types.SET_MARKERS, payload: { markers: markers } });
   }
 
-  async function loadPublicMarkers() {
-    let markers: IPMarker[] = [];
-    (await getPublicLocations()).forEach(m => markers.push(m));
-    setMarkers(markers);
-  }
-
   async function loadMarkers() {
     let markers = await readFriendMarkers(session.info.webId!);
     (await readMarkers(session.info.webId!)).forEach(m => markers.push(m));
-    (await getPublicLocations()).forEach(m => markers.push(m));
     setMarkers(markers);
   }
-
-
-  useEffect(() => {
-    loadPublicMarkers()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     session.setMaxListeners(0);
@@ -61,8 +46,8 @@ function App(): JSX.Element {
   }, [markers]);
 
   session.onLogin(loadMarkers);
-  session.onLogout(loadPublicMarkers);
   session.onSessionRestore(loadMarkers);
+  session.onLogout(() => setMarkers([]));
 
   return (
     <>

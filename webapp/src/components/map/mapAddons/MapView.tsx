@@ -109,7 +109,6 @@ const MapView: React.FC<IMapViewProps> = (props) => {
                             sx={{ width: '15em', height: '3em', bgcolor: 'white', margin: '1em' }}
                         >
                             <MenuItem disabled value={'S'}><em>{t("MapView.select")}</em></MenuItem>
-                            <MenuItem value={'E'}>{t("MapView.explore")}</MenuItem>
                             <MenuItem value={'M'}>{t("MapView.myLocations")}</MenuItem>
                             <MenuItem value={'A'}>{t("MapView.friendsLocations")}</MenuItem>
                         </Select>
@@ -120,7 +119,6 @@ const MapView: React.FC<IMapViewProps> = (props) => {
                             sx={{ width: '15em', height: '3em', bgcolor: 'white', margin: '1em' }}
                         >
                             <MenuItem disabled value={'S'}><em>{t("MapView.select")}</em></MenuItem>
-                            <MenuItem value={'E'}>{t("MapView.explore")}</MenuItem>
                         </Select>}
                     <Button className='blueButton' variant="contained" onClick={() => setFilterOpen(true)}>
                         {t("MapView.filters")}

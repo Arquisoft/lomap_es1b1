@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
-import { Slide, Stack, TextField, Select, MenuItem, FormGroup, FormControlLabel, Switch } from '@mui/material'
+import { Slide, Stack, TextField, Select, MenuItem } from '@mui/material'
 
 interface INewLocationFormProps {
   globalLat: number;
@@ -102,13 +102,6 @@ const NewUbicationForm: React.FC<INewLocationFormProps> = ({
               <MenuItem value={'En'}>{t("NewLocationForm.entertainment")}</MenuItem>
               <MenuItem value={'Tr'}>{t("NewLocationForm.transportation")}</MenuItem>
             </Select>
-            <FormGroup>
-              <FormControlLabel control={<Switch
-                checked={isPublic}
-                onChange={e => setIsPublic(e.target.checked)}
-                inputProps={{ 'aria-label': 'controlled' }}
-              />} sx={{ color: 'white' }} label={t("NewLocationForm.isPublic")} />
-            </FormGroup>
             <Button className='greenButton' variant="contained" type="submit" sx={{ my: 2 }}>{t("NewLocationForm.accept")}</Button>
             <Button className='redButton' variant="contained" onClick={() => setFormOpened(false)} sx={{ my: 2 }}>{t("NewLocationForm.cancel")}</Button>
           </Stack>
