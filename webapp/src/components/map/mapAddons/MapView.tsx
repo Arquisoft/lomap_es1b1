@@ -21,6 +21,7 @@ import {
     IconButton,
     ToggleButton,
     ToggleButtonGroup,
+    Tooltip,
 } from '@mui/material';
 
 interface IMapViewProps {
@@ -35,7 +36,7 @@ const MapView: React.FC<IMapViewProps> = (props) => {
     const [globalLat, setGlobalLat] = useState<number>(0);
     const [globalLng, setGlobalLng] = useState<number>(0);
     const [globalName, setGlobalName] = useState<string>("");
-    const [globalMode, setGlobalMode] = useState<string>("E");
+    const [globalMode, setGlobalMode] = useState<string>("S");
     const [isFormOpen, setFormOpen] = useState<boolean>(false);
     const [globalAddress, setGlobalAddress] = useState<string>("");
     const [isFilterOpen, setFilterOpen] = useState<boolean>(false);
@@ -85,7 +86,7 @@ const MapView: React.FC<IMapViewProps> = (props) => {
     };
 
     session.onLogout(() => {
-        setGlobalMode("E");
+        setGlobalMode("S");
     });
 
     useEffect(() => {
@@ -107,15 +108,18 @@ const MapView: React.FC<IMapViewProps> = (props) => {
                             onChange={(e) => setGlobalMode(e.target.value)}
                             sx={{ width: '15em', height: '3em', bgcolor: 'white', margin: '1em' }}
                         >
+                            <MenuItem disabled value={'S'}><em>{t("MapView.select")}</em></MenuItem>
                             <MenuItem value={'E'}>{t("MapView.explore")}</MenuItem>
                             <MenuItem value={'M'}>{t("MapView.myLocations")}</MenuItem>
                             <MenuItem value={'A'}>{t("MapView.friendsLocations")}</MenuItem>
                         </Select>
                         :
                         <Select
-                            value={'E'}
+                            value={globalMode}
+                            onChange={(e) => setGlobalMode(e.target.value)}
                             sx={{ width: '15em', height: '3em', bgcolor: 'white', margin: '1em' }}
                         >
+                            <MenuItem disabled value={'S'}><em>{t("MapView.select")}</em></MenuItem>
                             <MenuItem value={'E'}>{t("MapView.explore")}</MenuItem>
                         </Select>}
                     <Button className='blueButton' variant="contained" onClick={() => setFilterOpen(true)}>
@@ -149,18 +153,21 @@ const MapView: React.FC<IMapViewProps> = (props) => {
                         </Stack>
                     </Dialog>
                     <Box sx={{ flexGrow: 2 }}></Box>
-                    {globalMode === 'M' &&
-                        <Button
-                            variant="contained"
-                            className='blueButton'
-                            sx={{
-                                width: '15em',
-                                margin: '1em',
-                                display: isFormOpen ? 'none' : '',
-                            }}
-                            onClick={async () => setFormOpen(!isFormOpen)}
-                        >{t("MapView.newLocation")}</Button>
-                    }
+                    {session.info.isLoggedIn && <Tooltip title={globalMode === 'M' ? "" : t("MapView.tooltip")}>
+                        <span>
+                            <Button
+                                disabled={globalMode !== 'M'}
+                                variant="contained"
+                                className='blueButton'
+                                sx={{
+                                    width: '15em',
+                                    margin: '1em',
+                                    display: isFormOpen ? 'none' : '',
+                                }}
+                                onClick={async () => setFormOpen(!isFormOpen)}
+                            >{t("MapView.newLocation")}</Button>
+                        </span>
+                    </Tooltip>}
                 </Stack>
             </Grid>
             <Grid item xs={isDetailedIWOpen ? 3 : 0}>
