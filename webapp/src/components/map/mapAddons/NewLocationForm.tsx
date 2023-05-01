@@ -102,13 +102,6 @@ const NewUbicationForm: React.FC<INewLocationFormProps> = ({
               <MenuItem value={'En'}>{t("NewLocationForm.entertainment")}</MenuItem>
               <MenuItem value={'Tr'}>{t("NewLocationForm.transportation")}</MenuItem>
             </Select>
-            <FormGroup>
-              <FormControlLabel control={<Switch
-                checked={isPublic}
-                onChange={e => setIsPublic(e.target.checked)}
-                inputProps={{ 'aria-label': 'controlled' }}
-              />} sx={{ color: 'white' }} label={t("NewLocationForm.isPublic")} />
-            </FormGroup>
             <Button className='greenButton' variant="contained" type="submit" sx={{ my: 2 }}>{t("NewLocationForm.accept")}</Button>
             <Button className='redButton' variant="contained" onClick={() => setFormOpened(false)} sx={{ my: 2 }}>{t("NewLocationForm.cancel")}</Button>
           </Stack>
