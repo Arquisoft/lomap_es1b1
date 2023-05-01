@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import DetailedUbicationView from './DetailedInfoWindow';
 import { MarkerContextProvider } from '../../../context/MarkerContextProvider';
+import { IPMarker } from '../../../shared/SharedTypes';
 jest.mock('../../../helpers/SolidHelper');
 
 describe('DetailedUbicationView', () => {
@@ -94,6 +95,128 @@ describe('DetailedUbicationView', () => {
     const seeButton = screen.getByRole('button', { name: 'DetailedInfoWindow.seeReviews' });
     fireEvent.click(seeButton);
   });
+  it('should render the component', () => {
+    const marker1: IPMarker = {
+      id: "test",
+      date: new Date(),
+      lat: 0,
+      lng: 0,
+      name: "Sin nombre",
+      webId: "https://example.com/user1#me",
+      address: "Sin direccion",
+      category: "Sin categoría",
+      isPublic: false,
+      reviews: [],
+      canFriendsSee: false,
+      description: "Sin descripción",
+    };
+    const marker2: IPMarker = {
+      id: "2",
+      date: new Date(),
+      lat: 0,
+      lng: 0,
+      name: "Test marker 2",
+      webId: "https://example.com/user1#me",
+      address: "456 Main St",
+      category: "Test",
+      isPublic: true,
+      reviews: [],
+      canFriendsSee: false,
+      description: "This is another test marker",
+    };
+    const marker3: IPMarker = {
+      id: "test 2",
+      date: new Date(),
+      lat: 0,
+      lng: 0,
+      name: "Test marker 2",
+      webId: "https://example.com/user1#me",
+      address: "456 Main St",
+      category: "Test",
+      isPublic: false,
+      reviews: [],
+      canFriendsSee: true,
+      description: "This is another test marker",
+    };
+  
+    const markerList = [marker1, marker2, marker3];
+    render(
+      <DetailedUbicationView
+        markerShown={{
+          id: "test", date: new Date(), lat: 0, lng: 0, name: "Sin nombre", address: "Sin dirección",
+          category: "Sin categoría", isPublic: false, description: "Sin descripción", canFriendsSee: false,
+          reviews: [], webId: "https://example.com/user1#me"
+        }}
+        isDetailedIWOpen={true}
+        setDetailedIWOpen={jest.fn()}
+        tMarkers={markerList}
+      />
+    );
 
+    const seeButton = screen.getByRole('checkbox');
+    fireEvent.click(seeButton)
+  });
+
+  it('should render the component', () => {
+    const marker1: IPMarker = {
+      id: "test",
+      date: new Date(),
+      lat: 0,
+      lng: 0,
+      name: "Sin nombre",
+      webId: "https://example.com/user1#me",
+      address: "Sin direccion",
+      category: "Sin categoría",
+      isPublic: false,
+      reviews: [],
+      canFriendsSee: false,
+      description: "Sin descripción",
+    };
+    const marker2: IPMarker = {
+      id: "2",
+      date: new Date(),
+      lat: 0,
+      lng: 0,
+      name: "Test marker 2",
+      webId: "https://example.com/user1#me",
+      address: "456 Main St",
+      category: "Test",
+      isPublic: true,
+      reviews: [],
+      canFriendsSee: false,
+      description: "This is another test marker",
+    };
+    const marker3: IPMarker = {
+      id: "test 2",
+      date: new Date(),
+      lat: 0,
+      lng: 0,
+      name: "Test marker 2",
+      webId: "https://example.com/user1#me",
+      address: "456 Main St",
+      category: "Test",
+      isPublic: false,
+      reviews: [],
+      canFriendsSee: true,
+      description: "This is another test marker",
+    };
+  
+    const markerList = [marker1, marker2, marker3];
+    render(
+      <DetailedUbicationView
+        markerShown={{
+          id: "test 2", date: new Date(), lat: 0, lng: 0, name: "Sin nombre", address: "Sin dirección",
+          category: "Sin categoría", isPublic: false, description: "Sin descripción", canFriendsSee: true,
+          reviews: [], webId: "https://example.com/user1#me"
+        }}
+        isDetailedIWOpen={true}
+        setDetailedIWOpen={jest.fn()}
+        tMarkers={markerList}
+      />
+    );
+
+    const seeButton = screen.getByRole('checkbox');
+    fireEvent.click(seeButton)
+  });
 
 });

@@ -13,7 +13,8 @@ const DetailedUbicationView: React.FC<{
   markerShown: IPMarker;
   isDetailedIWOpen: boolean;
   setDetailedIWOpen: (detailedMarkerOpened: boolean) => void;
-}> = ({ markerShown, isDetailedIWOpen, setDetailedIWOpen }) => {
+  tMarkers?: IPMarker[];
+}> = ({ markerShown, isDetailedIWOpen, setDetailedIWOpen, tMarkers }) => {
   const { t } = useTranslation();
   const { session } = useSession();
   const [comment, setComment] = useState<string>("");
@@ -27,7 +28,8 @@ const DetailedUbicationView: React.FC<{
 
 
   const handleCanFriendsSeeChange = async (canFriendsSee: boolean) => {
-    let marker = markers.find(marker => marker.id === markerShown?.id);
+    const locations = (tMarkers === undefined) ? markers.filter((marker) => marker.webId === session.info.webId) : tMarkers;
+    let marker = locations.find(marker => marker.id === markerShown?.id);
     if (marker) {
       marker.canFriendsSee = canFriendsSee;
 
@@ -45,7 +47,8 @@ const DetailedUbicationView: React.FC<{
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let marker = markers.find(marker => marker.id === markerShown.id);
+    const locations = (tMarkers === undefined) ? markers.filter((marker) => marker.webId === session.info.webId) : tMarkers;
+    let marker = locations.find(marker => marker.id === markerShown.id);
 
     if (marker) {
       marker.reviews.push({ author: session.info.webId!, date: new Date(), score: reviewScore, comment: comment, pictureURL: pictureURL });
@@ -134,7 +137,7 @@ const DetailedUbicationView: React.FC<{
           <p>{t("DetailedInfoWindow.address")}{markerShown.address}</p>
           <p>{t("DetailedInfoWindow.category")}{t(`Map.${markerShown.category.toLowerCase()}`)}</p>
           <p>{t("DetailedInfoWindow.description")}{markerShown.description}</p>
-          {markerShown.webId === session.info.webId && !markerShown.isPublic
+          {(markerShown.webId === session.info.webId || tMarkers !== undefined) && !markerShown.isPublic
             &&
             <FormGroup>
               <FormControlLabel control={
