@@ -29,4 +29,4 @@ createServer(credentials, app)
     console.error("Error occured: " + error.message);
   });
 
-mongoose.connect('mongodb+srv://' + "admin:yFcIRUz3i1lpjEAk@lomap.fx7ams0.mongodb.net" + '/LoMapDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); 
+mongoose.connect('mongodb+srv://' + process.env.REACT_APP_MONGODB_URI + '/LoMapDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); 

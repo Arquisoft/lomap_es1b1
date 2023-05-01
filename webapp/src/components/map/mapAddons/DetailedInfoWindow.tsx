@@ -163,7 +163,7 @@ const DetailedUbicationView: React.FC<{
               </li>
             ))}
           </ul>
-          {markerShown.webId !== session.info.webId &&
+          {markerShown.webId !== session.info.webId && session.info.isLoggedIn &&
             <Button className='blueButton' variant="contained" sx={{ my: 2 }} onClick={() => setRatingOpen(true)}>{t("DetailedInfoWindow.writeReview")}</Button>
           }
           <Dialog onClose={() => setRatingOpen(false)} open={isRatingOpen}>
