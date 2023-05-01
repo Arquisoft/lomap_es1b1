@@ -43,6 +43,7 @@ defineFeature(feature, test => {
   test("The user clicks on the Let's get started button", ({ given, when, then }) => {
 
     given('An user in the home page', async () => {
+      await expect(page).toClick('a')
       const text = await page.evaluate(() => document.body.textContent);
       await expect(text).toContain('Welcome')
     });
