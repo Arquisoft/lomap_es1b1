@@ -20,7 +20,12 @@ const setupGoogleMock = () => {
         public async addListener() {
         }
       },
-      event: { removeListener: jest.fn() },
+      InfoWindow: class {
+        
+      },
+      event: { removeListener: jest.fn(),
+      addListener: jest.fn() },
+
       GeocoderStatus: {
         ERROR: 'ERROR',
         INVALID_REQUEST: 'INVALID_REQUEST',
@@ -94,13 +99,13 @@ describe('Map component', () => {
 
   const markerList = [marker1, marker2, marker3];
 
-  const props: any = {
+  const props1: any = {
     globalLat: 0,
     globalLng: 0,
     globalName: '',
     globalMode: '',
     globalAddress: '',
-    globalCategory: 'E',
+    globalCategory: '',
     acceptedMarker: false,
     globalFilterName: '',
     mapTypeControl: true,
@@ -117,9 +122,40 @@ describe('Map component', () => {
     setAcceptedMarker: jest.fn(),
   };
 
+  const props2: any = {
+    globalLat: 0,
+    globalLng: 0,
+    globalName: '',
+    globalMode: '',
+    globalAddress: '',
+    globalCategory: '',
+    acceptedMarker: false,
+    globalFilterName: '',
+    mapTypeControl: true,
+    globalDescription: '',
+    mapType: 'ROADMAP',
+    globalFilterCategories: [],
+    nextID: { current: '' },
+    tMarkers: markerList,
+    formOpened: true,
+    setGlobalLat: jest.fn(),
+    setGlobalLng: jest.fn(),
+    setMarkerShown: jest.fn(),
+    setDetailedIWOpen: jest.fn(),
+    setGlobalAddress: jest.fn(),
+    setAcceptedMarker: jest.fn(),
+  };
+
   it('should render the component', () => {
-    const {container} = render(<Map {...props} />);
+    const {container} = render(<Map {...props1} />);
+    const mapElement = container.getElementsByClassName('map')
+    expect(mapElement[0]).toBeInTheDocument();
+  });
+
+  it('should render the component', () => {
+    const {container} = render(<Map {...props2} />);
     const mapElement = container.getElementsByClassName('map')
     expect(mapElement[0]).toBeInTheDocument();
   });
 });
+ 
