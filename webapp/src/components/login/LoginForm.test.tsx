@@ -1,6 +1,5 @@
 import LoginForm from "../login/LoginForm";
 import { fireEvent, render, screen } from '@testing-library/react';
-import * as login from "../login/LoginForm";
 
 describe('LoginForm', () => {
     it('should render select and text field', () => {

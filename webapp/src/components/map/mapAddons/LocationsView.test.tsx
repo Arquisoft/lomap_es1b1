@@ -1,7 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import React, { useContext } from "react";
 import { IPMarker } from "../../../shared/SharedTypes";
-import { MarkerContext, MarkerContextProvider, Types } from "../../../context/MarkerContextProvider";
 import UbicationsView from "./LocationsView";
 
 // Mock the useSession hook

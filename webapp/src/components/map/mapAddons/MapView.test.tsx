@@ -1,9 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { SessionProvider } from '@inrupt/solid-ui-react';
-import { v4 as uuid } from 'uuid';
 import MapView from './MapView';
-import { loadMapApi } from '../../../utils/GoogleMapsUtils';
-import { MarkerContextProvider } from '../../../context/MarkerContextProvider';
 
 const setupGoogleMock = () => {
     global.window.google = {
@@ -56,14 +52,5 @@ describe('MapView component', () => {
         const test = screen.getByText("MapView.filters")
         expect(test).toBeInTheDocument();
     });
-
-    /*
-            const button = screen.getByRole('button', { name: 'MapView.filters' });
-                const button2 = screen.getByRole('button', { name: 'MadsdsfsdfpView.filters' });
-                const select = screen.getByRole('combobox', { name: 'MapView.select' });
-                fireEvent.click(select)
-                const option = screen.getByRole('button')
-                //fireEvent.click(button)
-    */
 
 });
