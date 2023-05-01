@@ -51,6 +51,10 @@ export const FriendsView: React.FC<IFriendsViewProps> = (props) => {
     setFriendList(friendList.filter(friend => friend !== webID));
   }
 
+  session.onLogin(loadFriends);
+  session.onSessionRestore(loadFriends);
+  session.onLogout(() => setFriendList([]));
+
   return (
     <Box sx={{ margin: "2em" }}>
       <form name="addFriend" onSubmit={handleSubmit}>

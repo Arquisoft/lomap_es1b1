@@ -26,7 +26,7 @@ const LoginForm: React.FC<LoginProps> = (props) => {
     } else {
       setDisabled(false);
     }
-  }, [itemSelected])
+  }, [itemSelected]);
 
   return (
     <Dialog onClose={handleClose} open={isOpen}>
