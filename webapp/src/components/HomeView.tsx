@@ -31,9 +31,9 @@ const HomeView = () => {
           <img src="/solid.svg" className="App-logo" alt="LoMap" width={'100%'} />
         </Grid>
         <Grid item xs={12} md={9}>
-          <p align='justify'>{t("HomeView.p1")}</p>
-          <p align='justify'>{t("HomeView.p2")}</p>
-          <p align='justify'>{t("HomeView.p3")}</p>
+          <p style={{textAlign: 'justify'}}>{t("HomeView.p1")}</p>
+          <p style={{textAlign: 'justify'}}>{t("HomeView.p2")}</p>
+          <p style={{textAlign: 'justify'}}>{t("HomeView.p3")}</p>
         </Grid>
       </Grid>
       <Link to="/map">
