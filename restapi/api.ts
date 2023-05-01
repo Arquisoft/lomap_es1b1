@@ -16,7 +16,7 @@ const locationSchema = new mongoose.Schema({
   category: String,
   isPublic: Boolean,
   reviews: [],
-  descripcion: String,
+  description: String,
   canFriendsSee: Boolean
 })
 
@@ -44,9 +44,9 @@ async (req: Request, res: Response): Promise<Response> => {
   let category = req.body.category;
   let isPublic = req.body.isPublic;
   let reviews = req.body.reviews;
-  let descripcion = req.body.descripcion;
+  let description = req.body.description;
   let canFriendsSee = req.body.canFriendsSee;
-  new Location({id, date, lat, lng, name, webId, address, category, isPublic, reviews, descripcion, canFriendsSee}).save();
+  new Location({id, date, lat, lng, name, webId, address, category, isPublic, reviews, description, canFriendsSee}).save();
   return res.sendStatus(200);
 })
 

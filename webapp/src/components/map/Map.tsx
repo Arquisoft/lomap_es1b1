@@ -31,6 +31,7 @@ interface IMapProps {
     globalMode: string;
     formOpened: boolean;
     globalAddress: string;
+    tMarkers?: IPMarker[];
     globalCategory: string;
     acceptedMarker: boolean;
     globalFilterName: string;
@@ -257,16 +258,17 @@ const Map: React.FC<IMapProps> = (props) => {
     const reloadMarkers = () => {
         props.setDetailedIWOpen(false);
         deleteAllMarkers();
+        const locations = (props.tMarkers === undefined) ? markers : props.tMarkers;
 
         switch (props.globalMode) {
             case 'M':
-                loadContextMarkers();
+                loadContextMarkers(locations);
                 break;
             case 'A':
-                loadFriendMarkers();
+                loadFriendMarkers(locations);
                 break;
             case 'E':
-                loadPublicMarkers();
+                loadPublicMarkers(locations);
                 break;
             default:
         }
@@ -282,15 +284,15 @@ const Map: React.FC<IMapProps> = (props) => {
         setGoogleMarkers([]);
     }
 
-    const loadContextMarkers = (): void => {
+    const loadContextMarkers = (markers: IPMarker[]): void => {
         loadMarkers(markers.filter(m => m.webId === session.info.webId!));
     }
 
-    const loadFriendMarkers = (): void => {
+    const loadFriendMarkers = (markers: IPMarker[]): void => {
         loadMarkers(markers.filter(m => m.webId !== session.info.webId! && !m.isPublic));
     }
 
-    const loadPublicMarkers = async () => {
+    const loadPublicMarkers = async (markers: IPMarker[]) => {
         loadMarkers(markers.filter(m => m.isPublic));
     }
 
