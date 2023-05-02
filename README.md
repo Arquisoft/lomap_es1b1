@@ -3,7 +3,7 @@
 <!-- PROJECT SHIELDS -->
 [![CI for LOMAP ES1B1](https://github.com/Arquisoft/lomap_es1b1/actions/workflows/lomap_es1b1.yml/badge.svg)](https://github.com/Arquisoft/lomap_es1b1/actions/workflows/lomap_es1b1.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_lomap_es1b1&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Arquisoft_lomap_es1b1)
-[![Coverage](https://codecov.io/gh/Arquisoft/lomap_es1b1/branch/master/graph/badge.svg?token=9oyu10S3qj)](https://codecov.io/gh/Arquisoft/lomap_es1b1)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_lomap_es1b1&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Arquisoft_lomap_es1b1)
 
 <!-- PROJECT LOGO -->
 <br />
