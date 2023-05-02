@@ -20,7 +20,7 @@
     <a href="https://arquisoft.github.io/lomap_es1b1/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://unioviedo-my.sharepoint.com/:v:/g/personal/uo284541_uniovi_es/Ea0yTK9QFEFOjYsVjp5XuTkB5WUYK4PkSSLV30f-czFW8g?e=aFCQLX">View Demo</a>
     ·
     <a href="https://github.com/Arquisoft/lomap_es1b1/issues">Report Bug</a>
     ·
