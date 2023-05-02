@@ -1138,20 +1138,9 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <div class="paragraph">
 <p>Data flow with an unidentified user</p>
 </div>
-<div class="listingblock">
+<div class="imageblock">
 <div class="content">
-<pre>Failed to generate image: Error processing request {:url=&gt;"/plantumlpreprocessor", :body=&gt;"@startuml\nactor UnidentifiedUser as User\nparticipant LoMap\nparticipant MapProvider\ndatabase DB\nUser -&gt; LoMap: App request\nLoMap -&gt; MapProvider: Map Request\nLoMap  &lt;- MapProvider: Map Response\nLoMap -&gt; DB: PublicLocations Request\nLoMap &lt;- DB: PublicLocations Response\nUser &lt;- LoMap: App response\n@enduml", :headers=&gt;{"X-PlantUML-Basedir"=&gt;"C:\\Users\\oscar\\OneDrive\\Documentos\\UNIVERSIDAD\\3er Ano\\2o Semestre\\ASW\\Laboratorio\\lomap_es1b1\\docs"}}
-Encoding of input is UTF-8
-actor UnidentifiedUser as User
-participant LoMap
-participant MapProvider
-database DB
-User -&gt; LoMap: App request
-LoMap -&gt; MapProvider: Map Request
-LoMap  &lt;- MapProvider: Map Response
-LoMap -&gt; DB: PublicLocations Request
-LoMap &lt;- DB: PublicLocations Response
-User &lt;- LoMap: App response</pre>
+<img src="./images/Sequence%20diagram%201.png" alt="Sequence diagram 1" width="383" height="365">
 </div>
 </div>
 </div>
@@ -1160,24 +1149,9 @@ User &lt;- LoMap: App response</pre>
 <div class="paragraph">
 <p>Unidentified user that logs in.</p>
 </div>
-<div class="listingblock">
+<div class="imageblock">
 <div class="content">
-<pre>Failed to generate image: Broken pipe
-actor User
-participant LoMap
-participant PodProvider
-database Pod as "Users's Pod"
-database DB
-User -&gt; LoMap: Authentication Request
-LoMap -&gt; PodProvider: Delegates the authentication request
-LoMap  &lt;- PodProvider: Authentication response
-LoMap -&gt; Pod: Locations Request
-LoMap &lt;- Pod: Locations Response
-LoMap -&gt; Pod: Friends Request
-LoMap &lt;- Pod: Friends Response
-LoMap -&gt; DB: PublicLocations Request
-LoMap &lt;- DB: PublicLocations Response
-User &lt;- LoMap: The page for identified users is shown</pre>
+<img src="./images/Sequence%20diagram%202.png" alt="Sequence diagram 2" width="698" height="487">
 </div>
 </div>
 </div>
@@ -1186,20 +1160,9 @@ User &lt;- LoMap: The page for identified users is shown</pre>
 <div class="paragraph">
 <p>When an identified user performs a change to a location (deletion, review submit&#8230;&#8203;)</p>
 </div>
-<div class="listingblock">
+<div class="imageblock">
 <div class="content">
-<pre>Failed to generate image: Broken pipe
-actor User
-participant LoMap
-database Pod as "Users's Pod"
-database DB
-User -&gt; LoMap: Changes for location request
-LoMap-&gt; LoMap: Local values updated
-User &lt;- LoMap: Response
-LoMap-&gt; Pod: Changes notified to pod
-LoMap&lt;- Pod: Ok response
-LoMap-&gt; DB: Changes notified to DB
-LoMap&lt;- DB: Ok response</pre>
+<img src="./images/Sequence%20diagram%203.png" alt="Sequence diagram 3" width="474" height="409">
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1797,7 +1760,7 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-05-02 06:42:19 +0200
+Last updated 2023-05-02 07:06:48 +0200
 </div>
 </div>
 </body>
