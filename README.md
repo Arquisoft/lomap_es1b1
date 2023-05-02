@@ -1,22 +1,92 @@
-# LoMap
+<a name="readme-top"></a>
 
-[![CI for LOMAP ES1B](https://github.com/Arquisoft/lomap_es1b/actions/workflows/lomap_es1b.yml/badge.svg)](https://github.com/Arquisoft/lomap_es1b/actions/workflows/lomap_es1b.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_lomap_es1b&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Arquisoft_lomap_es1b)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_lomap_es1b&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Arquisoft_lomap_es1b)
+<!-- PROJECT SHIELDS -->
+[![CI for LOMAP ES1B1](https://github.com/Arquisoft/lomap_es1b1/actions/workflows/lomap_es1b1.yml/badge.svg)](https://github.com/Arquisoft/lomap_es1b1/actions/workflows/lomap_es1b1.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_lomap_es1b1&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Arquisoft_lomap_es1b1)
+[![Coverage](https://codecov.io/gh/Arquisoft/lomap_es1b1/branch/master/graph/badge.svg?token=9oyu10S3qj)](https://codecov.io/gh/Arquisoft/lomap_es1b1)
 
+<!-- PROJECT LOGO -->
+<br />
 <div align="center">
-    <img src="https://github.com/Arquisoft/lomap_es1b/blob/develop/docs/images/logo-no-background.png" alt="LOMAP ES1B" width="160" height="100">
-    <h3>lomap_es1b</h3>
-    <a href="https://arquisoft.github.io/lomap_es1b/"><strong>Project documentation »</strong></a>
+  <a href="https://github.com/Arquisoft/lomap_es1b1">
+    <img src="https://github.com/Arquisoft/lomap_es1b/blob/develop/docs/images/logo-no-background.png" alt="Logo" height="80">
+  </a>
+
+<h3 align="center">LOMAP_ES1B1</h3>
+
+  <p align="center">
+    Discover your city with LoMap - your personalized map, your way!
+    <br />
+    <a href="https://arquisoft.github.io/lomap_es1b1/"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    ·
+    <a href="https://github.com/Arquisoft/lomap_es1b1/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/Arquisoft/lomap_es1b1/issues">Request Feature</a>
+  </p>
 </div>
 
-## 📚 Project description:
-<p align="justify">The software development company HappySw has been hired by the Council of Brussels to develop a software system called LoMap.</p>
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#-about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#-built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#-getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#-prerequisites">Prerequisites</a></li>
+        <li><a href="#-installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#-contact">Contact</a></li>
+  </ol>
+</details>
+
+<!-- ABOUT THE PROJECT -->
+## 📚 About The Project
+
+<a href="https://172.174.92.197">![LOMAP_screenshot](https://github.com/Arquisoft/lomap_es1b1/blob/develop/docs/images/screenshot.png)</a>
+<p align="justify">The software development company HappySw has been hired by the Council of Brussels to develop a software system called <a href="https://arquisoft.github.io/course2223/labAssignmentDescription.html">LoMap.</a></p>
 <p align="justify">This system will allow citizens to have personalized maps of places and local businesses in their city. The places that can be mapped include shops, bars, restaurants, sights, and cultural attractions, among others. Users will have full control over their personalized maps and the shared information will be stored in a personal pod according to the <a href="https://solidproject.org/">SOLID principles</a>.</p>
 
-## 💻 Getting started:
+### 🚧 Built With
+* [Docker](https://www.docker.com/)
+* [Node.js](https://nodejs.org/es/)
+* [React.js](https://reactjs.org/)
+* [MUI Core](https://mui.com/)
+* [MongoDB](https://www.mongodb.com/)
+* [TypeScript](https://www.typescriptlang.org/)
+* [SOLID Pods](https://solidproject.org/)
+* [Mongoose.js](https://mongoosejs.com/)
 
-Compile and run the restapi:
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- GETTING STARTED -->
+## 🦶 Getting Started
+### 📋 Prerequisites
+
+<p align="justify">If you already have Node.js and npm, ensure that you update them before trying to construct the images. To run the project, you'll need <a href="https://nodejs.org/en/download">Node.js</a>, <a href="https://www.docker.com/">Docker</a>, <a href="https://docs.npmjs.com/downloading-and-installing-node-js-and-npm">npm</a> and <a href="https://git-scm.com/downloads">git</a> installed on your machine. Make certain that all four are installed.</p>
+
+### 🛠 Installation
+<p align="justify">You can obtain the project by using the command <code>git clone https://github.com/Arquisoft/lomap_es1b1</code>.</p>
+
+#### With Docker
+<p align="justify">The most efficient method to initiate everything is by using Docker:</p>
+
+```sh
+docker-compose up --build
+```
+<p align="justify">Two docker images will be generated for the webapp and the restapi since they are not currently present on your system.</p>
+
+#### Without Docker
+<p align="justify">Compile and run the restapi:</p>
 
 ```shell
 cd restapi
@@ -24,7 +94,7 @@ npm install
 npm start
 ```
 
-Now the webapp:
+<p align="justify">Now the webapp:</p>
 
 ```shell
 cd webapp
@@ -34,11 +104,13 @@ npm start
 
 You should be able to access the application in [http://localhost:3000](http://localhost:3000).
 
-## 👨‍💻 Contributors:
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-| Contributor | Contact |
-| ------------- | ------------- |
-| Calvo Gamonal, Pablo  | <a href="https://github.com/pelotazos123"><img src="https://img.shields.io/badge/UO276220-Pablo Calvo-red"></a>  |
-| Davila Sampedro, Óscar  | <a href="https://github.com/OscarDavilaSampedro"><img src="https://img.shields.io/badge/UO284541-Óscar Davila-yellow"></a>  |
-| Hermida Giganto, Joaquín  | <a href="https://github.com/Jhergig"><img src="https://img.shields.io/badge/UO271718-Joaquín Hermida-success"></a>  |
-| García-Ovies Pérez, Pablo  | <a href="https://github.com/PabloGOP"><img src="https://img.shields.io/badge/UO265314-Pablo García Ovies-blue"></a>  |
+<!-- CONTACT -->
+## 📮 Contact
+Joaquín Hermida Giganto - [Jhergig](https://github.com/Jhergig)
+
+Óscar Davila Sampedro - [OscarDavilaSampedro](https://github.com/OscarDavilaSampedro)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+

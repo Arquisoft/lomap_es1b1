@@ -1,38 +1,62 @@
 [[section-runtime-view]]
 == Runtime View
 
-=== Login
+=== Unidentified user
 
-When an unidentified user logs in.
+Data flow with an unidentified user
 
 [plantuml,"Sequence diagram 1",png]
 ----
-actor User
+actor UnidentifiedUser as User
 participant LoMap
-participant PodProvider
-User -> LoMap: Authentication Request
-LoMap -> PodProvider: Delegates the authentication request
-LoMap  <- PodProvider: Authentication response
-User <- LoMap: The page for identified users is shown
+participant MapProvider
+database DB
+User -> LoMap: App request
+LoMap -> MapProvider: Map Request
+LoMap  <- MapProvider: Map Response
+LoMap -> DB: PublicLocations Request
+LoMap <- DB: PublicLocations Response
+User <- LoMap: App response 
 ----
 
-=== Seeing a personalized map
+=== Login
 
-When an identified user sees a personalized map
+Unidentified user that logs in.
 
 [plantuml,"Sequence diagram 2",png]
 ----
 actor User
 participant LoMap
-participant MapProvider
+participant PodProvider
 database Pod as "Users's Pod"
 database DB
-User -> LoMap: Personalized map Request
-LoMap -> MapProvider: Map Request
-LoMap  <- MapProvider: Map Response
-LoMap -> Pod: Places Request
-LoMap <- Pod: Places Response
-LoMap -> DB: Other information Request
-LoMap <- DB: Other information Response
-User <- LoMap: Personalized map Response
+User -> LoMap: Authentication Request
+LoMap -> PodProvider: Delegates the authentication request
+LoMap  <- PodProvider: Authentication response
+LoMap -> Pod: Locations Request
+LoMap <- Pod: Locations Response
+LoMap -> Pod: Friends Request
+LoMap <- Pod: Friends Response
+LoMap -> DB: PublicLocations Request
+LoMap <- DB: PublicLocations Response
+User <- LoMap: The page for identified users is shown
+----
+
+=== Changes in a location
+
+When an identified user performs a change to a location (deletion, review submit...)
+
+[plantuml,"Sequence diagram 3",png]
+----
+actor User
+participant LoMap
+database Pod as "Users's Pod"
+database DB
+User -> LoMap: Changes for location request
+LoMap-> LoMap: Local values updated
+User <- LoMap: Response
+LoMap-> Pod: Changes notified to pod
+LoMap<- Pod: Ok response
+LoMap-> DB: Changes notified to DB
+LoMap<- DB: Ok response
 ----

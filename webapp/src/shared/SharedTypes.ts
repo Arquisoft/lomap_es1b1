@@ -1,8 +1,9 @@
-export type User = {
-  id: string,
-  name: string,
-  email: string,
-  friends: Array<string>
+export type Review = {
+  date: Date,
+  score: number,
+  author: string,
+  comment: string,
+  pictureURL: string
 }
 
 export interface IPMarker {
@@ -15,7 +16,7 @@ export interface IPMarker {
   address: string,
   category: string,
   isPublic: boolean,
-  ratings: number[],
-  comments: string[],
-  description: string
+  reviews: Review[],
+  description: string,
+  canFriendsSee: boolean
 }

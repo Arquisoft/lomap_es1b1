@@ -1,8 +1,16 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render } from "@testing-library/react";
+import App from "./App";
+import { MarkerContextProvider } from "./context/MarkerContextProvider";
+import { BrowserRouter } from "react-router-dom";
 
-test('renders learn react link', () => {
-  const app = <App />;
-  expect(app).toBeDefined();
+test("App renders correctly", () => {
+
+    const { getByText } = render(<MarkerContextProvider>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </MarkerContextProvider>);
+
+    expect(getByText("Map")).toBeInTheDocument();
+
 });

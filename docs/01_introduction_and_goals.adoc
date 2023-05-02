@@ -11,15 +11,9 @@ As the software architects and developers of the LoMap aplication we must take i
 
 * Business Goals: On request of Brussels' Council, LoMap has to provide citizens with personalized maps about local places and business. Regarding to the enterprise's expectations, the software solution should aim to be general enough to be adapted to other future projects.
 
-* https://github.com/Arquisoft/lomap_es1b/edit/develop/docs/01_introduction_and_goals.adoc#requirements-overview[Essential Features and Functional Requirements]
+* Essential Features and Functional Requirements
 
-* Quality Goals for the Architecture:
-  - The information about a place should be stored in each user’s personal pod.
-  - Security and respect for user privacy.
-  - Responsiveness of the application.
-  - Originality of the solution.
-  - The system should also have a continuous integration and continuous delivery strategy and must be interoperable between the data stored by different applications.
-
+* Quality Goals for the Architecture
 
 * Relevant Stakeholders and Expectations: The stakeholders in the LoMap project include the Council of Brussels, HappySw, and the citizens of the city who will be using the software system. The Council of Brussels expects a software solution that will provide citizens with personalized maps about places and local businesses in their city. HappySw is expected to develop a generic software solution that can be deployed and used in other cities in the future. The citizens are expected to have an easy-to-use and responsive software solution that respects their privacy and allows them to create personalized maps about places and local businesses.
 
@@ -34,16 +28,15 @@ We expect the future users of the application to use it as a simpler and more fr
   - The LoMap system must prioritize the aesthetics and usability by non-technical people.
   - Quality of technical documentation
   - Code quality and tests code coverage.
-
+  - The system should also have a continuous integration and continuous delivery strategy and must be interoperable between the data stored by different applications.
 
 
 === Quality Architecture Goals
   - The information about a place should be stored in each user’s personal pod.
   - Security and respect for user privacy.
   - Responsiveness of the application.
-
-Pending: How is the quality of the architecture going to be judged?
-
+  - Adaptability of the application.
+  - Originality of the solution.
 
 === Stakeholders
 

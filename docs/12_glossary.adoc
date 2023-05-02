@@ -14,4 +14,8 @@
 | Docker     | A set of platform as a service products that use OS-level virtualization to deliver software in containers.
 | CI, Continuous integration     | The practice of automating the integration process of a software so it can be done several times a day and errors are found as soon as possible.
 | CD, Continuous deployment     | Extension of the CI, where code changes to the application are released automatically into the production environment.
+| Jest     |  JavaScript testing framework built on top of Jasmine and maintained by Meta.
+| End-to-End testing, E2E    | software testing methodology that verifies the working order of a software product in a start-to-finish process. End-to-end testing verifies that all components of a system can run under real-world scenarios.
+| Cucumber    | Software tool that supports behavior-driven development. Central to the Cucumber BDD approach is its ordinary language parser called Gherkin.
+| Gatling    | Gatling is an open-source load- and performance-testing framework based on Scala, Akka and Netty.
 |===

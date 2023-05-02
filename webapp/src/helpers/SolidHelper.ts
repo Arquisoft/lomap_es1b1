@@ -30,6 +30,42 @@ export async function readMarkers(webId: string) {
     return markers;
 };
 
+export async function readFriendsCanSeeMarkers(webId: string) {
+    let fileURL = `${parseURL(webId)}public/lomap/markers.json`;
+    let markers = await readMarkersFromFile(fileURL);
+
+    return markers;
+};
+
+export async function readFriendMarkers(webId: string) {
+    let markers: IPMarker[] = [];
+
+    (await getFriendList(webId)).forEach(async (friendWebId) => {
+        let fileURL = `${parseURL(friendWebId)}public/lomap/markers.json`;
+
+        try {
+            await getFile(fileURL, { fetch: fetch })
+                .then(async (file) => { (JSON.parse(await file.text())).forEach((marker: IPMarker) => markers.push(marker)); })
+                .catch(async () => {
+                    let fileType = "application/json;charset=utf-8";
+                    await saveFileInContainer(fileURL,
+                        new Blob(undefined, { type: fileType }),
+                        {
+                            slug: "Markers.json",
+                            contentType: fileType,
+                            fetch: fetch
+                        }
+                    );
+                });
+
+        } catch (error) {
+            //console.error(error);
+        }
+    });
+
+    return markers;
+}
+
 async function readMarkersFromFile(fileURL: string) {
     let markers: IPMarker[] = [];
 
@@ -52,6 +88,13 @@ async function readMarkersFromFile(fileURL: string) {
         console.error(error);
     }
     return markers;
+}
+
+export async function getFriendList(webId: string) {
+    let solidDataset = await getSolidDataset(webId);
+    let friends = getUrlAll((getThing(solidDataset, webId) as Thing), FOAF.knows);
+
+    return friends;
 }
 
 export async function saveMarkers(markers: IPMarker[], webId: string) {
@@ -77,13 +120,6 @@ async function saveMarkersToFile(markers: IPMarker[], fileURL: string) {
 
 function parseURL(webId: string) {
     return webId.split("profile")[0];
-}
-
-async function getFriendList(webId: string) {
-    let solidDataset = await getSolidDataset(webId);
-    let friends = getUrlAll((getThing(solidDataset, webId) as Thing), FOAF.knows);
-
-    return friends;
 }
 
 export async function addFriendByWebId(webId: string, friendWebId: string) {
@@ -162,37 +198,8 @@ async function grantAccessToMarkers(webId: string, access: boolean) {
     await saveAclFor(myDatasetWithAcl, updatedAcl, { fetch: fetch });
 }
 
-export async function readFriendMarkers(webId: string) {
-    let markers: IPMarker[] = [];
-
-    (await getFriendList(webId)).forEach(async (friendWebId) => {
-        let fileURL = `${parseURL(friendWebId)}public/lomap/markers.json`;
-
-        try {
-            await getFile(fileURL, { fetch: fetch })
-                .then(async (file) => { (JSON.parse(await file.text())).forEach((marker: IPMarker) => markers.push(marker)); })
-                .catch(async () => {
-                    let fileType = "application/json;charset=utf-8";
-                    await saveFileInContainer(fileURL,
-                        new Blob(undefined, { type: fileType }),
-                        {
-                            slug: "Markers.json",
-                            contentType: fileType,
-                            fetch: fetch
-                        }
-                    );
-                });
-
-        } catch (error) {
-            console.error(error);
-        }
-    });
-
-    return markers;
-}
-
-export async function savePublicMarker(publicMarker: IPMarker, webId: string) {
-    let { markers, fileURL } = await filterPublicMarker(webId, publicMarker);
+export async function saveFriendsCanSeeMarker(publicMarker: IPMarker, webId: string) {
+    let { markers, fileURL } = await filterFriendsCanSeeMarker(webId, publicMarker);
     markers.push(publicMarker);
 
     await saveMarkersToFile(markers, fileURL);
@@ -200,13 +207,13 @@ export async function savePublicMarker(publicMarker: IPMarker, webId: string) {
     return markers;
 }
 
-export async function deletePublicMarker(publicMarker: IPMarker, webId: string) {
-    let { markers, fileURL } = await filterPublicMarker(webId, publicMarker);
+export async function deleteFriendsCanSeeMarker(publicMarker: IPMarker, webId: string) {
+    let { markers, fileURL } = await filterFriendsCanSeeMarker(webId, publicMarker);
 
     await saveMarkersToFile(markers, fileURL);
 }
 
-async function filterPublicMarker(webId: string, publicMarker: IPMarker) {
+async function filterFriendsCanSeeMarker(webId: string, publicMarker: IPMarker) {
     let fileURL = `${parseURL(webId)}public/lomap/markers.json`;
     let markers = await readMarkersFromFile(fileURL);
 

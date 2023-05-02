@@ -1,0 +1,108 @@
+{
+    "NavBar": {
+        "map": "Mapa",
+        "login": "Iniciar sesión",
+        "logout": "Cerrar sesión",
+        "myFriends": "Mis amigos",
+        "myLocations": "Mis ubicaciones"
+    },
+    "HomeView": {
+        "welcome": "¡Bienvenido",
+        "p1": "LoMap es una aplicación web que te permite crear y almacenar ubicaciones personalizadas en un mapa propio, y mantener tus datos de ubicación seguros y privados en tu pod personal de Solid. ",
+        "p2": "Con LoMap, puedes agregar fácilmente un marcador en  cualquier lugar del mundo simplemente haciendo clic en el mapa en la ubicación deseada y personalizarlos con títulos, descripciones y etiquetas personalizadas.",
+        "p3": "Puedes compartir tus ubicaciones con tus amigos o con todo el mundo y podrás valorar las ubicaciones que compartan contigo. ¡Únete a la  comunidad LoMap hoy y comienza a crear y compartir tus ubicaciones personalizadas de manera segura y fácil!",
+        "start": "¡Empecemos!"
+    },
+    "Map": {
+        "f": "Salud",
+        "m": "Museos",
+        "p": "Parques",
+        "ti": "Tiendas",
+        "ed": "Edificios",
+        "tr": "Transporte",
+        "r": "Restaurantes",
+        "noName": "Sin nombre",
+        "en": "Entretenimiento",
+        "noDescription": "Sin descripción"
+    },
+    "NewLocationForm": {
+        "name": "Nombre",
+        "parks": "Parques",
+        "shops": "Tiendas",
+        "accept": "Aceptar",
+        "museums": "Museos",
+        "cancel": "Cancelar",
+        "latitude": "Latitud",
+        "pharmacies": "Salud",
+        "longitude": "Longitud",
+        "buildings": "Edificios",
+        "description": "Descripción",
+        "restaurants": "Restaurantes",
+        "transportation": "Transporte",
+        "isPublic": "Ubicación pública",
+        "entertainment": "Entretenimiento"
+    },
+    "MapView": {
+        "name": "Nombre",
+        "parks": "Parques",
+        "shops": "Tiendas",
+        "museums": "Museos",
+        "filters": "Filtros",
+        "pharmacies": "Salud",
+        "buildings": "Edificios",
+        "categories": "Categorías",
+        "restaurants": "Restaurantes",
+        "select": "Selecciona un mapa",
+        "transportation": "Transporte",
+        "newLocation": "Nueva ubicación",
+        "myLocations": "Mis ubicaciones",
+        "explore": "Ubicaciones públicas",
+        "entertainment": "Entretenimiento",
+        "creatorWebID": "WebID del creador",
+        "filterLocations": "Filtra ubicaciones",
+        "friendsLocations": "Ubicaciones de amigos",
+        "tooltip": "Seleccione mapa Mis ubicaciones para crear una"
+    },
+    "LocationsView": {
+        "friends": "Amigos",
+        "public": "Pública",
+        "private": "Privada",
+        "delete": "Eliminar",
+        "address": "Dirección: ",
+        "category": "Categoría: ",
+        "visibility": "Visibilidad: ",
+        "description": "Descripción: ",
+        "noLocations": "Aún no has creado ninguna ubicación"
+    },
+    "DetailedInfoWindow": {
+        "send": "Enviar",
+        "daysAgo": " día(s)",
+        "yearsAgo": " año(s)",
+        "hoursAgo": " hora(s)",
+        "comment": "Comentario",
+        "monthsAgo": " mese(s)",
+        "address": "Dirección: ",
+        "category": "Categoría: ",
+        "minutesAgo": " minuto(s)",
+        "imageURL": "URL de imagen",
+        "secondsAgo": " segundo(s)",
+        "seeReviews": "Ver reseñas",
+        "posted": "publicada hace ",
+        "noReviews": "No hay reseñas",
+        "description": "Descripción: ",
+        "writeReview": "Escribir reseña",
+        "shareLocation": "Compartir ubicación",
+        "rateLocation": "Valora esta ubicación",
+        "reviewsSummary": "Resumen de las reseñas"
+    },
+    "LoginForm": {
+        "login": "Iniciar sesión",
+        "otherProvider": "Otro proveedor",
+        "selectProvider": "Por favor, seleccione un proveedor."
+    },
+    "FriendsView": {
+        "delete": "Eliminar",
+        "addFriend": "Añadir amigo",
+        "noFriends": "Aún no has añadido ningún amigo"
+    }
+}
