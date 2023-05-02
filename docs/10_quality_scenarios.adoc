@@ -23,6 +23,4 @@ image:09_quality_tree.png["Quality tree"]
 |*Reliability*|Errors in the application must be handled by the application itself, without crashing under any circumstances.|The user shall have no knowledge of such errors, except for those that must necessarily be communicated to the user.|A considerable amount of effort will be dedicated to error prevention, as it is closely tied to maintainability. When implementing a feature, there is much more involved than simply making it functional.|_High_
 
 |*Maintainability*|Our application will undergo many changes, so we need to develop it in a way that makes it easy to maintain in the future.|We aim to make as few errors per line of code as possible.|Investing greater effort in implementing a new feature can lead to significant rewards when modifications are made later on.|_Medium_
-
-|*Freedom*|We are developing the application on a greenfield basis. We intend to save unnecessary effort for those working on it in the future by including the code with plenty of documentation in a public repository.|The project must be available in its entirety in a public repository accessible by anyone at any time.|A repository that is accessible to the public and contains a record of every discussion, issue, or decision made.|_Medium_
 |===
