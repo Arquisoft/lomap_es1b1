@@ -52,7 +52,7 @@
 <!-- ABOUT THE PROJECT -->
 ## 📚 About The Project
 
-<a href="https://172.174.92.197">![LOMAP_screenshot](https://github.com/Arquisoft/lomap_es1b1/blob/develop/docs/images/screenshot.png)</a>
+<a href="https://20.25.10.184/">![LOMAP_screenshot](https://github.com/Arquisoft/lomap_es1b1/blob/develop/docs/images/screenshot.png)</a>
 <p align="justify">The software development company HappySw has been hired by the Council of Brussels to develop a software system called <a href="https://arquisoft.github.io/course2223/labAssignmentDescription.html">LoMap.</a></p>
 <p align="justify">This system will allow citizens to have personalized maps of places and local businesses in their city. The places that can be mapped include shops, bars, restaurants, sights, and cultural attractions, among others. Users will have full control over their personalized maps and the shared information will be stored in a personal pod according to the <a href="https://solidproject.org/">SOLID principles</a>.</p>
 
