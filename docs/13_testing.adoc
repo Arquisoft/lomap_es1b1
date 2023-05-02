@@ -1,0 +1,71 @@
+[[section-glossary]]
+== Testing
+
+=== Unitary testing
+For the creation of unit tests we have used the Jest libraries and, in the case of the components found in the webapp, the React Testing Library. In the webapp, the correct operation and rendering of each individual component is tested, the functions that call data from the pod or the database have been mockerized with functions that return prepared data. 
+
+We have achieved almost 70% of code coverage. Although a higher percentage would be optimal or required in a real environment, it is a good result considering that most of the application relies on a google map which makes it more difficult to test.
+
+:imagesdir: images/
+image::13_coverage.png[]
+
+=== End-to-End testing
+The Jest and Cucumber libraries have been used to create e2e tests. Cucumber allows the tests to be performed with the Given, When, Then user story syntax. Examples of acceptance test would be:
+
+
+****
+Feature: Login
+
+Scenario: The user logs in
+
+  Given An user in the home page
+  When The user clicks on the login button
+  Then It opens the login dialog 
+****
+
+****
+Feature: Map view
+
+Scenario: The user opens the filters
+
+  Given An user in the map page
+  When The user clicks on the filters button
+  Then It opens the filters dialog
+
+Scenario: The user selects the public locations map
+
+  Given An user in the map page
+  When The user clicks on the combo box and selects public locations
+  Then The public locations are displayed
+
+****
+
+****
+Feature: HomePage
+
+Scenario: The user views the map page of the app
+
+  Given An user in the home page
+  When The user clicks on the map link in the navbar
+  Then The map page should be shown
+
+Scenario: The user clicks on the Let's get started button
+
+  Given An user in the home page
+  When The user clicks on the button
+  Then The map page should be shown
+****
+
+=== Static analysis
+We have used SonarCloud in our project to enhance the maintainability of the project and reducing the code smells and security issues.
+
+=== Load testing
+We have used Gatling to perform some load testing. As there was not a number of users specified in the requirements, we first started with a rampUsersPerSec configuration. Starting with 2 users and scaling each second, we noticed that our application reached its limit with 10 simultaneous users.
+
+:imagesdir: images/
+image::13_load_test_1.png[]
+
+We performed a stress test after that, with 20 simultaneous users with the atOnceUsers configuration.
+
+:imagesdir: images/
+image::13_load_test_2.png[]

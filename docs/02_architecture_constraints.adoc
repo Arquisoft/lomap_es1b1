@@ -37,14 +37,6 @@
 |*Due dates*
 |We have to meet the deadlines for handing in the project. These coincide with the deadlines for the evaluation of the subject.
 
-|*Experience* 
-|Regardless of our knowledge of the technologies used, this is the first time we have implemented a real-life project.
-
-|*Working as a team*
-|This is the first time that the two of us have worked as a team.
-
-|*Coordination*
-|We must coordinate properly to avoid problems like those that happened in the previous team.
 |===
 
 === 3. Conventions

@@ -1,4 +1,4 @@
-[[section-technical-risks]]
+[[section-technical-risks]] 
 == Risks and Technical Debts
 
 “Risk management is project management for grown-ups” (Tim Lister, Atlantic Systems Guild.) 
@@ -17,27 +17,38 @@ _(It will obviously be extended as we find new risks and generate others technic
 |Time availability of memebers of the developement team
 |Good organization and distribution of the project work along the semester
 
+|Medium
+|Experience
+|Regardless of our knowledge of the technologies used, this is the first time we have implemented a real-life project.
+
+|High
+|New technology
+|Most of the technologies of the project are new for us and we have little experience in web development.
+
+|Low
+|Working as a team
+|This is the first time that the two of us have worked as a team.
+
+|Medium
+|Coordination
+|We must coordinate properly to avoid problems like those that happened in the previous team.
+
 |===
 
 .Technical Debts
 |===
-|Relevance |Technical Debts | Considerations
+|Technical Debts | Considerations
 
-|Medium
-|Mandatory use of SOLID
-|Although it may be a great solution to the problem faced, the obligation to use this technology sets a new handicap to the start of the developement
+|Some small functional features | As a result of prioritizing other aspects, some interesting features have not been implemented, such as transforming a public location into a private one or vice versa, filtering locations by friend in a clean and straightforward way, etc.
 
-|Medium
-|Learning techincal material along the semester
-|The discovery of some of the technologies of the project and some of good strategies will take place as we attend the course lectures, which coincide with the developement period
+|Some small usability features | As a result of prioritizing other aspects, the app lacks the usual feedback of a profesional application. For example, confirmation dialogs when deleting, messages when an operation has been successfully completed, etc.
 
-|Low
-|The usage of TypeScript and React
-|Even though the advises of our professors may conduct us to use these technologies, we are not familiar with them
+|Testing | We have achieved a 70% of coverage, but we expected to be able to achieve at least 80%.
 
-|Low
-|Lack of relation between members of the team
-|Most probably it will not be a big deal, but the fact that we do not know each other may difficutl at least the beggining of the developement
+|E2E Testing | We have not performed many e2e tests (5), since we can not log in the application in these tests and most of the features are only available for logged-in users.
+
+|Deployment | For using the solid login, we need to deploy the application with https. However, we can not use the restapi correctly using this protocol, so the deployed application is lacking the part related to the database.
+
 
 |===
 

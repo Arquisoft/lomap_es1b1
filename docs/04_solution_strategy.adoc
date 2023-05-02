@@ -25,3 +25,4 @@ We are using the following technologies for the development of the application:
 === Relevant organizational decisions
 
 * Documentation written in English.
+* Kanban borad in GitHub.
