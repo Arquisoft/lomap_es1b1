@@ -51,7 +51,7 @@ const DetailedUbicationView: React.FC<{
     let marker = locations.find(marker => marker.id === markerShown.id);
 
     if (marker) {
-      marker.reviews.push({ author: session.info.webId!, date: new Date(), score: reviewScore, comment: comment, pictureURL: pictureURL });
+      marker.reviews.push({ author: session.info.isLoggedIn ? session.info.webId! : "https://anonimo.inrupt.net/profile/card#me", date: new Date(), score: reviewScore, comment: comment, pictureURL: pictureURL });
       setReviews(marker.reviews);
 
       dispatch({ type: Types.UPDATE_MARKER, payload: { id: marker.id, marker: marker } });
@@ -163,7 +163,7 @@ const DetailedUbicationView: React.FC<{
               </li>
             ))}
           </ul>
-          {markerShown.webId !== session.info.webId && session.info.isLoggedIn &&
+          {markerShown.webId !== session.info.webId &&
             <Button className='blueButton' variant="contained" sx={{ my: 2 }} onClick={() => setRatingOpen(true)}>{t("DetailedInfoWindow.writeReview")}</Button>
           }
           <Dialog onClose={() => setRatingOpen(false)} open={isRatingOpen}>
