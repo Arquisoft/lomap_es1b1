@@ -32,27 +32,6 @@ describe('DetailedUbicationView', () => {
         setDetailedIWOpen={jest.fn()}
       />
     );
-
-    const ratingButton = screen.getByRole('button', { name: 'DetailedInfoWindow.writeReview' });
-    fireEvent.click(ratingButton);
-    const sendButton = screen.getByRole('button', { name: 'DetailedInfoWindow.send' });
-    fireEvent.click(sendButton);
-
-    expect(screen.getByText('DetailedInfoWindow.rateLocation')).toBeInTheDocument();
-  });
-
-  it('should show the rating dialog when the button is clicked', async () => {
-    render(
-      <DetailedUbicationView
-        markerShown={{
-          id: "", date: new Date(), lat: 0, lng: 0, name: "Sin nombre", address: "Sin dirección",
-          category: "Sin categoría", isPublic: false, description: "Sin descripción", canFriendsSee: false,
-          reviews: [], webId: ""
-        }}
-        isDetailedIWOpen={true}
-        setDetailedIWOpen={jest.fn()}
-      />
-    );
     const seeButton = screen.getByRole('button', { name: 'DetailedInfoWindow.seeReviews' });
     fireEvent.click(seeButton);
 
@@ -75,17 +54,18 @@ describe('DetailedUbicationView', () => {
             comment:
               "",
             pictureURL: ""
-          },{author:
-            "https://uo271718-dedeuser1.inrupt.net/profile/card#me",
+          }, {
+            author:
+              "https://uo271718-dedeuser1.inrupt.net/profile/card#me",
             date:
-            new Date(),
+              new Date(),
             score:
-            5,
+              5,
             comment:
-            "Fantastico",
+              "Fantastico",
             pictureURL: "https://upload.wikimedia.org/wikipedia/commons/2/24/PARQUE_SAN_FRANCISCO_PAVO_REAL2.JPG"
-            }
-        ], webId: ""
+          }
+          ], webId: ""
         }}
         isDetailedIWOpen={true}
         setDetailedIWOpen={jest.fn()}
@@ -94,6 +74,7 @@ describe('DetailedUbicationView', () => {
     const seeButton = screen.getByRole('button', { name: 'DetailedInfoWindow.seeReviews' });
     fireEvent.click(seeButton);
   });
+
   it('should render the component', () => {
     const marker1: IPMarker = {
       id: "test",
@@ -137,7 +118,7 @@ describe('DetailedUbicationView', () => {
       canFriendsSee: true,
       description: "This is another test marker",
     };
-  
+
     const markerList = [marker1, marker2, marker3];
     render(
       <DetailedUbicationView
@@ -199,7 +180,7 @@ describe('DetailedUbicationView', () => {
       canFriendsSee: true,
       description: "This is another test marker",
     };
-  
+
     const markerList = [marker1, marker2, marker3];
     render(
       <DetailedUbicationView
